@@ -11,6 +11,9 @@
         <module name="webappservice" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="appService" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
