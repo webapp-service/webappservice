@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 public class Provider extends Person {
 
-    String Description;
-    Double PricePerHour;
+    String description;
+    Double pricePerHour;
 
 
     @ManyToMany
