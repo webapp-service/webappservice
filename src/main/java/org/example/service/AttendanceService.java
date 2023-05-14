@@ -43,6 +43,9 @@ public class AttendanceService {
             attendanceRepository.save(attendance);
         }
     }
+    public void findAttendance(Attendance attendance){
+        attendanceRepository.findById(attendance.getId());
+    }
     @Transactional
     public void deleteAttendance(Attendance attendance){
         attendanceRepository.delete(attendance);
