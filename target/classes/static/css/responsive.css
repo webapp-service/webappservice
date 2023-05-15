@@ -1,0 +1,40 @@
+@media (max-width:1440px){
+
+}
+
+@media (max-width:670px){
+    .portada-section{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 60vh;
+    }
+    .portada-div-img{
+        width: 100vw;
+    }
+    .portada-img {
+        width: 250px;
+        margin: 0px;
+        padding: 0px;
+    }
+    .portada-user-panel{
+        margin: 0px 20px;
+    }
+
+
+}
+
+
+
+
+@media (max-width: 425px) {
+    .footer div{
+        flex-direction: column;
+        text-align: center;
+        font-size: small;
+    }
+    .footer-img{
+        height: 50%;
+    }
+
+}
