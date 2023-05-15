@@ -17,7 +17,8 @@ public abstract class Person {
     Long phone;
     String email;
     String address;
-    String image;
+    @Lob @Basic(fetch = FetchType.LAZY)
+    byte[] image;
     String password;
     @Enumerated(EnumType.STRING)
     Rol rol;
