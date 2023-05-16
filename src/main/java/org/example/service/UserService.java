@@ -22,7 +22,7 @@ public class UserService {
         user.setDni(Dni);
         user.setAddress(address);
         user.setPhone(phone);
-        user.setImage(image);
+        //user.setImage(image);
 
 
         if (password.equals(password2)) {
