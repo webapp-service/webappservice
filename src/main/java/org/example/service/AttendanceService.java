@@ -24,7 +24,7 @@ public class AttendanceService {
             attendance.setName(name);
             attendanceRepository.save(attendance);
 
-        } else throw new Exception("name cannot be empty or null");
+        } else throw new Exception("el nombre no puede estar vacio");
         return attendance;
     }
     @Transactional(readOnly = true)
