@@ -1,9 +1,8 @@
 package org.example.service;
 
-import org.example.entity.Provider;
 import org.example.entity.User;
 import org.example.repository.UserRepository;
-import org.example.util.Rol;
+import org.example.util.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +18,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void create(String name, String email, String password, String password2, Long Dni, String lastName, String address, Long phone, MultipartFile image) throws IOException {
+    public void create(String name, String email, String password, Long Dni, String lastName, String address, Long phone, MultipartFile image) throws IOException {
 
         User user = new User();
         user.setName(name);
@@ -29,12 +28,8 @@ public class UserService {
         user.setAddress(address);
         user.setPhone(phone);
         user.setImage(image.getBytes());
-
-        if (password.equals(password2)) {
-            user.setPassword(password);
-        }
-        user.setRol(Rol.USER);
-
+        user.setRole(Role.USER);
+        userRepository.save(user);
 
     }
 
@@ -45,9 +40,9 @@ public class UserService {
     }
 
     public void modify(Long dni, String name, String lastname, Long phone, String email, String address,
-                               MultipartFile image, String password, Rol rol) throws IOException {
+                       MultipartFile image, String password, Role role) throws IOException {
         Optional<User> optUser = userRepository.findById(dni);
-        if(optUser.isPresent()){
+        if (optUser.isPresent()) {
             User user = optUser.get();
             user.setDni(dni);
             user.setName(name);
@@ -57,12 +52,12 @@ public class UserService {
             user.setAddress(address);
             user.setImage(image.getBytes());
             user.setPassword(password);
-            user.setRol(rol);
+            user.setRole(role);
             userRepository.save(user);
         }
     }
 
-    public void delete(Long DNI){
+    public void delete(Long DNI) {
         Optional<User> optUser = userRepository.findById(DNI);
         User user = optUser.get();
         userRepository.deleteById(DNI);

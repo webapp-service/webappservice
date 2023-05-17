@@ -1,7 +1,7 @@
 package org.example.service;
 import org.example.entity.Provider;
 import org.example.repository.ProviderRepository;
-import org.example.util.Rol;
+import org.example.util.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +31,7 @@ public class ProviderService {
         if (password.equals(password2)) {
             provider.setPassword(password);
         }
-        provider.setRol(Rol.PROVIDER);
+        provider.setRole(Role.PROVIDER);
     }
 
     public List<Provider> providers(){
@@ -40,7 +40,7 @@ public class ProviderService {
         return providers;
     }
     public void modifyProvider(Long dni, String name, String lastname, Long phone, String email, String address,
-                               MultipartFile image, String password, Rol rol, String description, Double pricePerHour) throws IOException {
+                               MultipartFile image, String password, Role role, String description, Double pricePerHour) throws IOException {
         Optional<Provider> optProvider = providerRepository.findById(dni);
         if(optProvider.isPresent()){
             Provider provider = optProvider.get();
@@ -52,10 +52,11 @@ public class ProviderService {
             provider.setAddress(address);
             provider.setImage(image.getBytes());
             provider.setPassword(password);
-            provider.setRol(rol);
+            provider.setRole(role);
             provider.setDescription(description);
             provider.setPricePerHour(pricePerHour);
             providerRepository.save(provider);
+
         }
     }
     public void delete(Long dni){
@@ -65,7 +66,7 @@ public class ProviderService {
     }
 
     public void validate(Long dni, String name, String lastname, Long phone, String email,
-                        String addess, String image, String password, Rol rol, String description, Double pricePerHour){
+                         String addess, String image, String password, Role role, String description, Double pricePerHour){
     }
 
     public Provider getOne(Long dni){

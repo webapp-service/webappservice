@@ -2,7 +2,7 @@ package org.example.entity;
 
 
 import lombok.Data;
-import org.example.util.Rol;
+import org.example.util.Role;
 
 import javax.persistence.*;
 
@@ -21,5 +21,5 @@ public abstract class Person {
     byte[] image;
     String password;
     @Enumerated(EnumType.STRING)
-    Rol rol;
+    Role role;
 }
