@@ -1,13 +1,12 @@
 package org.example.service;
 
+
 import org.example.entity.User;
 import org.example.repository.UserRepository;
-import org.example.util.Role;
+import org.example.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,19 +17,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void create(String name, String email, String password, Long Dni, String lastName, String address, Long phone, MultipartFile image) throws IOException {
+    @Autowired
+    Validation validation;
 
-        User user = new User();
-        user.setName(name);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setDni(Dni);
-        user.setAddress(address);
-        user.setPhone(phone);
-        user.setImage(image.getBytes());
-        user.setRole(Role.USER);
-        userRepository.save(user);
+    public void create(String name, String email, String password, Long Dni, String lastName, String address, Long phone, MultipartFile image) throws Exception {
 
+        User user = validation.validationUser(name, email, password, Dni, lastName, address, phone, image);
+
+        if (!(user == null)) {
+
+            userRepository.save(user);
+        }
     }
 
     public List<User> GetUsers() {
@@ -39,21 +36,23 @@ public class UserService {
         return users;
     }
 
-    public void modify(Long dni, String name, String lastname, Long phone, String email, String address,
-                       MultipartFile image, String password, Role role) throws IOException {
-        Optional<User> optUser = userRepository.findById(dni);
-        if (optUser.isPresent()) {
-            User user = optUser.get();
-            user.setDni(dni);
-            user.setName(name);
-            user.setLastName(lastname);
-            user.setPhone(phone);
-            user.setEmail(email);
-            user.setAddress(address);
-            user.setImage(image.getBytes());
-            user.setPassword(password);
-            user.setRole(role);
-            userRepository.save(user);
+    public void modify(Long dni, String name, String lastName, Long phone, String email, String address,
+                       MultipartFile image, String password) throws Exception {
+
+        Optional<User> userOpc = GetOneById(dni);
+
+        if (userOpc.isPresent()) {
+            User useResp = userOpc.get();
+
+            User userAux=validation.validationUser(name, email, password, dni, lastName, address, phone, image);
+
+            if (!(userAux == null)) {
+                useResp= userAux;
+
+                userRepository.save(useResp);
+            }
+        }else {
+            throw new Exception("no se encontro el usuario");
         }
     }
 
@@ -63,8 +62,16 @@ public class UserService {
         userRepository.deleteById(DNI);
     }
 
-    public User GetOne(String email) {
+    public User GetOneByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public Optional<User> GetOneById(long id) {
+        return userRepository.findById(id);
+    }
+
+    public void modify(User user) {
+        userRepository.save(user);
+        }
 
 }
