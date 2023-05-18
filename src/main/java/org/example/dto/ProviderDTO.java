@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class ProviderDTO extends Provider {
 
-    private Attendance attendance;
+    private Attendance attendanceUnique;
     private Integer score;
 
 }

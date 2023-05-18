@@ -56,6 +56,11 @@ public class ContractService {
         return contracts;
     }
 
+    public List<Contract> findByProviderAndAttendance(Long userId, Integer attendanceId) {
+        List<Contract> contracts = contractRep.findByProviderAndAttendance(userId,attendanceId);
+        return contracts;
+    }
+
      @Transactional
     public void qualify(int contractId, int score, String comment) {
         Contract contract = getContractById(contractId);
