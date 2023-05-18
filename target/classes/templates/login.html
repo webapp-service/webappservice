@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/main/resources/static/css/login.css">
+
+    <title>Login</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">
+                <img class="navbar-img" th:src="@{src/main/resources/static/images/logo-solo.png}" alt="Logo GyL Services" />
+                <!-- <img class="navbar-img" src="/src/main/resources/static/images/logo-solo.png" alt="Logo GyL Services"> -->
+            </div>
+            <div class="navbar-link">
+                <a href="#">INICIO</a>
+                <a href="#">SOBRE NOSOTROS</a>
+                <a href="#">CONTACTO</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="navbar-icon">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <div class="navbar-link">
+                <a href="#">INGRESAR</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="horizontal-section">
+        <div class="left-section">
+            <div class="image-container">
+                <img src="/src/main/resources/static/images/logo-solo.png" height="300px" width="350px" alt="Imagen">
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="login-box">
+                <h2>Login</h2>
+                <form>
+                    <div class="user-box">
+                        <input type="text" name="" required="">
+                        <label>Username</label>
+                    </div>
+                    <div class="user-box">
+                        <input type="password" name="" required="">
+                        <label>Password</label>
+                    </div>
+                    <a class="box" href="#">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Ingresar
+                    </a>
+                    <div class="options">
+                    <a class="option">Registro cliente</a>
+                    <a class="option">Registro proveedor</a>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="fragments/footer"></footer>
+    <script th:src="@{/javascript/example.js}"></script>
+</body>
+
+</html>

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +31,7 @@ public class ProviderService {
         }
     }
 
-    public List<Provider> providers(){
+    public ArrayList<Provider> providers(){
         List<Provider> providers = new ArrayList<>();
         providers = providerRepository.findAll();
         return providers;
