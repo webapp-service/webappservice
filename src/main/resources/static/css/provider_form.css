@@ -86,8 +86,6 @@
 }
 
 .form-row {
-  /* display: flex; */
-  /* flex-direction: column; */
   align-items: center; 
   justify-content: space-around;
   margin-bottom: 10px;
@@ -121,15 +119,6 @@ select {
   display: flex;
   align-items: center;
 }
-
-/*Modificado, puede quedar el de arriba*/
-/* .image-textarea-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
-
 
 section {
   padding: 20px;
