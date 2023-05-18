@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class ContractService {
     public void createContract(int attendanceId, Long providerId, Long userId) {
         Contract contract = new Contract();
         contract.setContractDate(new Date());
-        contract.setStatus(statusRep.findByName("PENDING"));
+        contract.setStatus(statusRep.getById(1));
         contract.setAttendance(attendanceRep.findById(attendanceId).get());
         contract.setProvider(providerRep.findById(providerId).get());
         contract.setUser(userRep.findById(userId).get());
@@ -55,42 +56,45 @@ public class ContractService {
         return contracts;
     }
 
-    @Transactional
-    public void changeContractStatus(int contractId, String contractStatus) {
+     @Transactional
+    public void qualify(int contractId, int score, String comment) {
         Contract contract = getContractById(contractId);
-        Status status = statusRep.findByName(contractStatus);
-        String actualStatusName = contract.getStatus().getName();
 
-        if (validateContractStatusChange(contractStatus, actualStatusName)) {
-            contract.setStatus(status);
-            contractRep.save(contract);
-        }
-    }
+            if (contract.getStatus().getId().equals(2) || contract.getStatus().getId().equals(3)) {
 
-    @Transactional
-    public void qualify(int contractId, Long userId, int score, String comment) {
-        Contract contract = getContractById(contractId);
-        User user = userRep.findById(userId).get();
+                if (score>0 && score<=5){
+                    contract.setScore(score);
 
-        if (contract.getUser().equals(user)) {
-            String statusName = contract.getStatus().getName();
+                    if (comment.length() >80&& !comment.isEmpty()){
+                        contract.setComment(comment);
+                        contractRep.save(contract);
+                    }
 
-            if (statusName.equals("CANCELLED") || statusName.equals("COMPLETED")) {
-                contract.setScore(score);
-                contract.setComment(comment);
-                contractRep.save(contract);
+                }
             }
         }
-    }
 
-    private boolean validateContractStatusChange(String actualStatusName, String contractStatus) {
-        if (actualStatusName.equals("PENDING")) {
-            return (contractStatus.equals("IN PROGRESS") || contractStatus.equals("CANCELLED"));
+
+    private void statusChange(int idContract, int idStatus) throws Exception {
+        Optional<Contract> contractResp = contractRep.findById(idContract);
+        Optional<Status> statusResp = statusRep.findById(idStatus);
+
+        if (contractResp.isPresent()) {
+            Contract contract = contractResp.get();
+
+            if (statusResp.isPresent()) {
+                Status status = statusResp.get();
+                contract.setStatus(status);
+                contractRep.save(contract);
+            }else {
+                throw new Exception("no se encontro un estado valido");
+            }
+
+        }else {
+            throw new Exception("no se encontro el contrato");
+
         }
-        if (actualStatusName.equals("IN PROGRESS")) {
-            return contractStatus.equals("CANCELLED") || contractStatus.equals("COMPLETED");
-        }
-        return false;
+
     }
 }
 

@@ -1,6 +1,6 @@
 package org.example.util;
 
 
-public enum Rol {
+public enum Role {
     ADMIN,USER,PROVIDER
 }
