@@ -11,15 +11,15 @@ import javax.persistence.*;
 public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long dni;
-    String name;
-    String lastName;
-    Long phone;
-    String email;
-    String address;
+    private Long dni;
+    private String name;
+    private String lastName;
+    private Long phone;
+    private String email;
+    private String address;
     @Lob @Basic(fetch = FetchType.LAZY)
-    byte[] image;
-    String password;
+    private byte[] image;
+    private String password;
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
 }

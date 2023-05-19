@@ -10,8 +10,8 @@ import javax.persistence.*;
 public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String name;
+    private Integer id;
+    private String name;
 
     public Status(String name) {
         this.name = name;

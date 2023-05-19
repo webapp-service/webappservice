@@ -10,20 +10,20 @@ import java.util.List;
 @Data
 public class Provider extends Person {
 
-    String description;
-    Double pricePerHour;
+    private String description;
+    private Double pricePerHour;
 
 
     @ManyToMany
     @JoinTable(name = "providers_attendances",
             joinColumns = @JoinColumn(name = "provider_id"),
             inverseJoinColumns = @JoinColumn(name = "attendance_id"))
-    List<Attendance> attendances;
+    private List<Attendance> attendances;
 
 
 
     @OneToMany(mappedBy = "provider")
-    List<Contract> contracts;
+    private List<Contract> contracts;
 
 
 }

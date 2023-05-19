@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 public class Attendance {
     @Id
-    Integer id;
-    String name;
+    private Integer id;
+    private String name;
 
     @ManyToMany
     @JoinTable(name = "providers_attendances",
