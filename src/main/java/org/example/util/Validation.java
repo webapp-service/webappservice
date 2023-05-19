@@ -1,6 +1,8 @@
 package org.example.util;
 
 
+import org.example.entity.Attendance;
+import org.example.entity.Contract;
 import org.example.entity.Provider;
 import org.example.entity.User;
 import org.springframework.stereotype.Service;
@@ -71,7 +73,7 @@ public class Validation {
         return user;
     }
 
-    public Provider validationProvider (String name, String email, String password, Long dni, String lastName, String address, Long phone, MultipartFile image,String description, Double pricePerHour) throws Exception {
+    public Provider validationProvider (String name, String email, String password, Long dni, String lastName, String address, Long phone, MultipartFile image,String description, Double pricePerHour, Integer idAttendace, Integer idCOntract) throws Exception {
 
        Provider provider = null;
 
@@ -105,6 +107,12 @@ public class Validation {
                                                 provider.setPassword(password);
                                                 provider.setDescription(description);
                                                 provider.setPricePerHour(pricePerHour);
+                                                Attendance attendance = new Attendance();
+                                                attendance.setId(idAttendace);
+                                                provider.getAttendances().add(attendance);
+                                                Contract contract = new Contract();
+                                                contract.setContractId(idCOntract);
+                                                provider.getContracts().add(contract);
                                                 provider.setRole(Role.PROVIDER);
 
                                             }else {
