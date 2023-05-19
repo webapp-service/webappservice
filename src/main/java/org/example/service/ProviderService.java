@@ -1,5 +1,6 @@
 package org.example.service;
 
+import com.sun.xml.internal.fastinfoset.algorithm.IntEncodingAlgorithm;
 import org.example.entity.Provider;
 import org.example.repository.ProviderRepository;
 import org.example.util.Role;
@@ -23,9 +24,9 @@ public class ProviderService {
     private Validation validation;
 
     public void create(String name, String email, String password, Long dni, String lastName,
-                       String address, Long phone, MultipartFile image, String description, Double pricePerHour) throws Exception {
+                       String address, Long phone, MultipartFile image, String description, Double pricePerHour, Integer idAttendance, Integer idContract) throws Exception {
 
-        Provider provider = validation.validationProvider(name, email, password, dni, lastName, address, phone, image, description, pricePerHour);
+        Provider provider = validation.validationProvider(name, email, password, dni, lastName, address, phone, image, description, pricePerHour, idAttendance, idContract);
         if (provider != null) {
 
             providerRepository.save(provider);
@@ -39,11 +40,11 @@ public class ProviderService {
     }
 
     public void modifyProvider(Long dni, String name, String lastName, Long phone, String email, String address,
-                               MultipartFile image, String password, Role role, String description, Double pricePerHour) throws Exception {
+                               MultipartFile image, String password, Role role, String description, Double pricePerHour, Integer idAttendance, Integer idContract) throws Exception {
 
         Provider provider = providerRepository.findById(dni).orElseThrow(() -> new EntityNotFoundException("no se encontro el id"));
 
-        Provider provider1 = validation.validationProvider(name, email, password, dni, lastName, address, phone, image, description, pricePerHour);
+        Provider provider1 = validation.validationProvider(name, email, password, dni, lastName, address, phone, image, description, pricePerHour, idAttendance, idContract);
         if (provider != null) {
 
             providerRepository.save(provider1);
