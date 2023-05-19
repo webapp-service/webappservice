@@ -14,7 +14,7 @@ import java.util.List;
 public class User extends Person {
 
     @OneToMany(mappedBy = "user")
-    List<Contract> contracts;
+    private List<Contract> contracts;
 
 
 }
