@@ -21,13 +21,23 @@ public class ProviderDTOService {
     @Autowired
     AttendanceService attendanceservice;
 
-
     public List<ProviderDTO> create(){
-        ArrayList<Provider> providers = providerService.providers();
+        List<Provider> providers = providerService.providers();
         ArrayList<ProviderDTO> providersDTO = new ArrayList<>();
         for (Provider p: providers) {
-            ProviderDTO providerDTO = (ProviderDTO) p;
+
+            ProviderDTO providerDTO = new ProviderDTO();
+            providerDTO.setName(providerDTO.getName());
+            providerDTO.setLastName(providerDTO.getLastName());
+            providerDTO.setPhone(providerDTO.getPhone());
+            providerDTO.setEmail(providerDTO.getEmail());
+            providerDTO.setAddress(providerDTO.getAddress());
+            providerDTO.setImage(providerDTO.getImage());
+            providerDTO.setPassword(providerDTO.getPassword());
+            providerDTO.setRole(providerDTO.getRole());
+
             List<Attendance> attendances = p.getAttendances();
+
             for (Attendance a: attendances) {
                 providerDTO.setAttendanceUnique(a);
                 providerDTO.setScore(averageScore(p.getDni(),a.getId()));
