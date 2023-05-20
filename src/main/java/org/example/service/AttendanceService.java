@@ -1,55 +1,18 @@
 package org.example.service;
 
 import org.example.entity.Attendance;
-import org.example.repository.AttendanceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class AttendanceService {
+public interface AttendanceService {
+    Attendance create(String name) throws Exception;
 
-    @Autowired
-    AttendanceRepository attendanceRepository;
+    List<Attendance> listAttendances();
 
-    @Transactional
-    public Attendance create(String name) throws Exception {
-        Attendance attendance = new Attendance();
+    void modifyAttendance(Integer id, String name);
 
-        if (name != null && !name.isEmpty()) {
-            attendance.setName(name);
-            attendanceRepository.save(attendance);
+    Optional<Attendance> findAttendance(Integer id);
 
-        } else throw new Exception("el nombre no puede estar vacio");
-        return attendance;
-    }
-    @Transactional(readOnly = true)
-    public List<Attendance> listAttendances(){
-        List<Attendance> attendances = new ArrayList<>();
-        attendances = attendanceRepository.findAll();
-
-        return attendances;
-    }
-    @Transactional
-    public void modifyAttendance(Integer id, String name){
-        Optional<Attendance> answer = attendanceRepository.findById(id);
-        if (answer.isPresent()){
-            Attendance attendance = answer.get();
-            attendance.setName(name);
-            attendanceRepository.save(attendance);
-        }
-    }
-    public Optional<Attendance> findAttendance(Integer id){
-        Optional<Attendance> attendance = attendanceRepository.findById(id);
-        return attendance;
-    }
-    @Transactional
-    public void deleteAttendance(Attendance attendance){
-        attendanceRepository.delete(attendance);
-    }
-
+    void deleteAttendance(Attendance attendance);
 }

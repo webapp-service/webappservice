@@ -14,7 +14,7 @@ public abstract class Person {
     private Long dni;
     private String name;
     private String lastName;
-    private Long phone;
+    private String phone;
     private String email;
     private String address;
     @Lob @Basic(fetch = FetchType.LAZY)
