@@ -3,15 +3,14 @@ package org.example.controller;
 import org.example.entity.Attendance;
 import org.example.entity.Contract;
 import org.example.entity.Provider;
-import org.example.service.AttendanceService;
-import org.example.service.ContractService;
-import org.example.service.ProviderService;
+import org.example.service.AttendanceServiceImpl;
+import org.example.service.ContractServiceImpl;
+import org.example.service.ProviderServiceImpl;
 import org.example.util.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,79 +18,74 @@ import java.util.List;
 @RequestMapping("/provider")
 public class ControllerProvider {
     @Autowired
-    ContractService contractService;
+    ContractServiceImpl contractServiceImpl;
     @Autowired
-    AttendanceService attendanceService;
+    AttendanceServiceImpl attendanceServiceImpl;
     @Autowired
-    ProviderService providerService;
+    ProviderServiceImpl providerServiceImpl;
 
-    @GetMapping("/register_provider")
+    @GetMapping("/register")
     public String register(ModelMap modelo) {
-        List<Contract> contracts = contractService.getAllContracts();
-        List<Attendance> attendances = attendanceService.listAttendances();
-        modelo.addAttribute("contracts", contracts);
-        modelo.addAttribute("attendance", attendances);
-        return "provider_form.html";
+        List<Attendance> attendances = attendanceServiceImpl.listAttendances();
+        modelo.addAttribute("attendances", attendances);
+        return "provider_form";
     }
 
-    @PostMapping("/register_provider")
+    @PostMapping("/register")
     public String register(@RequestParam String name, @RequestParam String email, @RequestParam String password,
-                           @RequestParam Long dni, @RequestParam String lastName, @RequestParam String addres,
-                           @RequestParam Long phone, @RequestParam MultipartFile image, @RequestParam String description,
-                           @RequestParam Double pricePerHour, @RequestParam Integer idAttendance, @RequestParam Integer idContract, ModelMap model) throws Exception {
+                           @RequestParam Long dni, @RequestParam String lastName, @RequestParam String address,
+                           @RequestParam String phone, @RequestParam String description, @RequestParam Integer idAttendance,
+                           @RequestParam Double pricePerHour, ModelMap model) {
         try {
-            providerService.create(name, email, password, dni, lastName, addres, phone, image, description, pricePerHour, idAttendance, idContract);
-            model.put("success", "The provider was successfully loaded");
+            providerServiceImpl.create(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
         } catch (Exception e) {
-            List<Contract> contracts = contractService.getAllContracts();
-            List<Attendance> attendances = attendanceService.listAttendances();
-            model.addAttribute("contracts", contracts);
+            List<Attendance> attendances = attendanceServiceImpl.listAttendances();
             model.addAttribute("attendance", attendances);
             model.put("fail", e.getMessage());
-            return "provider_form.html";
+            return "provider_form";
         }
-        return "index.html";
+        return "redirect:/";
     }
 
     @GetMapping("/modify_provider/{dni}")
     public String modify(@PathVariable Long dni, ModelMap model) {
-        List<Contract> contracts = contractService.getAllContracts();
-        List<Attendance> attendances = attendanceService.listAttendances();
+        List<Contract> contracts = contractServiceImpl.getAllContracts();
+        List<Attendance> attendances = attendanceServiceImpl.listAttendances();
         model.addAttribute("contracts", contracts);
         model.addAttribute("attendance", attendances);
-        model.put("provider", providerService.getOne(dni));
-        return "provider_modify.html";
+        model.put("provider", providerServiceImpl.getOne(dni));
+        return "provider_modify";
     }
 
     @PostMapping("/modify/{dni}")
-    public String modify(Long dni, String name, String lastName, Long phone, String email, String address,
-                         MultipartFile image, String password, Role role, String description, Double pricePerHour,
-                         Integer idAttendance, Integer idContract, ModelMap model) {
+    public String modify(Long dni, String name, String lastName, String phone, String email, String address,
+                         String password, Role role, String description, Double pricePerHour,
+                         Integer idAttendance, ModelMap model) {
         try {
-            providerService.modifyProvider(dni, name, lastName, phone, email, address, image, password, role, description, pricePerHour, idAttendance, idContract);
+            providerServiceImpl.modifyProvider(dni, name, lastName, phone, email, address, password, role, description, pricePerHour, idAttendance);
             return "redirect:../list_providers";
         } catch (Exception e) {
             model.put("fail", e.getMessage());
-            return "provider_modify.html";
+            return "provider_modify";
         }
     }
 
     @GetMapping("/list_providers")
     public String list(ModelMap model) {
-        List<Provider> providers = providerService.providers();
+        List<Provider> providers = providerServiceImpl.providers();
         model.addAttribute("providers", providers);
-        return "provider_list.html";
+        return "provider_list";
     }
 
     @GetMapping("/delete/{dni}")
     public String delete(@PathVariable Long dni, ModelMap modelo) {
         try {
-            providerService.delete(dni);
+            providerServiceImpl.delete(dni);
             modelo.put("success", "The provider was deleted successfully");
         } catch (Exception e) {
             modelo.put("fail", e.getMessage());
         }
-        return "provider_list.html";
+        return "provider_list";
     }
 
 }

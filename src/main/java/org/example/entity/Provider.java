@@ -3,6 +3,7 @@ package org.example.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,12 +19,12 @@ public class Provider extends Person {
     @JoinTable(name = "providers_attendances",
             joinColumns = @JoinColumn(name = "provider_id"),
             inverseJoinColumns = @JoinColumn(name = "attendance_id"))
-    private List<Attendance> attendances;
+    private List<Attendance> attendances = new ArrayList<>();
 
 
 
     @OneToMany(mappedBy = "provider")
-    private List<Contract> contracts;
+    private List<Contract> contracts = new ArrayList<>();
 
 
 }

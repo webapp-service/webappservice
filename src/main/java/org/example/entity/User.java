@@ -3,9 +3,9 @@ package org.example.entity;
 import lombok.Data;
 
 import javax.persistence.Entity;
-
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +14,7 @@ import java.util.List;
 public class User extends Person {
 
     @OneToMany(mappedBy = "user")
-    private List<Contract> contracts;
+    private List<Contract> contracts = new ArrayList<>();
 
 
 }

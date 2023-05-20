@@ -3,6 +3,7 @@ package org.example.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,5 +18,5 @@ public class Attendance {
     @JoinTable(name = "providers_attendances",
             joinColumns = @JoinColumn(name = "attendance_id"),
             inverseJoinColumns = @JoinColumn(name = "provider_id"))
-    List<Provider> providers;
+    List<Provider> providers = new ArrayList<>();
 }
