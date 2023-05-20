@@ -21,10 +21,10 @@ public class ProviderDTOService {
     @Autowired
     AttendanceService attendanceservice;
 
-    public List<ProviderDTO> create(){
+    public List<ProviderDTO> create() {
         List<Provider> providers = providerService.providers();
         ArrayList<ProviderDTO> providersDTO = new ArrayList<>();
-        for (Provider p: providers) {
+        for (Provider p : providers) {
 
             ProviderDTO providerDTO = new ProviderDTO();
             providerDTO.setName(providerDTO.getName());
@@ -38,29 +38,37 @@ public class ProviderDTOService {
 
             List<Attendance> attendances = p.getAttendances();
 
-            for (Attendance a: attendances) {
+            for (Attendance a : attendances) {
                 providerDTO.setAttendanceUnique(a);
-                providerDTO.setScore(averageScore(p.getDni(),a.getId()));
+                providerDTO.setScore(averageScore(p.getDni(), a.getId()));
                 providersDTO.add(providerDTO);
             }
         }
         return providersDTO;
     }
-    public Optional<Attendance> getAttendances(Integer idAttendance){
+
+    public Optional<Attendance> getAttendances(Integer idAttendance) {
         Optional<Attendance> attendance = attendanceservice.findAttendance(idAttendance);
         return attendance;
     }
-    public Integer averageScore(long idProvider, Integer idAttendance){
-        List<Contract> contract = contractService.findByProviderAndAttendance(idProvider,idAttendance);
+
+    public Integer averageScore(long idProvider, Integer idAttendance) {
+        List<Contract> contract = contractService.findByProviderAndAttendance(idProvider, idAttendance);
         Integer score = 0;
         Integer count = 0;
-        for(Contract contractAux : contract){
-            if((contractAux.getScore() > 0) && (contractAux.getScore() != null)){
-                count++;
-                score = score + contractAux.getScore();
+        Integer average = 0;
+
+        if (contract.size() > 0) {
+            for (Contract contractAux : contract) {
+                if ((contractAux.getScore() > 0) && (contractAux.getScore() != null)) {
+                    count++;
+                    score = score + contractAux.getScore();
+                }
             }
+            average = Math.round(score / count);
+        } else {
+            average = score;
         }
-        Integer average = Math.round(score/count);
 
         return average;
     }
