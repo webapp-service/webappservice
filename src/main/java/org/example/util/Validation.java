@@ -5,6 +5,8 @@ import org.example.entity.Attendance;
 import org.example.entity.Provider;
 import org.example.entity.User;
 import org.example.service.AttendanceServiceImpl;
+import org.example.service.ProviderServiceImpl;
+import org.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Validation {
     @Autowired
     private AttendanceServiceImpl attendanceServiceImpl;
+
 
     public User validationUser(String name, String email, String password, Long dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
@@ -31,6 +34,8 @@ public class Validation {
                                 if (phone.length() > 9) {
 
                                     if (image != null) {
+
+
                                         User user = new User();
                                         user.setDni(dni);
                                         user.setName(name);
@@ -81,6 +86,7 @@ public class Validation {
                                     if (!description.isEmpty() && description.length() > 50) {
 
                                         if (pricePerHour > 0) {
+
                                             Provider provider = new Provider();
                                             provider.setDni(dni);
                                             provider.setName(name);
@@ -92,10 +98,12 @@ public class Validation {
                                             provider.setDescription(description);
                                             provider.setPricePerHour(pricePerHour);
                                             Attendance attendance = attendanceServiceImpl.findAttendance(idAttendace).get();
+
                                             provider.getAttendances().add(attendance);
                                             provider.setRole(Role.PROVIDER);
 
                                             return provider;
+
 
                                         } else throw new Exception("El precio debe ser superior a 0.00");
 

@@ -2,19 +2,21 @@ package org.example.service;
 
 import org.example.entity.Provider;
 import org.example.repository.ProviderRepository;
+import org.example.repository.UserRepository;
 import org.example.util.Role;
 import org.example.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class ProviderServiceImpl implements ProviderService{
+public class ProviderServiceImpl implements ProviderService {
 
     @Autowired
     private ProviderRepository providerRepository;
@@ -25,19 +27,27 @@ public class ProviderServiceImpl implements ProviderService{
     @Autowired
     private AttendanceServiceImpl attendanceServiceImpl;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public void create(String name, String email, String password, Long dni, String lastName,
                        String address, String phone, String description, Double pricePerHour, Integer idAttendance) throws Exception {
 
-        Provider provider = validation.validationProvider(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
-        if (provider != null) {
-            String encodedPassword = new BCryptPasswordEncoder().encode(password);
-            provider.setPassword(encodedPassword);
-            providerRepository.save(provider);
-        }
+        try {
+            if (getOne(dni) == null && !userRepository.findById(dni).isPresent()) {
+
+                Provider provider = validation.validationProvider(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
+                providerRepository.save(provider);
+            } else {
+                throw new Exception("Error:  El dni ya se encuentra registrado en la base de datos");
+            }
+        } catch (DataIntegrityViolationException e) {
+            throw new Exception("Error: El email ya esta registrado en la base de datos", e);
+
     }
 
-
+    }
     @Override
     public List<Provider> providers() {
         List<Provider> providers = new ArrayList<>();
@@ -50,13 +60,14 @@ public class ProviderServiceImpl implements ProviderService{
     public void modifyProvider(Long dni, String name, String lastName, String phone, String email, String address,
                                String password, Role role, String description, Double pricePerHour, Integer idAttendance) throws Exception {
 
-        Provider provider = providerRepository.findById(dni).orElseThrow(() -> new EntityNotFoundException("no se encontro el id"));
-
-        Provider provider1 = validation.validationProvider(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
+        Provider provider = validation.validationProvider(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
         if (provider != null) {
-
-            providerRepository.save(provider1);
+            String encodedPassword = new BCryptPasswordEncoder().encode(password);
+            provider.setPassword(encodedPassword);
+            providerRepository.save(provider);
         }
+
+
     }
 
     @Override
@@ -68,7 +79,14 @@ public class ProviderServiceImpl implements ProviderService{
 
     @Override
     public Provider getOne(Long dni) {
-        return providerRepository.findById(dni).get();
+        Optional<Provider> optProvider = providerRepository.findById(dni);
+
+        if (optProvider.isPresent()) {
+            return optProvider.get();
+        } else {
+            return null;
+
+        }
     }
 
     @Override

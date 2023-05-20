@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/provider")
-public class ControllerProvider {
+public class ProviderController {
     @Autowired
     ContractServiceImpl contractServiceImpl;
     @Autowired

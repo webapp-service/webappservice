@@ -3,6 +3,7 @@ package org.example.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class Attendance {
     @Id
     private Integer id;
+    @NotNull
     private String name;
 
     @ManyToMany
