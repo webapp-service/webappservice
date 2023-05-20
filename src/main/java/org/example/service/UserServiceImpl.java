@@ -5,6 +5,7 @@ import org.example.entity.User;
 import org.example.repository.UserRepository;
 import org.example.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
@@ -20,12 +21,13 @@ public class UserService {
     @Autowired
     Validation validation;
 
-    public void create(String name, String email, String password, Long Dni, String lastName, String address, Long phone, MultipartFile image) throws Exception {
+    public void create(String name, String email, String password, Long Dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
         User user = validation.validationUser(name, email, password, Dni, lastName, address, phone, image);
 
         if (!(user == null)) {
-
+            String encodedPassword = new BCryptPasswordEncoder().encode(password);
+            user.setPassword(encodedPassword);
             userRepository.save(user);
         }
     }
@@ -36,7 +38,7 @@ public class UserService {
         return users;
     }
 
-    public void modify(Long dni, String name, String lastName, Long phone, String email, String address,
+    public void modify(Long dni, String name, String lastName, String phone, String email, String address,
                        MultipartFile image, String password) throws Exception {
 
         Optional<User> userOpc = GetOneById(dni);

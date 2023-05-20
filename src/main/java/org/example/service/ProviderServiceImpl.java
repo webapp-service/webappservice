@@ -1,11 +1,14 @@
 package org.example.service;
 
 import com.sun.xml.internal.fastinfoset.algorithm.IntEncodingAlgorithm;
+import org.example.entity.Attendance;
 import org.example.entity.Provider;
+import org.example.repository.AttendanceRepository;
 import org.example.repository.ProviderRepository;
 import org.example.util.Role;
 import org.example.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,12 +26,16 @@ public class ProviderService {
     @Autowired
     private Validation validation;
 
+    @Autowired
+    private AttendanceService attendanceService;
+
     public void create(String name, String email, String password, Long dni, String lastName,
-                       String address, Long phone, MultipartFile image, String description, Double pricePerHour, Integer idAttendance, Integer idContract) throws Exception {
+                       String address, String phone, String description, Double pricePerHour, Integer idAttendance) throws Exception {
 
-        Provider provider = validation.validationProvider(name, email, password, dni, lastName, address, phone, image, description, pricePerHour, idAttendance, idContract);
+        Provider provider = validation.validationProvider(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
         if (provider != null) {
-
+            String encodedPassword = new BCryptPasswordEncoder().encode(password);
+            provider.setPassword(encodedPassword);
             providerRepository.save(provider);
         }
     }
@@ -39,12 +46,12 @@ public class ProviderService {
         return providers;
     }
 
-    public void modifyProvider(Long dni, String name, String lastName, Long phone, String email, String address,
-                               MultipartFile image, String password, Role role, String description, Double pricePerHour, Integer idAttendance, Integer idContract) throws Exception {
+    public void modifyProvider(Long dni, String name, String lastName, String phone, String email, String address,
+                               String password, Role role, String description, Double pricePerHour, Integer idAttendance) throws Exception {
 
         Provider provider = providerRepository.findById(dni).orElseThrow(() -> new EntityNotFoundException("no se encontro el id"));
 
-        Provider provider1 = validation.validationProvider(name, email, password, dni, lastName, address, phone, image, description, pricePerHour, idAttendance, idContract);
+        Provider provider1 = validation.validationProvider(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
         if (provider != null) {
 
             providerRepository.save(provider1);
@@ -67,5 +74,8 @@ public class ProviderService {
     }
 
 
+    public Provider getByEmail(String email) {
+        return providerRepository.findByEmail(email);
+    }
 }
 
