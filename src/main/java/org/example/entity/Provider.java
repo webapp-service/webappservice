@@ -3,6 +3,7 @@ package org.example.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,9 @@ import java.util.List;
 @Data
 public class Provider extends Person {
 
+    @NotNull
     private String description;
+    @NotNull
     private Double pricePerHour;
 
 

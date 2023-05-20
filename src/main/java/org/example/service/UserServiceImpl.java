@@ -1,10 +1,13 @@
 package org.example.service;
 
 
+import org.example.entity.Provider;
 import org.example.entity.User;
+import org.example.repository.ProviderRepository;
 import org.example.repository.UserRepository;
 import org.example.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,17 +25,32 @@ public class UserServiceImpl implements UserService{
     @Autowired
     Validation validation;
 
+    @Autowired
+    private ProviderRepository providerRepository;
+
     @Override
     public void create(String name, String email, String password, Long Dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
-        User user = validation.validationUser(name, email, password, Dni, lastName, address, phone, image);
+        try {
 
-        if (!(user == null)) {
-            String encodedPassword = new BCryptPasswordEncoder().encode(password);
-            user.setPassword(encodedPassword);
+
+        if (GetOneById(Dni)==null &&  providerRepository.findById(Dni).isPresent()){
+
+            User user = validation.validationUser(name, email, password, Dni, lastName, address, phone,image);
             userRepository.save(user);
+        } else {
+            throw new Exception("Error:  El dni ya se encuentra registrado en la base de datos");
         }
+    } catch (
+    DataIntegrityViolationException e) {
+        throw new Exception("Error: El email ya esta registrado en la base de datos", e);
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+        e.printStackTrace();
     }
+
+}
+
 
     @Override
     public List<User> GetUsers() {
