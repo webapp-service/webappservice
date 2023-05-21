@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="securityjdk8" />
-        <module name="webappservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
