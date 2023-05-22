@@ -1,10 +1,13 @@
 package org.example.controller;
 
+import org.example.entity.Person;
 import org.example.service.ContractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/contract")
@@ -22,12 +25,13 @@ public class ContractController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestParam Long userId, @RequestParam Long providerId,
-                         @RequestParam int attendanceId){
-
+    public String create(@RequestParam Long providerId,
+                         @RequestParam int attendanceId , HttpSession httpSession){
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        Long userId = logged.getDni();
         contractService.createContract(attendanceId, providerId, userId);
 
-        return "user_menu.html";
+        return "login.html";
     }
 
     @PostMapping("/opine/{id}")

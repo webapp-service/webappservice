@@ -42,11 +42,16 @@
                 <h4>VER MAS</h4>
             </a>
             <div class="service-button">
-                <button>CONTRATAR</button>
+                <form th:action="@{/contract/create}" method="POST">
+                    <input type="number" id="providerId" name="providerId" hidden
+                           th:value="${card.dni}"/>
+                    <input type="number" id="attendanceId" name="attendanceId" hidden
+                           th:value="${card.attendanceUnique.id}"/>
+                    <button sec:authorize="!hasRole('ROLE_PROVIDER')" >CONTRATAR</button>
+                </form>
                 <p th:text="${card.pricePerHour}"></p>
                 <i th:class="${card.attendanceUnique.icon}" style="color: #2d2929"></i>
             </div>
-            </h3>
         </div>
     </article>
 </section>

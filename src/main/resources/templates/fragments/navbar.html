@@ -16,7 +16,8 @@
     </div>
     <div class="navbar-link">
       <a sec:authorize="!isAuthenticated()" th:ref="@{/login}" href="/login">INGRESAR</a>
-      <a sec:authorize="isAuthenticated()" th:ref="@{/logout}" >CERAR SESIÓN</a>
+      <h3 sec:authorize="isAuthenticated()" th:text="${logged}"></h3>
+      <a sec:authorize="isAuthenticated()"  href="/logout">CERRAR SESIÓN</a>
     </div>
   </div>
 </nav>
