@@ -120,7 +120,7 @@
     color: black;
     pointer-events: none;
     transition: .5s;
-    transform: translateY(-90%);
+    transform: translateY(-80%);
 }
 
 .login-box .user-box input:placeholder-shown + label {
