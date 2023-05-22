@@ -42,6 +42,7 @@
     background-color: #2C80B0;
 }
 .categoria-list-article{
+    text-align: center;
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(
@@ -69,6 +70,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    text-decoration: none;
 }
 
 .categoria-icon-div h3{
@@ -150,4 +152,16 @@
 
 .row{
     justify-content: center
+}
+
+.card-text h4{
+    color: white;
+    font-size: 1px;
+}
+.div-stars i{
+    font-size: 20px;
+}
+.div-stars h3{
+    text-decoration: none;
+    padding: 0px 10px;
 }

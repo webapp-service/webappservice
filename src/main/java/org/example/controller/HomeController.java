@@ -27,12 +27,42 @@ public class HomeController {
         model.addAttribute("Attendances",listAttendances);
         return "index.html";
     }
-//    @GetMapping ("")
-//    public String listAttendance(Model model){
-//        List<Attendance> listAttendances= attendanceService.listAttendances();
-//        model.addAttribute("Attendances",listAttendances);
-//        return "index.html";
-//    }
+
+    @GetMapping ("/attendance/1")
+    public String fistAttendance(Model model){
+        List<ProviderDTO> listDTOs= providerDTOServiceImpl.filterFistAttendance();
+        model.addAttribute("provider",listDTOs);
+        List<Attendance> listAttendances= attendanceServiceImpl.listAttendances();
+        model.addAttribute("Attendances",listAttendances);
+        return "index.html";
+    }
+
+    @GetMapping ("/attendance/2")
+    public String secondAttendance(Model model){
+        List<ProviderDTO> listDTOs= providerDTOServiceImpl.filterSecondAttendance();
+        model.addAttribute("provider",listDTOs);
+        List<Attendance> listAttendances= attendanceServiceImpl.listAttendances();
+        model.addAttribute("Attendances",listAttendances);
+        return "index.html";
+    }
+
+    @GetMapping ("/attendance/3")
+    public String thirdAttendance(Model model){
+        List<ProviderDTO> listDTOs= providerDTOServiceImpl.filterThirdAttendance();
+        model.addAttribute("provider",listDTOs);
+        List<Attendance> listAttendances= attendanceServiceImpl.listAttendances();
+        model.addAttribute("Attendances",listAttendances);
+        return "index.html";
+    }
+    @GetMapping ("/attendance/4")
+    public String fourthAttendance(Model model){
+        List<ProviderDTO> listDTOs= providerDTOServiceImpl.filterFourthAttendance();
+        model.addAttribute("provider",listDTOs);
+        List<Attendance> listAttendances= attendanceServiceImpl.listAttendances();
+        model.addAttribute("Attendances",listAttendances);
+        return "index.html";
+    }
+
 
 
 }
