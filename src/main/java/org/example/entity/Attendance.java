@@ -15,6 +15,8 @@ public class Attendance {
     private Integer id;
     @NotNull
     private String name;
+    @NotNull
+    private String icon;
 
     @ManyToMany
     @JoinTable(name = "providers_attendances",

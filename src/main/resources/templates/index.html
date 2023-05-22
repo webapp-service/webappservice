@@ -21,32 +21,21 @@
 
 <section class="categorias-section ">
     <h1 class="titulo">SERVICIOS DISPONIBLES</h1>
-    <article class="categoria-list-article">
-        <div class="categoria-icon-div ">
-            <i class="fa-solid fa-bolt-lightning" style="color: #FFCD00"></i>
-            <h3>ELECTRICIDAD</h3>
-        </div>
-        <div class="categoria-icon-div ">
-            <i class="fa-solid fa-seedling" style="color: green"></i>
-            <h3>JARDINERIA</h3>
-        </div>
-        <div class="categoria-icon-div ">
-            <i class="fa-solid fa-trowel" style="color: orangered"></i>
-            <h3>ALABAÑILERIA</h3>
-        </div>
-        <div class="categoria-icon-div">
-            <i class="fa-solid fa-paint-roller" style="color:blueviolet"></i>
-            <h3>PINTURA</h3>
-        </div>
-
+    <article class="categoria-list-article" >
+        <a th:each="attendance : ${Attendances}" class="categoria-icon-div " th:href="@{'/attendance/' + ${attendance.id}}">
+            <div>
+                <i th:class="${attendance.icon}" style="color: #2d2929"></i>
+                <h3 th:text="${attendance.name}"></h3>
+            </div>
+        </a >
     </article>
 </section>
 <section class="servicios-lista-section">
     <article class="servicios-tarjeta" th:each="card : ${provider}">
         <div class="card-text">
-            <img src="https://cdn.pixabay.com/photo/2017/09/16/14/33/electrician-2755683_1280.jpg" alt="" />
+            <img class="navbar-img" th:src="@{'/images/' + ${card.image}}" alt="cosa/algo"/>
             <h2 th:text="${card.name}"></h2>
-            <h3 class="valor" th:id="'star-valor-' + ${card.idDto}" th:text="${card.score}"></h3>
+            <h4 class="valor" th:id="'star-valor-' + ${card.idDto}" th:text="${card.score}"></h4>
             <div class="div-stars" th:id="'div-stars-' + ${card.idDto}"></div>
             <p th:text="${card.attendanceUnique.name}"></p>
             <a href="" target="_blank" rel="noopener noreferrer">
@@ -55,6 +44,7 @@
             <div class="service-button">
                 <button>CONTRATAR</button>
                 <p th:text="${card.pricePerHour}"></p>
+                <i th:class="${card.attendanceUnique.icon}" style="color: #2d2929"></i>
             </div>
             </h3>
         </div>
