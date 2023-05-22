@@ -1,21 +1,30 @@
 package org.example.controller;
 
+import org.example.entity.Attendance;
+import org.example.service.AttendanceServiceImpl;
 import org.example.service.ContractServiceImpl;
 import org.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
+
+
     @Autowired
     UserServiceImpl userService;
     @Autowired
     ContractServiceImpl contractService;
+
+
 
     @GetMapping("contract/{id}")
     public String userMenu(@PathVariable Long id, ModelMap model){
@@ -26,7 +35,17 @@ public class UserController {
         return "user_menu.html";
     }
 
-    @PostMapping("/register")
+
+    @GetMapping("/user/register")
+    public String register() {
+
+
+
+        return "user_form.html";
+
+    }
+
+    @PostMapping("/user/register")
     public String register(@RequestParam String name, @RequestParam String email,
                            @RequestParam String password1, @RequestParam Long dni,
                            @RequestParam String lastName, @RequestParam String address,
@@ -36,10 +55,15 @@ public class UserController {
             userService.create(name, email, password1, dni, lastName, address, phone, image);
         } catch (Exception e) {
             model.put("error", e.getMessage());
+            return "user_form";
         }
 
-        return "index.html";
+        return "redirect:/";
+    }
+
     }
 
 
-}
+
+
+

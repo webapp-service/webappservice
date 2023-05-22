@@ -7,6 +7,44 @@
 
 }
 
+.navbar {
+    background-color: #2d2929;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-weight: 700;
+    color: white;
+}
+
+.navbar-icon i {
+    color: white;
+    font-size: 24px;
+}
+
+.navbar-left,
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo img {
+    height: 50px;
+}
+
+.navbar-link {
+    margin-left: 20px;
+}
+
+.navbar-link a {
+    color: white;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.navbar-icon img {
+    height: 30px;
+}
 
 .horizontal-section {
     height: 94vh;
@@ -82,11 +120,25 @@
     color: black;
     pointer-events: none;
     transition: .5s;
+    transform: translateY(-80%);
 }
 
-.login-box .user-box input:focus~label,
+.login-box .user-box input:placeholder-shown + label {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-50%);
+}
+
+.login-box .user-box input:focus + label {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-100%);
+    color: #2C80B0;
+    font-size: 12px;
+}
+----
 .login-box .user-box input:valid~label {
-    top: -20px;
+    top: -10px;
     left: 0;
     color: #2C80B0;
     font-size: 12px;
@@ -115,9 +167,9 @@
     color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 5px white,
-        0 0 5px #2C80B0,
-        0 0 5px #2C80B0,
-        0 0 5px #2C80B0;
+    0 0 5px #2C80B0,
+    0 0 5px #2C80B0,
+    0 0 5px #2C80B0;
 }
 
 .login-box button span {
