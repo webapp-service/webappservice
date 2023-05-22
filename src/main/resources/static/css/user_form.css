@@ -32,46 +32,6 @@
   font-size: 60px;
 }
 
-/*NAVBAR*/
-.navbar {
-  background-color: #2d2929;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  font-weight: 700;
-  color: white;
-}
-
-.navbar-icon i {
-  color: white;
-  font-size: 24px;
-}
-
-.navbar-left,
-.navbar-right {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-logo img {
-  height: 50px;
-}
-
-.navbar-link {
-  margin-left: 20px;
-}
-
-.navbar-link a {
-  color: white;
-  margin-right: 10px;
-  text-decoration: none;
-}
-
-.navbar-icon img {
-  height: 30px;
-}
-
 /*CSS NUEVO*/
 .form {
   display: flex;
@@ -160,7 +120,7 @@ select {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 5vh;
+    margin: 30px 0px 30px 0px;
 }
 
 .btn-registrar {

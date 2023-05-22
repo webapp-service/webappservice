@@ -28,6 +28,8 @@ public class ContractServiceImpl implements ContractService{
         contract.setStatus(statusRep.getById(1));
         contract.setAttendance(attendanceRep.findById(attendanceId).get());
         contract.setProvider(providerRep.findById(providerId).get());
+        contract.setScore(0);
+        System.out.println(userRep.findById(userId).get().getName());
         contract.setUser(userRep.findById(userId).get());
         contractRep.save(contract);
     }

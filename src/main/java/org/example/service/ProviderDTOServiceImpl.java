@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,7 @@ public class ProviderDTOServiceImpl implements ProviderDTOService{
                 id++;
                 ProviderDTO providerDTO = new ProviderDTO();
                 providerDTO.setName(p.getName());
+                providerDTO.setDni(p.getDni());
                 providerDTO.setLastName(p.getLastName());
                 providerDTO.setPhone(p.getPhone());
                 providerDTO.setEmail(p.getEmail());
@@ -67,7 +69,7 @@ public class ProviderDTOServiceImpl implements ProviderDTOService{
 
         if (contract.size() > 0) {
             for (Contract contractAux : contract) {
-                if ((contractAux.getScore() > 0) && (contractAux.getScore() != null)) {
+                if ((contractAux.getScore() > 0)) {
                     count++;
                     score = score + contractAux.getScore();
                 }
@@ -80,4 +82,15 @@ public class ProviderDTOServiceImpl implements ProviderDTOService{
         return average;
     }
 
+        public List<ProviderDTO> filterAttendance(Integer id) {
+        List<ProviderDTO> providerDTOS = create();
+        List<ProviderDTO> dtoList = new ArrayList<>();
+
+        for (ProviderDTO dto: providerDTOS) {
+            if (id == dto.getAttendanceUnique().getId()){
+                dtoList.add(dto);
+            }
+        }
+        return dtoList;
+    }
 }
