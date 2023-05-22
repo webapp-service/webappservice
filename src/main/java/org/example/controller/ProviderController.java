@@ -40,7 +40,7 @@ public class ProviderController {
             providerServiceImpl.create(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
         } catch (Exception e) {
             List<Attendance> attendances = attendanceServiceImpl.listAttendances();
-            model.addAttribute("attendance", attendances);
+            model.addAttribute("attendances", attendances);
             model.put("fail", e.getMessage());
             return "provider_form";
         }

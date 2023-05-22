@@ -26,25 +26,26 @@ public class ProviderDTOServiceImpl implements ProviderDTOService{
     public List<ProviderDTO> create() {
         List<Provider> providers = providerServiceImpl.providers();
         ArrayList<ProviderDTO> providersDTO = new ArrayList<>();
+        Integer id = 0;
         for (Provider p : providers) {
-
-            ProviderDTO providerDTO = new ProviderDTO();
-            providerDTO.setName(providerDTO.getName());
-            providerDTO.setLastName(providerDTO.getLastName());
-            providerDTO.setPhone(providerDTO.getPhone());
-            providerDTO.setEmail(providerDTO.getEmail());
-            providerDTO.setAddress(providerDTO.getAddress());
-            providerDTO.setImage(providerDTO.getImage());
-            providerDTO.setPassword(providerDTO.getPassword());
-            providerDTO.setRole(providerDTO.getRole());
 
             List<Attendance> attendances = p.getAttendances();
 
             for (Attendance a : attendances) {
+                id++;
+                ProviderDTO providerDTO = new ProviderDTO();
+                providerDTO.setName(p.getName());
+                providerDTO.setLastName(p.getLastName());
+                providerDTO.setPhone(p.getPhone());
+                providerDTO.setEmail(p.getEmail());
+                providerDTO.setAddress(p.getAddress());
+                providerDTO.setImage(p.getImage());
+                providerDTO.setPassword(p.getPassword());
+                providerDTO.setRole(p.getRole());
                 providerDTO.setAttendanceUnique(a);
                 providerDTO.setScore(averageScore(p.getDni(), a.getId()));
                 providersDTO.add(providerDTO);
-            }
+                providerDTO.setIdDto(id);            }
         }
         return providersDTO;
     }

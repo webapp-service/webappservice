@@ -7,69 +7,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link th:href="@{/css/index.css}" rel="stylesheet" />
     <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-        
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
     <title>Web App Services</title>
 </head>
 
 <body>
 
-    <section class="portada-section">
-        <div class="portada-div-img">
-            <img class="portada-img" th:src="@{images/logo-solo.png}" alt="logo g&l services" />
+<nav th:replace="/fragments/navbar :: nav"></nav>
+
+<section class="categorias-section ">
+    <h1 class="titulo">SERVICIOS DISPONIBLES</h1>
+    <article class="categoria-list-article">
+        <div class="categoria-icon-div ">
+            <i class="fa-solid fa-bolt-lightning" style="color: #FFCD00"></i>
+            <h3>ELECTRICIDAD</h3>
         </div>
-        <div class="portada-user-panel">
-            <i class="fa-solid fa-circle-user"></i>
-            <h3>PERFIL</h3>
+        <div class="categoria-icon-div ">
+            <i class="fa-solid fa-seedling" style="color: green"></i>
+            <h3>JARDINERIA</h3>
         </div>
-    </section>
+        <div class="categoria-icon-div ">
+            <i class="fa-solid fa-trowel" style="color: orangered"></i>
+            <h3>ALABAÑILERIA</h3>
+        </div>
+        <div class="categoria-icon-div">
+            <i class="fa-solid fa-paint-roller" style="color:blueviolet"></i>
+            <h3>PINTURA</h3>
+        </div>
 
-    <section class="categorias-section ">
-        <h1 class="titulo">SERVICIOS DISPONIBLES</h1>
-        <article class="categoria-list-article">
-            <div class="categoria-icon-div ">
-                <i class="fa-solid fa-bolt-lightning" style="color: #FFCD00"></i>
-                <h3>ELECTRICIDAD</h3>
+    </article>
+</section>
+<section class="servicios-lista-section">
+    <article class="servicios-tarjeta" th:each="card : ${provider}">
+        <div class="card-text">
+            <img src="https://cdn.pixabay.com/photo/2017/09/16/14/33/electrician-2755683_1280.jpg" alt="" />
+            <h2 th:text="${card.name}"></h2>
+            <h3 class="valor" th:id="'star-valor-' + ${card.idDto}" th:text="${card.score}"></h3>
+            <div class="div-stars" th:id="'div-stars-' + ${card.idDto}"></div>
+            <p th:text="${card.attendanceUnique.name}"></p>
+            <a href="" target="_blank" rel="noopener noreferrer">
+                <h4>VER MAS</h4>
+            </a>
+            <div class="service-button">
+                <button>CONTRATAR</button>
+                <p th:text="${card.pricePerHour}"></p>
             </div>
-            <div class="categoria-icon-div ">
-                <i class="fa-solid fa-seedling" style="color: green"></i>
-                <h3>JARDINERIA</h3>
-            </div>
-            <div class="categoria-icon-div ">
-                <i class="fa-solid fa-trowel" style="color: orangered"></i>
-                <h3>ALABAÑILERIA</h3>
-            </div>
-            <div class="categoria-icon-div">
-                <i class="fa-solid fa-paint-roller" style="color:blueviolet"></i>
-                <h3>PINTURA</h3>
-            </div>
-
-        </article>
-    </section>
-    <section class="servicios-lista-section">
-
-        <article class="servicios-tarjeta">
-            <div class="card-text">
-                <img src="https://cdn.pixabay.com/photo/2017/09/16/14/33/electrician-2755683_1280.jpg" alt="" />
-                <h2>DAVID CASSIET</h2>
-                <h3 id="star-valor">2</h3>
-                <p>ELECTRICIDAD</p>
-                <div id="div-stars">
-                </div>
-                <a href="http://" target="_blank" rel="noopener noreferrer">
-                    <h3>VER MAS</h3>
-                </a>
-                <div class="service-button">
-                    <button>CONTRATAR</button>
-                    <p>$200xhora</p>
-                </div>
-            </div>
-        </article>
-
-    </section>
-    <footer th:replace="fragments/footer"></footer>
-    <script th:src="@{/javascript/example.js}"></script>
+            </h3>
+        </div>
+    </article>
+</section>
+<div id="providers-list" th:text="${#lists.size(provider)}"></div>
+<footer th:replace="fragments/footer"></footer>
+<script th:src="@{/javascript/example.js}"></script>
 </body>
 </html>

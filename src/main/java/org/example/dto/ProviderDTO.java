@@ -13,5 +13,6 @@ public class ProviderDTO extends Provider {
 
     private Attendance attendanceUnique;
     private Integer score;
+    private Integer idDto;
 
 }
