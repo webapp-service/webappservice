@@ -26,6 +26,12 @@ public class UserController {
         return "user_menu.html";
     }
 
+    @GetMapping("/register")
+    public String register(){
+
+        return "user_form.html";
+    }
+
     @PostMapping("/register")
     public String register(@RequestParam String name, @RequestParam String email,
                            @RequestParam String password1, @RequestParam Long dni,

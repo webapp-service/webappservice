@@ -3,10 +3,8 @@ package org.example.controller;
 import org.example.service.ContractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/contract")
@@ -15,8 +13,10 @@ public class ContractController {
     @Autowired
     ContractServiceImpl contractService;
 
-    @GetMapping("/opine/id")
-    public String opine(){
+    @GetMapping("/opine/{id}")
+    public String opine(@PathVariable Integer id, ModelMap model){
+
+        model.put("contract", contractService.getContractById(id));
 
         return "opinar.html";
     }
@@ -27,17 +27,16 @@ public class ContractController {
 
         contractService.createContract(attendanceId, providerId, userId);
 
-        return "index.html";
+        return "user_menu.html";
     }
 
-    // agrega score y comentario al contrato
-    @PostMapping("/opine/id")
-    public String rateAndComment(@RequestParam int contractId, @RequestParam int score,
+    @PostMapping("/opine/{id}")
+    public String rateAndComment(@PathVariable int id, @RequestParam int score,
                                  @RequestParam String comment){
 
-        contractService.qualify(contractId, score, comment);
+        contractService.qualify(id, score, comment);
 
-        return "index.html";
+        return "user_menu.html";
     }
 
 }
