@@ -32,12 +32,13 @@ public class UserServiceImpl implements UserService{
     public void create(String name, String email, String password, Long Dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
         try {
+            System.out.println();
 
-
-        if (GetOneById(Dni)==null &&  providerRepository.findById(Dni).isPresent()){
+        if (!GetOneById(Dni).isPresent() &&  !providerRepository.findById(Dni).isPresent()){
 
             User user = validation.validationUser(name, email, password, Dni, lastName, address, phone,image);
             userRepository.save(user);
+            System.out.println(user.getDni());
         } else {
             throw new Exception("Error:  El dni ya se encuentra registrado en la base de datos");
         }

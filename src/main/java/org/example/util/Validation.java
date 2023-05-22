@@ -5,11 +5,14 @@ import org.example.entity.Attendance;
 import org.example.entity.Provider;
 import org.example.entity.User;
 import org.example.service.AttendanceServiceImpl;
-import org.example.service.ProviderServiceImpl;
-import org.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 @Service
@@ -30,7 +33,8 @@ public class Validation {
 
                         if (!lastName.isEmpty() && lastName.length() > 5) {
 
-                            if (address.isEmpty() && address.length() > 7) {
+                            if (!address.isEmpty() && address.length() > 7) {
+
                                 if (phone.length() > 9) {
 
                                     if (image != null) {
@@ -43,8 +47,22 @@ public class Validation {
                                         user.setPhone(phone);
                                         user.setEmail(email);
                                         user.setAddress(address);
-                                        user.setImage(image.getBytes());
-                                        user.setPassword(password);
+                                        try{
+
+                                            Path directorioImagenes= Paths.get("src//main//resources/static/images");
+                                            String rutaAbsoluta=directorioImagenes.toFile().getAbsolutePath();
+                                            byte[] byteImg = image.getBytes();
+                                            Path rutaCompleta=Paths.get(rutaAbsoluta+"//"+image.getOriginalFilename());
+                                            Files.write(rutaCompleta, byteImg);
+                                            user.setImage(image.getOriginalFilename());
+
+
+                                        }catch (Exception e){
+                                            System.out.println(e.getMessage());
+                                        }
+
+                                        String encodedPassword = new BCryptPasswordEncoder().encode(password);
+                                        user.setPassword(encodedPassword);
                                         user.setRole(Role.USER);
 
                                         return user;
@@ -66,7 +84,7 @@ public class Validation {
         } else throw new Exception("el nombre no puede estar vacio o con menos de 4 caracteres");
     }
 
-    public Provider validationProvider(String name, String email, String password, Long dni, String lastName, String address, String phone, String description, Double pricePerHour, Integer idAttendace) throws Exception {
+    public Provider validationProvider(String name, String email, String password, Long dni, String lastName, String address, String phone, String description, Double pricePerHour, Integer idAttendace,MultipartFile image) throws Exception {
 
         if (!name.isEmpty() && name.length() >= 4) {
 
@@ -87,22 +105,48 @@ public class Validation {
 
                                         if (pricePerHour > 0) {
 
-                                            Provider provider = new Provider();
-                                            provider.setDni(dni);
-                                            provider.setName(name);
-                                            provider.setLastName(lastName);
-                                            provider.setPhone(phone);
-                                            provider.setEmail(email);
-                                            provider.setAddress(address);
-                                            provider.setPassword(password);
-                                            provider.setDescription(description);
-                                            provider.setPricePerHour(pricePerHour);
-                                            Attendance attendance = attendanceServiceImpl.findAttendance(idAttendace).get();
+                                            if (image!=null ){
 
-                                            provider.getAttendances().add(attendance);
-                                            provider.setRole(Role.PROVIDER);
+                                                Provider provider = new Provider();
+                                                provider.setDni(dni);
+                                                provider.setName(name);
+                                                provider.setLastName(lastName);
+                                                provider.setPhone(phone);
+                                                provider.setEmail(email);
+                                                provider.setAddress(address);
 
-                                            return provider;
+                                                try{
+
+                                                Path directorioImagenes= Paths.get("src//main//resources/static/images");
+                                                String rutaAbsoluta=directorioImagenes.toFile().getAbsolutePath();
+                                                byte[] byteImg = image.getBytes();
+                                                Path rutaCompleta=Paths.get(rutaAbsoluta+"//"+image.getOriginalFilename());
+                                                Files.write(rutaCompleta, byteImg);
+                                                provider.setImage(image.getOriginalFilename());
+
+
+                                                }catch (Exception e){
+                                                    System.out.println(e.getMessage());
+                                                }
+
+                                                String encodedPassword = new BCryptPasswordEncoder().encode(password);
+                                                provider.setPassword(encodedPassword);
+                                                provider.setDescription(description);
+                                                provider.setPricePerHour(pricePerHour);
+
+
+                                                Attendance attendance = attendanceServiceImpl.findAttendance(idAttendace).get();
+
+                                                provider.getAttendances().add(attendance);
+                                                provider.setRole(Role.PROVIDER);
+
+                                                return provider;
+
+
+                                            }else{
+                                                throw new Exception("debe ingresar una imagen");
+                                            }
+
 
 
                                         } else throw new Exception("El precio debe ser superior a 0.00");

@@ -48,7 +48,7 @@
                 </button>
 
                 <div class="options">
-                    <a class="option" >Registro cliente</a>
+                    <a class="option" th:href="@{/user/user/register}">Registro cliente</a>
                     <a class="option" th:href="@{/provider/register}">Registro proveedor</a>
                 </div>
                 <div th:if="${error != null}" class="alert alert-danger card-body" role="alert">

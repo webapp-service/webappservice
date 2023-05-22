@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -24,24 +26,43 @@ public class ProviderController {
     @Autowired
     ProviderServiceImpl providerServiceImpl;
 
+    private Provider provider;
+
     @GetMapping("/register")
     public String register(ModelMap modelo) {
         List<Attendance> attendances = attendanceServiceImpl.listAttendances();
         modelo.addAttribute("attendances", attendances);
-        return "provider_form";
+
+
+            return "provider_form";
+
     }
 
     @PostMapping("/register")
     public String register(@RequestParam String name, @RequestParam String email, @RequestParam String password,
                            @RequestParam Long dni, @RequestParam String lastName, @RequestParam String address,
                            @RequestParam String phone, @RequestParam String description, @RequestParam Integer idAttendance,
-                           @RequestParam Double pricePerHour, ModelMap model) {
+                           @RequestParam Double pricePerHour, ModelMap model ,@RequestParam MultipartFile image) {
         try {
-            providerServiceImpl.create(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance);
+            providerServiceImpl.create(name, email, password, dni, lastName, address, phone, description, pricePerHour, idAttendance,image);
         } catch (Exception e) {
             List<Attendance> attendances = attendanceServiceImpl.listAttendances();
             model.addAttribute("attendances", attendances);
+
+            provider=new Provider();
+            provider.setDni(dni);
+            provider.setName(name);
+            provider.setLastName(lastName);
+            provider.setPhone(phone);
+            provider.setEmail(email);
+            provider.setAddress(address);
+            provider.setPassword(password);
+            provider.setDescription(description);
+            provider.setPricePerHour(pricePerHour);
+
             model.put("fail", e.getMessage());
+
+
             return "provider_form";
         }
         return "redirect:/";
@@ -60,9 +81,9 @@ public class ProviderController {
     @PostMapping("/modify/{dni}")
     public String modify(Long dni, String name, String lastName, String phone, String email, String address,
                          String password, Role role, String description, Double pricePerHour,
-                         Integer idAttendance, ModelMap model) {
+                         Integer idAttendance, ModelMap model , @RequestParam MultipartFile image) {
         try {
-            providerServiceImpl.modifyProvider(dni, name, lastName, phone, email, address, password, role, description, pricePerHour, idAttendance);
+            providerServiceImpl.modifyProvider(dni, name, lastName, phone, email, address, password, role, description, pricePerHour, idAttendance,image);
             return "redirect:../list_providers";
         } catch (Exception e) {
             model.put("fail", e.getMessage());

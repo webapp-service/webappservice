@@ -26,7 +26,7 @@ public abstract class Person {
     private String address;
     @Lob @Basic(fetch = FetchType.LAZY)
     @NotNull
-    private byte[] image;
+    String image;
     @NotNull
     private String password;
     @Enumerated(EnumType.STRING)
