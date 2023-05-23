@@ -5,107 +5,95 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/main/resources/static/css/footer.css" />
-    <link rel="stylesheet" href="/src/main/resources/static/css/user_menu.css" />
-    <!-- <link rel="stylesheet" th:href="@{/css/tarea_admin.css}" /> -->
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/footer.css" />
+    <link rel="stylesheet" href="/src/main/resources/static/css/user_menu.css" /> -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/user_menu.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
 </head>
 
-<nav class="navbar">
-    <div class="navbar-left">
-        <div class="navbar-logo">
-            <!-- <img class="navbar-img" th:src="@{images/logo-solo.png}" alt="Logo GyL Services" /> -->
-            <img class="navbar-img" src="/src/main/resources/static/images/logo-solo.png" alt="Logo GyL Services" />
+<body>
 
-        </div>
-        <div class="navbar-link">
-            <a href="#">INICIO</a>
-            <a href="#">SOBRE NOSOTROS</a>
-            <a href="#">CONTACTO</a>
-        </div>
-    </div>
-    <div class="navbar-right">
-        <div class="navbar-icon">
-            <i class="fa-solid fa-circle-user"></i>
-        </div>
-        <div class="navbar-link">
-            <a href="#">ARTURO</a>
-        </div>
-    </div>
-</nav>
+    <!-- NAVBAR -->
 
-<section class="portada-section">
-    <h1>MIS SERVICIOS CONTRATADOS</h1>
-</section>
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <!-- Banner -->
+
+    <section class="portada-section">
+        <h1>MIS SERVICIOS CONTRATADOS</h1>
+    </section>
 
 
-<Section class="title">
+    <Section class="title">
 
-    <h2>ARTURO FREITES</h2>
+        <h2>ARTURO FREITES</h2>
 
-</Section>
-
-
-<section class="table">
-
-    <table>
-        <tr class="table-title">
-            <th>PROVEEDORES</th>
-            <th>TIPO</th>
-            <th>ESTADO</th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>ARTURO FREITES</td>
-            <td>ELECTRICIDAD</td>
-            <td>EN PROCESO</td>
-            <td>
-                <button class="btn-cancel">CANCELAR</button>
-            </td>
-        </tr>
-        <tr>
-            <td>ARTURO FREITES</td>
-            <td>PINTURA</td>
-            <td>PENDIENTE</td>
-            <td>
-                <button class="btn-cancel">CANCELAR</button>
-            </td>
-        </tr>
-        <tr>
-            <td>ARTURO FREITES</td>
-            <td>ELECTRICIDAD</td>
-            <td>COMPLETADO</td>
-            <td>
-                <button class="btn-comment">OPINAR</button>
-            </td>
-        </tr>
-        <tr>
-            <td>ARTURO FREITES</td>
-            <td>ELECTRICIDAD</td>
-            <td>COMPLETADO</td>
-            <td>
-                <button class="btn-comment">OPINAR</button>
-            </td>
-        </tr>
-        <tr>
-            <td>ARTURO FREITES</td>
-            <td>ELECTRICIDAD</td>
-            <td>EN PROCESO</td>
-            <td>
-                <button class="btn-cancel">CANCELAR</button>
-            </td>
-        </tr>
-    </table>
+    </Section>
 
 
-</section>
+    <section class="table">
+
+        <table>
+            <tr class="table-title">
+                <th>PROVEEDORES</th>
+                <th>TIPO</th>
+                <th>ESTADO</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>ARTURO FREITES</td>
+                <td>ELECTRICIDAD</td>
+                <td>EN PROCESO</td>
+                <td>
+                    <button class="btn-cancel">CANCELAR</button>
+                </td>
+            </tr>
+            <tr>
+                <td>ARTURO FREITES</td>
+                <td>PINTURA</td>
+                <td>PENDIENTE</td>
+                <td>
+                    <button class="btn-cancel">CANCELAR</button>
+                </td>
+            </tr>
+            <tr>
+                <td>ARTURO FREITES</td>
+                <td>ELECTRICIDAD</td>
+                <td>COMPLETADO</td>
+                <td>
+                    <button class="btn-comment">OPINAR</button>
+                </td>
+            </tr>
+            <tr>
+                <td>ARTURO FREITES</td>
+                <td>ELECTRICIDAD</td>
+                <td>COMPLETADO</td>
+                <td>
+                    <button class="btn-comment">OPINAR</button>
+                </td>
+            </tr>
+            <tr>
+                <td>ARTURO FREITES</td>
+                <td>ELECTRICIDAD</td>
+                <td>EN PROCESO</td>
+                <td>
+                    <button class="btn-cancel">CANCELAR</button>
+                </td>
+            </tr>
+        </table>
 
 
-<footer th:replace="fragments/footer"></footer>
-<script th:src="@{/javascript/example.js}"></script>
+    </section>
+
+
+    <footer th:replace="fragments/footer"></footer>
+    <script th:src="@{/javascript/example.js}"></script>
 
 </body>
 
