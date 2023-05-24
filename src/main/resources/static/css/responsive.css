@@ -40,6 +40,15 @@
     .navbar-link a {
         margin: 10px 0px;
     }
+    .servicios-lista-section{
+        display: grid;
+        grid-template-columns: repeat(
+    auto-fit,
+    minmax(350px,
+    1fr)
+    );
+    }
+
 
 
 }

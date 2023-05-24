@@ -1,5 +1,6 @@
 
 let cantProvider = parseInt(document.getElementById("providers-list").textContent);
+document.getElementById('providers-list').innerHTML = '';
 
 for (let i = 1; i <= cantProvider; i++) {
 

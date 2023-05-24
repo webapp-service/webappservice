@@ -21,6 +21,7 @@
 
 <section class="categorias-section ">
     <h1 class="titulo">SERVICIOS DISPONIBLES</h1>
+    <div id="providers-list" th:text="${#lists.size(provider)}"></div>
     <article class="categoria-list-article" >
         <a th:each="attendance : ${Attendances}" class="categoria-icon-div " th:href="@{'/attendance/' + ${attendance.id}}">
             <div>
@@ -39,7 +40,7 @@
             <div class="div-stars" th:id="'div-stars-' + ${card.idDto}"></div>
             <p th:text="${card.attendanceUnique.name}"></p>
             <a href="" target="_blank" rel="noopener noreferrer">
-                <h4>VER MAS</h4>
+                <h5>VER MAS</h5>
             </a>
             <div class="service-button">
                 <form th:action="@{/contract/create}" method="POST">
@@ -55,7 +56,6 @@
         </div>
     </article>
 </section>
-<div id="providers-list" th:text="${#lists.size(provider)}"></div>
 <footer th:replace="fragments/footer"></footer>
 <script th:src="@{/javascript/example.js}"></script>
 </body>
