@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/footer.css" />
+    <link
+      rel="stylesheet"
+      href="/src/main/resources/static/css/provider_menu.css"
+    /> -->
+    <!-- <link rel="stylesheet" th:href="@{/css/tarea_admin.css}" /> -->
+    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/provider_menu.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Document</title>
+  </head>
+
+  <body>
+    
+
+
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <section class="portada-section">
+      <h1>MIS SERVICIOS</h1>
+    </section>
+
+    <section class="encabezado">
+      <h2>JORGE GARCIA</h2>
+      <h3>SOLICITUDES</h3>
+    </section>
+
+    <table>
+      <tr class="table-title">
+          <th>CLIENTE</th>
+          <th>TIPO</th>
+          <th>ESTADO</th>
+          <th></th>
+          <th></th>
+          <th></th>
+      </tr>
+      <tr>
+          <td>ARTURO FREITES</td>
+          <td>ELECTRICIDAD</td>
+          <td>EN PROCESO</td>
+         
+          <td>
+              <button class="btn-acept">ACEPTAR</button>
+          </td>
+          <td>
+         <button class="btn-cancel">CANCELAR</button>
+
+          </td>
+          <td> 
+            <button class="btn-complete">COMPLETAR</button>             
+          </td>
+      </tr>
+      <tr>
+          <td>NATALIN ACUÑA</td>
+          <td>PINTURA</td>
+          <td>PENDIENTE</td>
+         
+          <td>
+              <button class="btn-acept">ACEPTAR</button>
+          </td>
+          <td>
+            <button class="btn-cancel">CANCELAR</button>
+          </td>
+          <td> 
+            <button class="btn-complete">COMPLETAR</button>             
+          </td>
+      </tr>
+      <tr>
+          <td>SOFIA SOUZA</td>
+          <td>ELECTRICIDAD</td>
+          <td>COMPLETADO</td>
+          
+          <td>
+              <button class="btn-acept">ACEPTAR</button>
+          </td>
+          <td><button class="btn-cancel">CANCELAR</button></td>
+          <td> 
+            <button class="btn-complete">COMPLETAR</button>             
+          </td>
+      </tr>
+      <tr>
+          <td>ARTURO FREITES</td>
+          <td>ELECTRICIDAD</td>
+          <td>CANCELADO </td>
+        
+          <td>
+              <button class="btn-acept">ACEPTAR</button>
+          </td>
+          <td>
+            <button class="btn-cancel">CANCELAR</button>
+          </td>
+          <td> 
+            <button class="btn-complete">COMPLETAR</button>             
+          </td>
+      </tr>
+      <tr>
+          <td>SABRINA TECHERA</td>
+          <td>ELECTRICIDAD</td>
+          <td>EN PROCESO</td>
+        
+          <td>
+              <button class="btn-acept">ACEPTAR</button>
+          </td>
+          <td><button class="btn-cancel">CANCELAR</button></td>
+          <td> 
+            <button class="btn-complete">COMPLETAR</button>             
+          </td>
+      </tr>
+  </table>
+
+
+</section>
+
+
+
+    <footer th:replace="fragments/footer"></footer>
+    <script th:src="@{/javascript/example.js}"></script>
+  </body>
+</html>
