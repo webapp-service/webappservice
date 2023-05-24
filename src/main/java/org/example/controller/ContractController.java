@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.entity.Person;
 import org.example.service.ContractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class ContractController {
         return "opinar.html";
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/create")
     public String create(@RequestParam Long providerId,
                          @RequestParam int attendanceId , HttpSession httpSession, ModelMap model){
@@ -43,7 +45,7 @@ public class ContractController {
     public String rateAndComment(@PathVariable int id, @RequestParam int score,
                                  @RequestParam String comment){
 
-        contractService.qualify(id, score, comment);
+//        contractService.qualify(id, score, comment);
 
         return "user_menu.html";
     }
