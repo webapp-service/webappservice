@@ -79,11 +79,10 @@
     font-size: 15px;
 }
 .servicios-lista-section{
+    justify-content: center;
     display: grid;
     grid-template-columns: repeat(
-    auto-fit,
-    minmax(300px,
-    1fr)
+    auto-fit,500px
     );
 }
 
@@ -146,6 +145,11 @@
     
 }
 
+.service-button button:hover{
+    background-color: black;
+    color: #FFCD00;
+}
+
 .fa-star{
     color: #FFCD00;
 }
@@ -165,3 +169,5 @@
     text-decoration: none;
     padding: 0px 10px;
 }
+
+

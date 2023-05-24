@@ -28,6 +28,7 @@ public class HomeController {
         Person logged = (Person) httpSession.getAttribute("usersession");
         if (logged!= null){
             model.addAttribute("logged",logged.getName());
+            model.addAttribute("rol",logged.getRole());
         }
         List<ProviderDTO> listDTOs= providerDTOServiceImpl.create();
         model.addAttribute("provider",listDTOs);
@@ -44,7 +45,4 @@ public class HomeController {
         model.addAttribute("Attendances",listAttendances);
         return "index.html";
     }
-
-
-
 }

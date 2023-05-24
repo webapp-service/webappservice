@@ -11,7 +11,7 @@
 
 .navbar-icon i {
     color: white;
-    font-size: 24px;
+    font-size: 40px;
 }
 
 .navbar-left,
@@ -36,4 +36,28 @@
 
 .navbar-icon img {
     height: 30px;
+}
+
+.navbar-user-details{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.rol-style{
+    text-align: center;
+    background-color:#2C80B0;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px;
+    width: 80px;
+    margin: 0px 5px;
+}
+.logout:hover{
+    background-color: #FFCD00;
+    color: white;
+    margin: 20px 0px;
+    border-radius: 5px;
 }
