@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -31,26 +31,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public void create(String name, String email, String password, Long Dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
-        try {
-            System.out.println();
-
-        if (!GetOneById(Dni).isPresent() &&  !providerRepository.findById(Dni).isPresent()){
-
-            User user = validation.validationUser(name, email, password, Dni, lastName, address, phone,image);
-            userRepository.save(user);
-            System.out.println(user.getDni());
-        } else {
-            throw new Exception("Error:  El dni ya se encuentra registrado en la base de datos");
-        }
-    } catch (
-    DataIntegrityViolationException e) {
-        throw new Exception("Error: El email ya esta registrado en la base de datos", e);
-    } catch (Exception e) {
-        System.out.println(e.getMessage());
-        e.printStackTrace();
+        User user = validation.validationUser(name, email, password, Dni, lastName, address, phone, image);
+        userRepository.save(user);
     }
-
-}
 
 
     @Override
@@ -69,14 +52,14 @@ public class UserServiceImpl implements UserService{
         if (userOpc.isPresent()) {
             User useResp = userOpc.get();
 
-            User userAux=validation.validationUser(name, email, password, dni, lastName, address, phone, image);
+            User userAux = validation.validationUser(name, email, password, dni, lastName, address, phone, image);
 
             if (!(userAux == null)) {
-                useResp= userAux;
+                useResp = userAux;
 
                 userRepository.save(useResp);
             }
-        }else {
+        } else {
             throw new Exception("no se encontro el usuario");
         }
     }
@@ -101,6 +84,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public void modify(User user) {
         userRepository.save(user);
-        }
+    }
 
 }
