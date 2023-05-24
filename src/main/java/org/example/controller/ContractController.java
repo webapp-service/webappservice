@@ -26,12 +26,17 @@ public class ContractController {
 
     @PostMapping("/create")
     public String create(@RequestParam Long providerId,
-                         @RequestParam int attendanceId , HttpSession httpSession){
+                         @RequestParam int attendanceId , HttpSession httpSession, ModelMap model){
         Person logged = (Person) httpSession.getAttribute("usersession");
         Long userId = logged.getDni();
-        contractService.createContract(attendanceId, providerId, userId);
 
-        return "login.html";
+        try{
+            contractService.createContract(attendanceId, providerId, userId);
+            return "user_menu.html";
+        } catch(Exception e){
+            model.put("error", e.getMessage());
+            return "index.html";
+        }
     }
 
     @PostMapping("/opine/{id}")
