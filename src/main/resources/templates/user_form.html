@@ -91,11 +91,20 @@
             <section class="form-button">
                 <button type="submit" class="btn-registrar">Registrar</button>
             </section>
+            <div th:if="${fail != null}" class="alert alert-danger card-body" role="alert">
+                <h5 class="card-title">Error!</h5>
+                <p class="card-text" th:text="${fail}"></p>
+            </div>
 
 
+        </form>
+    </section>
 
-            <footer th:replace="fragments/footer"></footer>
-            <script th:src="@{/javascript/example.js}"></script>
+
+    <footer th:replace="fragments/footer"></footer>
+    <script th:src="@{/javascript/example.js}"></script>
+    <script th:src="@{/javascript/user_form.js}"></script>
+    <!-- <script src="/src/main/resources/static/javascript/user_form.js"></script> -->
 </body>
 
 </html>
