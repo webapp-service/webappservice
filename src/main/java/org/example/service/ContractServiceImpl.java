@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ContractServiceImpl implements ContractService{
+public class ContractServiceImpl implements ContractService {
     private final ContractRepository contractRep;
     private final StatusRepository statusRep;
     private final AttendanceRepository attendanceRep;
@@ -65,28 +65,29 @@ public class ContractServiceImpl implements ContractService{
 
     @Override
     public List<Contract> findByProviderAndAttendance(Long userId, Integer attendanceId) {
-        List<Contract> contracts = contractRep.findByProviderAndAttendance(userId,attendanceId);
+        List<Contract> contracts = contractRep.findByProviderAndAttendance(userId, attendanceId);
         return contracts;
     }
 
-     @Transactional
-     @Override
-    public void qualify(int contractId, int score, String comment) {
+    @Transactional
+    @Override
+    public void qualify(int contractId, int score, String comment) throws Exception {
         Contract contract = getContractById(contractId);
 
-            if (contract.getStatus().getId().equals(2) || contract.getStatus().getId().equals(3)) {
+        if (contract.getStatus().getId().equals(4)) {
+            if (score > 0 && score <= 5) {
+                contract.setScore(score);
 
-                if (score>0 && score<=5){
-                    contract.setScore(score);
+                if (comment.trim().length() > 10) {
+                    contract.setComment(comment);
+                    contractRep.save(contract);
 
-                    if (comment.length() >80&& !comment.isEmpty()){
-                        contract.setComment(comment);
-                        contractRep.save(contract);
-                    }
+                } else throw new Exception("el comentario debe contener mas de 10 caracteres");
 
-                }
-            }
-        }
+            } else throw new Exception("el puntaje debe ser entre 1 y 5");
+
+        } else throw new Exception("el status debe ser completado");
+    }
 
 
     private void statusChange(int idContract, int idStatus) throws Exception {
@@ -100,11 +101,11 @@ public class ContractServiceImpl implements ContractService{
                 Status status = statusResp.get();
                 contract.setStatus(status);
                 contractRep.save(contract);
-            }else {
+            } else {
                 throw new Exception("no se encontro un estado valido");
             }
 
-        }else {
+        } else {
             throw new Exception("no se encontro el contrato");
 
         }
