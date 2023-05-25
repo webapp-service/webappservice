@@ -48,6 +48,7 @@ public class UserController {
             userService.create(name, email, password1, dni, lastName, address, phone, image);
         } catch (Exception e) {
             model.put("error", e.getMessage());
+
             return "user_form";
         }
 

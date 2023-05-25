@@ -1,9 +1,12 @@
 package org.example.util;
 
 
+
 import org.example.entity.Attendance;
 import org.example.entity.Provider;
 import org.example.entity.User;
+import org.example.repository.ProviderRepository;
+import org.example.repository.UserRepository;
 import org.example.service.AttendanceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +21,12 @@ import java.nio.file.Paths;
 public class Validation {
     @Autowired
     private AttendanceServiceImpl attendanceServiceImpl;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ProviderRepository providerRepository;
 
     public User validationUser(String name, String email, String password, Long dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
@@ -60,9 +69,18 @@ public class Validation {
     }
 
     private void validateEmail(String email) throws Exception {
-        if (email.isEmpty() || email.length() <= 10) {
-            throw new Exception("El email no puede estar vacío o tener menos de 10 caracteres");
-        }
+
+
+       if (userRepository.findByEmail(email) == null && providerRepository.findByEmail(email)== null) {
+
+
+            if (email == null || email.length() <= 10) {
+
+                throw new Exception("El email no puede estar vacío o tener menos de 10 caracteres");
+            }
+        }else{
+           throw new Exception("El email ya existe en la base de datos.");
+       }
     }
 
     private void validatePassword(String password) throws Exception {
@@ -72,9 +90,16 @@ public class Validation {
     }
 
     private void validateDni(Long dni) throws Exception {
-        if (dni <= 5999999) {
-            throw new Exception("El dni no puede ser menor a 6 millones");
+
+        if ( !userRepository.existsById(dni) && !providerRepository.existsById(dni)) {
+            if (dni <= 5999999) {
+                throw new Exception("El dni no puede ser menor a 6 millones");
+            }
+
+        }else{
+            throw new Exception("El dni ya existe en la base de datos");
         }
+
     }
 
     private void validateLastName(String lastName) throws Exception {
@@ -112,6 +137,8 @@ public class Validation {
             throw new Exception("Debe cargar una imagen");
         }
     }
+
+
 
     private User createUser(String name, String email, String password, Long dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
@@ -183,73 +210,86 @@ public class Validation {
 
 
 
-
 /*
+
 @Service
 public class Validation {
     @Autowired
     private AttendanceServiceImpl attendanceServiceImpl;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ProviderRepository providerRepository;
+
+
 
 
     public User validationUser(String name, String email, String password, Long dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
         if (!name.isEmpty() && name.length() >= 4) {
 
-            if (!email.isEmpty() && email.length() > 10) {
+            if (userRepository.findByEmail(email) ==null && providerRepository.findByEmail(email) ==null && email.length() > 10) {
 
-                if (!password.isEmpty() && password.length() > 5) {
-
-                    if (dni > 5999999) {
-
-                        if (!lastName.isEmpty() && lastName.length() > 5) {
-
-                            if (!address.isEmpty() && address.length() > 7) {
-
-                                if (phone.length() > 9) {
-
-                                    if (image != null && !image.isEmpty()) {
+                if (!userRepository.existsById(dni) && !providerRepository.existsById(dni )) {
 
 
-                                        User user = new User();
-                                        user.setDni(dni);
-                                        user.setName(name);
-                                        user.setLastName(lastName);
-                                        user.setPhone(phone);
-                                        user.setEmail(email);
-                                        user.setAddress(address);
-                                        try{
+                    if (!password.isEmpty() && password.length() > 5) {
 
-                                            Path directorioImagenes= Paths.get("src//main//resources/static/images");
-                                            String rutaAbsoluta=directorioImagenes.toFile().getAbsolutePath();
-                                            byte[] byteImg = image.getBytes();
-                                            Path rutaCompleta=Paths.get(rutaAbsoluta+"//"+image.getOriginalFilename());
-                                            Files.write(rutaCompleta, byteImg);
-                                            user.setImage(image.getOriginalFilename());
+                        if (dni > 5999999) {
+
+                            if (!lastName.isEmpty() && lastName.length() > 5) {
+
+                                if (!address.isEmpty() && address.length() > 7) {
+
+                                    if (phone.length() > 9) {
+
+                                        if (image != null && !image.isEmpty()) {
 
 
-                                        }catch (Exception e){
-                                            System.out.println(e.getMessage());
-                                        }
+                                            User user = new User();
+                                            user.setDni(dni);
+                                            user.setName(name);
+                                            user.setLastName(lastName);
+                                            user.setPhone(phone);
+                                            user.setEmail(email);
+                                            user.setAddress(address);
+                                            try {
 
-                                        String encodedPassword = new BCryptPasswordEncoder().encode(password);
-                                        user.setPassword(encodedPassword);
-                                        user.setRole(Role.USER);
+                                                Path directorioImagenes = Paths.get("src//main//resources/static/images");
+                                                String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+                                                byte[] byteImg = image.getBytes();
+                                                Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + image.getOriginalFilename());
+                                                Files.write(rutaCompleta, byteImg);
+                                                user.setImage(image.getOriginalFilename());
 
-                                        return user;
 
-                                    } else throw new Exception("debe cargar una imagen");
+                                            } catch (Exception e) {
+                                                System.out.println(e.getMessage());
+                                            }
 
-                                } else throw new Exception("el telefono no puede ser menor a 10 numeros");
+                                            String encodedPassword = new BCryptPasswordEncoder().encode(password);
+                                            user.setPassword(encodedPassword);
+                                            user.setRole(Role.USER);
 
-                            } else throw new Exception("la direccion no puede estar nula o con menos de 7 caracteres");
+                                            return user;
 
-                        } else throw new Exception("el apellido no puede estar nulo o con menos de 5 caracteres");
+                                        } else throw new Exception("debe cargar una imagen");
 
-                    } else throw new Exception("el dni no puede ser menor a 6 millones");
+                                    } else throw new Exception("el telefono no puede ser menor a 10 numeros");
 
-                } else throw new Exception("el password no puede estar vacio o con menos de 5 caracteres");
+                                } else
+                                    throw new Exception("la direccion no puede estar nula o con menos de 7 caracteres");
 
-            } else throw new Exception("el email no puede estar vacio o con menos de 10 caracteres");
+                            } else throw new Exception("el apellido no puede estar nulo o con menos de 5 caracteres");
+
+                        } else throw new Exception("el dni no puede ser menor a 6 millones");
+
+                    } else throw new Exception("el password no puede estar vacio o con menos de 5 caracteres");
+
+                }else throw new Exception("el dni ya existe en la base de datos");
+            }else throw new Exception("el email no puede estar vacio o con menos de 10 caracteres");
 
         } else throw new Exception("el nombre no puede estar vacio o con menos de 4 caracteres");
     }
@@ -338,4 +378,5 @@ public class Validation {
         } else throw new Exception("El nombre no puede estar vacio o con menos de 4 caracteres");
     }
 
-}*/
+}
+*/
