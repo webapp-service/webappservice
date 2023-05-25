@@ -90,7 +90,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
 
-    private void statusChange(int idContract, int idStatus) throws Exception {
+    public void statusChange(int idContract, int idStatus) throws Exception {
         Optional<Contract> contractResp = contractRep.findById(idContract);
         Optional<Status> statusResp = statusRep.findById(idStatus);
 

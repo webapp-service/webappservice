@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.entity.Attendance;
 import org.example.entity.Contract;
+import org.example.entity.Person;
 import org.example.entity.Provider;
 import org.example.service.AttendanceServiceImpl;
 import org.example.service.ContractServiceImpl;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,7 +34,6 @@ public class ProviderController {
     public String register(ModelMap modelo) {
         List<Attendance> attendances = attendanceServiceImpl.listAttendances();
         modelo.addAttribute("attendances", attendances);
-
 
             return "provider_form";
 
@@ -117,6 +118,35 @@ public class ProviderController {
             modelo.put("error", e.getMessage());
         }
         return "provider_list";
+    }
+    @PostMapping("/menu_accept")
+    public String accept(Integer contractId){
+        try {
+            contractServiceImpl.statusChange(contractId, 2);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "provider_menu";
+    }
+    
+    @PostMapping("/menu_cancelled")
+    public String cancelled(Integer contractId){
+        try {
+            contractServiceImpl.statusChange(contractId, 3);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "provider_menu";
+    }
+
+    @PostMapping("/menu_completed")
+    public String completed(Integer contractId){
+        try {
+            contractServiceImpl.statusChange(contractId, 4);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "provider_menu";
     }
 
 }
