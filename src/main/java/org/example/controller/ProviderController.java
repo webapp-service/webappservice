@@ -49,6 +49,16 @@ public class ProviderController {
             List<Attendance> attendances = attendanceServiceImpl.listAttendances();
             model.addAttribute("attendances", attendances);
 
+            model.addAttribute("name", name);
+            model.addAttribute("email", email);
+            model.addAttribute("dni", dni);
+            model.addAttribute("lastName", lastName);
+            model.addAttribute("address", address);
+            model.addAttribute("phone", phone);
+            model.addAttribute("description", description);
+            model.addAttribute("pricePerHour", pricePerHour);
+            model.addAttribute("image", image);
+
             provider=new Provider();
             provider.setDni(dni);
             provider.setName(name);
