@@ -33,6 +33,8 @@ public class UserServiceImpl implements UserService {
 
         User user = validation.validationUser(name, email, password, Dni, lastName, address, phone, image);
         userRepository.save(user);
+
+
     }
 
 
