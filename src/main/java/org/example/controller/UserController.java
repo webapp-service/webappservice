@@ -48,6 +48,15 @@ public class UserController {
             userService.create(name, email, password1, dni, lastName, address, phone, image);
         } catch (Exception e) {
             model.put("error", e.getMessage());
+
+            model.addAttribute("name", name);
+            model.addAttribute("email", email);
+            model.addAttribute("dni", dni);
+            model.addAttribute("lastName", lastName);
+            model.addAttribute("address", address);
+            model.addAttribute("phone", phone);
+            model.addAttribute("image", image);
+
             return "user_form";
         }
 
