@@ -45,4 +45,5 @@ public class HomeController {
         model.addAttribute("Attendances",listAttendances);
         return "index.html";
     }
+
 }
