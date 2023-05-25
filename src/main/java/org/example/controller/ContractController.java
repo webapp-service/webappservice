@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.entity.Person;
 import org.example.service.ContractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -16,36 +17,43 @@ public class ContractController {
     @Autowired
     ContractServiceImpl contractService;
 
-    @GetMapping("/opine/{id}")
-    public String opine(@PathVariable Integer id, ModelMap model){
-
-        model.put("contract", contractService.getContractById(id));
-
-        return "opinar.html";
-    }
-
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/create")
     public String create(@RequestParam Long providerId,
-                         @RequestParam int attendanceId , HttpSession httpSession, ModelMap model){
+                         @RequestParam int attendanceId, HttpSession httpSession, ModelMap model) {
         Person logged = (Person) httpSession.getAttribute("usersession");
         Long userId = logged.getDni();
 
-        try{
+        try {
             contractService.createContract(attendanceId, providerId, userId);
-            return "user_menu.html";
-        } catch(Exception e){
+            return "user_menu";
+        } catch (Exception e) {
             model.put("error", e.getMessage());
-            return "index.html";
+            return "redirect:/";
         }
     }
 
-    @PostMapping("/opine/{id}")
-    public String rateAndComment(@PathVariable int id, @RequestParam int score,
-                                 @RequestParam String comment){
+    @GetMapping("/rate/{contractId}")
+    public String opine(@PathVariable Integer contractId, ModelMap model) {
+        model.put("contractId", contractId);
 
-        contractService.qualify(id, score, comment);
+        return "rate_provider";
+    }
 
-        return "user_menu.html";
+    @PostMapping("/rate/{contractId}")
+    public String rateAndComment(@PathVariable int contractId, @RequestParam int rate, @RequestParam String comment,
+                                 ModelMap model) {
+        try {
+            contractService.qualify(contractId, rate, comment);
+        } catch (Exception e) {
+            model.put("contractId", contractId);
+            model.put("rate", rate);
+            model.put("comment", comment);
+            model.put("error", e.getMessage());
+
+            return "rate_provider";
+        }
+        return "redirect:/user/profile";
     }
 
 }

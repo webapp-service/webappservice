@@ -2,109 +2,107 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
-    <link rel="stylesheet" th:href="@{/css/footer.css}" />
-    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
-    <link rel="stylesheet" th:href="@{/css/user_form.css}" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" th:href="@{/css/responsive.css}"/>
+    <link rel="stylesheet" th:href="@{/css/footer.css}"/>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}"/>
+    <link rel="stylesheet" th:href="@{/css/user_form.css}"/>
     <!-- <link rel="stylesheet" href="/src/main/resources/static/css/user_form.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <title>Formulario registro cliente</title>
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
+<!-- NAVBAR -->
 
-    <nav th:replace="/fragments/navbar :: nav"></nav>
+<nav th:replace="/fragments/navbar :: nav"></nav>
 
-    <!-- Banner -->
-    <section class="portada-section">
-        <div class="portada-div-img">
-            <h2>CLIENTE</h2>
-            <h3>REGISTRO</h3>
-        </div>
-    </section>
-
-
-
-    <!-- Formulario de registro -->
-    <section class="form-section">
-        <!-- Ver a qué página va el form -->
-
-        <form class="form" th:action="@{/user/user/register}" method="POST" enctype="multipart/form-data">
-
-            <section class="form-rows">
-                <div class="form-row">
-                    <label for="name"></label>
-                    <input type="text" id="name" name="name" placeholder="NOMBRE" required
-                        th:value="${name}" /><br /><br />
-
-                    <label for="lastName"></label>
-                    <input type="text" id="lastName" name="lastName" placeholder="APELLIDO" required
-                        th:value="${lastName}" /><br /><br />
-
-                    <label for="dni"></label>
-                    <input type="text" id="dni" name="dni" placeholder="DNI" required th:value="${id}" /><br /><br />
-                </div>
-
-                <div class="form-row">
-                    <label for="phone"></label>
-                    <input type="tel" id="phone" name="phone" placeholder="TELÉFONO" required
-                        th:value="${phone}" /><br /><br />
-
-                    <label for="email"></label>
-                    <input type="email" id="email" name="email" placeholder="EMAIL" required
-                        th:value="${email}" /><br /><br />
-
-                    <label for="address"></label>
-                    <input type="text" id="address" name="address" placeholder="DIRECCIÓN" required
-                        th:value="${address}" /><br /><br />
-                </div>
-
-                <div>
-                    <label for="password1"></label>
-                    <input type="password" id="password1" name="password1" placeholder="CONTRASEÑA"
-                        required /><br /><br />
-                </div>
-            </section>
-            <!-- Imagen a subir -->
+<!-- Banner -->
+<section class="portada-section">
+    <div class="portada-div-img">
+        <h2>CLIENTE</h2>
+        <h3>REGISTRO</h3>
+    </div>
+</section>
 
 
-            <section class="upload-image">
-                <div class="imagen-preview">
-                    <input type="file" id="image" name="image">
-                    <label for="image">Seleccionar foto de perfil</label>
-                    <div class="preview-container">
-                        <!-- Imagen a subir <span id="no-file">No se ha seleccionado ningún archivo</span> -->
-                        <img id="preview" src="" alt="Vista previa de la imagen">
-                    </div>
-                </div>
-            </section>
+<!-- Formulario de registro -->
+<section class="form-section">
+    <!-- Ver a qué página va el form -->
 
-            <!-- TEXT AREA -->
+    <form class="form" th:action="@{/user/register}" method="POST" enctype="multipart/form-data">
 
-            <section class="form-button">
-                <button type="submit" class="btn-registrar">Registrar</button>
-            </section>
-            <div th:if="${fail != null}" class="alert alert-danger card-body" role="alert">
-                <h5 class="card-title">Error!</h5>
-                <p class="card-text" th:text="${fail}"></p>
+        <section class="form-rows">
+            <div class="form-row">
+                <label for="name"></label>
+                <input type="text" id="name" name="name" placeholder="NOMBRE" required
+                       th:value="${name}"/><br/><br/>
+
+                <label for="lastName"></label>
+                <input type="text" id="lastName" name="lastName" placeholder="APELLIDO" required
+                       th:value="${lastName}"/><br/><br/>
+
+                <label for="dni"></label>
+                <input type="text" id="dni" name="dni" placeholder="DNI" required th:value="${id}"/><br/><br/>
             </div>
 
+            <div class="form-row">
+                <label for="phone"></label>
+                <input type="tel" id="phone" name="phone" placeholder="TELÉFONO" required
+                       th:value="${phone}"/><br/><br/>
 
-        </form>
-    </section>
+                <label for="email"></label>
+                <input type="email" id="email" name="email" placeholder="EMAIL" required
+                       th:value="${email}"/><br/><br/>
+
+                <label for="address"></label>
+                <input type="text" id="address" name="address" placeholder="DIRECCIÓN" required
+                       th:value="${address}"/><br/><br/>
+            </div>
+
+            <div>
+                <label for="password1"></label>
+                <input type="password" id="password1" name="password1" placeholder="CONTRASEÑA"
+                       required/><br/><br/>
+            </div>
+        </section>
+        <!-- Imagen a subir -->
 
 
-    <footer th:replace="fragments/footer"></footer>
-    <script th:src="@{/javascript/example.js}"></script>
-    <script th:src="@{/javascript/user_form.js}"></script>
-    <!-- <script src="/src/main/resources/static/javascript/user_form.js"></script> -->
+        <section class="upload-image">
+            <div class="imagen-preview">
+                <input type="file" id="image" name="image">
+                <label for="image">Seleccionar foto de perfil</label>
+                <div class="preview-container">
+                    <!-- Imagen a subir <span id="no-file">No se ha seleccionado ningún archivo</span> -->
+                    <img id="preview" src="" alt="Vista previa de la imagen">
+                </div>
+            </div>
+        </section>
+
+        <!-- TEXT AREA -->
+
+        <section class="form-button">
+            <button type="submit" class="btn-registrar">Registrar</button>
+        </section>
+
+        <div th:if="${error != null}" class="alert alert-danger card-body" role="alert">
+            <h5 class="card-title">Error!</h5>
+            <p class="card-text" th:text="${error}"></p>
+        </div>
+    </form>
+</section>
+
+
+<footer th:replace="fragments/footer"></footer>
+<script th:src="@{/javascript/example.js}"></script>
 </body>
 
 </html>

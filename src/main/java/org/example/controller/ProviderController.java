@@ -60,7 +60,7 @@ public class ProviderController {
             provider.setDescription(description);
             provider.setPricePerHour(pricePerHour);
 
-            model.put("fail", e.getMessage());
+            model.put("error", e.getMessage());
 
 
             return "provider_form";
@@ -86,7 +86,7 @@ public class ProviderController {
             providerServiceImpl.modifyProvider(dni, name, lastName, phone, email, address, password, role, description, pricePerHour, idAttendance,image);
             return "redirect:../list_providers";
         } catch (Exception e) {
-            model.put("fail", e.getMessage());
+            model.put("error", e.getMessage());
             return "provider_modify";
         }
     }
@@ -104,7 +104,7 @@ public class ProviderController {
             providerServiceImpl.delete(dni);
             modelo.put("success", "The provider was deleted successfully");
         } catch (Exception e) {
-            modelo.put("fail", e.getMessage());
+            modelo.put("error", e.getMessage());
         }
         return "provider_list";
     }

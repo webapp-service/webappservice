@@ -109,9 +109,9 @@
             <section class="form-button">
                 <button type="submit" class="btn-registrar">Registrar</button>
             </section>
-            <div th:if="${fail != null}" class="alert alert-danger card-body" role="alert">
+            <div th:if="${error != null}" class="alert alert-danger card-body" role="alert">
                 <h5 class="card-title">Error!</h5>
-                <p class="card-text" th:text="${fail}"></p>
+                <p class="card-text" th:text="${error}"></p>
             </div>
         </div>
     </form>

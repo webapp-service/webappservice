@@ -1,51 +1,44 @@
 package org.example.controller;
 
-import org.example.entity.Attendance;
-import org.example.service.AttendanceServiceImpl;
+import org.example.entity.Person;
 import org.example.service.ContractServiceImpl;
 import org.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
-
 
     @Autowired
     UserServiceImpl userService;
     @Autowired
     ContractServiceImpl contractService;
 
+    @GetMapping("/profile")
+    public String userMenu(HttpSession httpSession, ModelMap model) {
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        long loggedDni = logged.getDni();
 
+        model.addAttribute("user", userService.GetOneById(loggedDni));
+        model.addAttribute("userContracts", contractService.getAllContractsByUser(loggedDni));
 
-    @GetMapping("contract/{id}")
-    public String userMenu(@PathVariable Long id, ModelMap model){
-
-        model.addAttribute("user", userService.GetOneById(id));
-        model.addAttribute("userContracts", contractService.getAllContractsByUser(id));
-
-        return "user_menu.html";
+        return "user_menu";
     }
 
 
-    @GetMapping("/user/register")
+    @GetMapping("/register")
     public String register() {
-
-
-
-        return "user_form.html";
+        return "user_form";
 
     }
 
-    @PostMapping("/user/register")
+    @PostMapping("/register")
     public String register(@RequestParam String name, @RequestParam String email,
                            @RequestParam String password1, @RequestParam Long dni,
                            @RequestParam String lastName, @RequestParam String address,
