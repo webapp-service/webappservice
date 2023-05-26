@@ -82,7 +82,7 @@ public class ProviderDTOServiceImpl implements ProviderDTOService{
         return average;
     }
 
-        public List<ProviderDTO> filterAttendance(Integer id) {
+    public List<ProviderDTO> filterAttendance(Integer id) {
         List<ProviderDTO> providerDTOS = create();
         List<ProviderDTO> dtoList = new ArrayList<>();
 
@@ -93,4 +93,5 @@ public class ProviderDTOServiceImpl implements ProviderDTOService{
         }
         return dtoList;
     }
+
 }

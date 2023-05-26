@@ -27,10 +27,11 @@
 
     <section class="detalles-proveedor">
       <div class="div-imagen-estrellas">
-        <img
-          src="https://cdn.pixabay.com/photo/2017/09/16/14/33/electrician-2755683_1280.jpg"
-          alt=""
+        <img th:src="@{'/images/' + ${provider.image}}" alt="Image Provider"
         />
+
+        <h4 class="valor" th:id="'star-valor-' + ${provider.dni}" th:text="${score}"></h4>
+        <div class="div-stars" th:id="'div-stars-' + ${provider.dni}"></div>
         <div>
           <i class="fa fa-star star"></i>
           <i class="fa fa-star star"></i>
@@ -69,7 +70,8 @@
 
     <section>
       <div class="comentario" th:each="card : ${contracts}">
-        <h4 th:text="${card.user.name}">SOFIA</h4>
+        <h4 th:text="${card.user.name} + ' ' + ${card.score}">SOFIA:</h4>
+
         <p th:text="${card.comment}">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, vero
           officia? Delectus accusantium sit, soluta excepturi necessitatibus in

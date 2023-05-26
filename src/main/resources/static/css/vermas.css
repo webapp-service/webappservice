@@ -157,3 +157,10 @@
     font-weight: 900;
 
   }
+.div-stars i{
+  font-size: 20px;
+}
+.div-stars h4{
+  text-decoration: none;
+  padding: 0px 10px;
+}

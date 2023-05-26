@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.entity.Contract;
 import org.example.entity.Provider;
 import org.example.repository.ProviderRepository;
 import org.example.repository.UserRepository;
@@ -30,6 +31,8 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ContractServiceImpl contractService;
 
     @Override
     public void create(String name, String email, String password, Long dni, String lastName,
@@ -83,6 +86,47 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public Provider getByEmail(String email) {
         return providerRepository.findByEmail(email);
+    }
+
+    public Integer averageScore(long idProvider, Integer idAttendance) {
+        List<Contract> contract = contractService.findByUserAndAttendance(idProvider, idAttendance);
+        Integer score = 0;
+        Integer count = 0;
+        Integer average = 0;
+        if (contract.size() > 0) {
+            for (Contract contractAux : contract) {
+                if ((contractAux.getScore() > 0)) {
+                    count++;
+                    score = score + contractAux.getScore();
+                }
+            }
+            average = Math.round(score / count);
+        } else {
+            average = score;
+        }
+
+        return average;
+    }
+    @Override
+    public Integer averageScoreVermas(List<Contract> contracts) {
+        List<Contract> contracts1 = contracts;
+        Integer score = 0;
+        double count = 0;
+        Integer average = 0;
+        if (contracts1.size() > 0) {
+            for (Contract contractAux : contracts1) {
+                if ((contractAux.getScore() > 0)) {
+                    count++;
+                    score = score + contractAux.getScore();
+                }
+            }
+            double resultado = Math.ceil(score / count);
+            average = (int) resultado;
+        } else {
+            average = score;
+        }
+
+        return average;
     }
 }
 

@@ -44,6 +44,8 @@ public class VermasController {
             model.addAttribute("provider", provider);
             Attendance attendance = attendanceService.findAttendance(attendanceId).get();
             model.addAttribute("attendance", attendance);
+            Integer score = providerService.averageScoreVermas(contracts);
+            model.addAttribute("score", score);
 
 
             return "vermas.html";
