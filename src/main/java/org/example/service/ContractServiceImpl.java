@@ -68,6 +68,11 @@ public class ContractServiceImpl implements ContractService {
         List<Contract> contracts = contractRep.findByProviderAndAttendance(userId, attendanceId);
         return contracts;
     }
+    @Override
+    public List<Contract> findByUserAndAttendance(Long userId, Integer attendanceId) {
+        List<Contract> contracts = contractRep.findByProviderAndAttendance(userId, attendanceId);
+        return contracts;
+    }
 
     @Transactional
     @Override

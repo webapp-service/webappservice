@@ -12,4 +12,5 @@ public interface ProviderDTOService {
     Optional<Attendance> getAttendances(Integer idAttendance);
 
     Integer averageScore(long idProvider, Integer idAttendance);
+
 }
