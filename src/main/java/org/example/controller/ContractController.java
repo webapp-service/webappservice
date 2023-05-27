@@ -25,26 +25,11 @@ public class ContractController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/create")
     public String create(@RequestParam Long providerId,
-                         @RequestParam int attendanceId, HttpSession httpSession, ModelMap model) {
+                         @RequestParam int attendanceId, HttpSession httpSession) {
         Person logged = (Person) httpSession.getAttribute("usersession");
-        Long userId = logged.getDni();
+        Long loggedDni = logged.getDni();
+        contractService.createContract(attendanceId, providerId, loggedDni);
 
-        try {
-            contractService.createContract(attendanceId, providerId, userId);
-            System.out.println(logged.getName()+"prueba");
-            if (logged!= null){
-                long loggedDni = logged.getDni();
-                model.addAttribute("logged",logged.getName());
-                model.addAttribute("rol",logged.getRole());
-                model.addAttribute("user",logged);
-                model.addAttribute("userContracts", contractService.getAllContractsByUser(loggedDni));
-            }else{
-                return "login";
-            }
-            return "user_menu";
-        } catch (Exception e) {
-            model.put("error", e.getMessage());
-            return "redirect:/";
-        }
+        return "redirect:/user/profile";
     }
 }

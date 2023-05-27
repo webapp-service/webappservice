@@ -119,32 +119,50 @@ public class ProviderController {
         }
         return "provider_list";
     }
-    @PostMapping("/menu_accept")
-    public String accept(Integer contractId){
-        try {
-            contractServiceImpl.statusChange(contractId, 2);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+
+    @GetMapping("/{contractId}/{buttonId}")
+    public String buttonAction(@PathVariable Integer contractId, @PathVariable Integer buttonId, ModelMap model, HttpSession httpSession) {
+
+        Contract contract = contractServiceImpl.getContractById(contractId);
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        Long userId = logged.getDni();
+        switch (buttonId) {
+            case 1:
+                try {
+                    contractServiceImpl.statusChange(contractId, 2);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                return "redirect:/provider/profile";
+            case 2:
+                try {
+                    contractServiceImpl.statusChange(contractId, 3);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                return "redirect:/provider/profile";
+            case 3:
+                try {
+                    contractServiceImpl.statusChange(contractId, 4);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                return "redirect:/provider/profile";
         }
-        return "provider_menu";
-    }
-    
-    @PostMapping("/menu_cancelled")
-    public String cancelled(Integer contractId){
-        try {
-            contractServiceImpl.statusChange(contractId, 3);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return "provider_menu";
+        return "redirect:/provider/profile";
     }
 
-    @PostMapping("/menu_completed")
-    public String completed(Integer contractId){
-        try {
-            contractServiceImpl.statusChange(contractId, 4);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    @GetMapping("/profile")
+    public String userMenu(HttpSession httpSession, ModelMap model) {
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        if (logged != null){
+            long loggedDni = logged.getDni();
+            model.addAttribute("logged",logged.getName());
+            model.addAttribute("rol",logged.getRole());
+            model.addAttribute("provider",logged);
+            model.addAttribute("providerContracts", contractServiceImpl.createContractDTO(loggedDni));
+        }else{
+            return "login";
         }
         return "provider_menu";
     }

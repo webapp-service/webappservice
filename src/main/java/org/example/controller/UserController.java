@@ -5,6 +5,7 @@ import org.example.entity.Person;
 import org.example.service.ContractServiceImpl;
 import org.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -20,25 +21,20 @@ public class UserController {
     @Autowired
     ContractServiceImpl contractService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/profile")
     public String userMenu(HttpSession httpSession, ModelMap model) {
         Person logged = (Person) httpSession.getAttribute("usersession");
-        System.out.println(logged.getName()+"prueba");
-        if (logged!= null){
-            long loggedDni = logged.getDni();
-            model.addAttribute("logged",logged.getName());
-            model.addAttribute("rol",logged.getRole());
-            model.addAttribute("user",logged);
-            model.addAttribute("userContracts", contractService.getAllContractsByUser(loggedDni));
-        }else{
-            return "login";
-        }
+        long loggedDni = logged.getDni();
+        System.out.println(logged.getName() + "prueba");
 
+        model.addAttribute("logged", logged.getName());
+        model.addAttribute("rol", logged.getRole());
+        model.addAttribute("user", logged);
+        model.addAttribute("userContracts", contractService.createContractDTO(loggedDni));
 
         return "user_menu";
     }
-
-
 
     @GetMapping("/register")
     public String register() {
@@ -135,9 +131,9 @@ public class UserController {
                 }else{
                     return "login";
                 }
-                return "user_menu";
+                return "redirect:/user/profile";
         }
-        return "user_menu";
+        return "redirect:/user/profile";
 }
 
     }

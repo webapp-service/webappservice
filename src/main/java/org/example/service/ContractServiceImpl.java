@@ -1,12 +1,14 @@
 package org.example.service;
 
 import lombok.AllArgsConstructor;
+import org.example.dto.ContractDTO;
 import org.example.entity.Contract;
 import org.example.entity.Status;
 import org.example.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -125,8 +127,40 @@ public class ContractServiceImpl implements ContractService {
             throw new Exception("no se encontro el contrato");
 
         }
-
     }
+
+    public List<ContractDTO> createContractDTO(Long idPerson) {
+        List<Contract> contracts;
+        System.out.println(idPerson);
+        if (!providerRep.findById(idPerson).isPresent()) {
+
+            contracts = contractRep.findAllByUser(idPerson);
+            System.out.println(contracts.size());
+        } else {
+
+            contracts = contractRep.findAllByProvider(idPerson);
+        }
+
+
+        List<ContractDTO> contractDTOS = new ArrayList<>();
+
+        Integer contador = 0;
+
+        for (Contract aux : contracts) {
+            contador++;
+            ContractDTO contractDTO = new ContractDTO();
+            contractDTO.setContractId(aux.getContractId());
+            contractDTO.setStatus(aux.getStatus());
+            contractDTO.setUser(aux.getUser());
+            contractDTO.setAttendance(aux.getAttendance());
+            contractDTO.setContractDtoId(contador);
+            contractDTO.setProvider(aux.getProvider());
+            contractDTOS.add(contractDTO);
+        }
+        System.out.println(contractDTOS.size());
+        return contractDTOS;
+    }
+
 }
 
 
