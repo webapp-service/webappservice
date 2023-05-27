@@ -31,7 +31,7 @@
 <section class="rate">
     <!--  -->
     <div class="stars">
-        <form th:action="@{/contract/rate/__${contractId}__}" method="POST">
+        <form th:action="@{/user/rate/__${contractId}__}" method="POST">
             <div hidden="hidden" name="contractId" th:value="contractId"></div>
 
             <div class="stars">

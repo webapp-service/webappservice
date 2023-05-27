@@ -120,7 +120,9 @@ public class UserController {
                 try {
                     contractService.statusChange(contractId, 4);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    //throw new RuntimeException(e);
+                    System.out.println(e.getMessage());
+
                 }
                 if (logged!= null){
                     long loggedDni = logged.getDni();
