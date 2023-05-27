@@ -1,27 +1,29 @@
 <nav class="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
-  <div class="navbar-left">
-    <div class="navbar-logo">
-      <img class="navbar-img" th:src="@{/images/logo-solo.png}" alt="Logo GyL Services"/>
-      <!-- <img class="navbar-img" src="/src/main/resources/static/images/logo-solo.png" alt="Logo GyL Services"> -->
+    <div class="navbar-left">
+        <div class="navbar-logo">
+            <img class="navbar-img" th:src="@{/images/logo-solo.png}" alt="Logo GyL Services"/>
+            <!-- <img class="navbar-img" src="/src/main/resources/static/images/logo-solo.png" alt="Logo GyL Services"> -->
+        </div>
+        <div class="navbar-link">
+            <a th:href="@{/}">INICIO</a>
+            <a href="#">SOBRE NOSOTROS</a>
+            <a href="#">CONTACTO</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/accounts">PANEL ADMINISTRADOR</a>
+        </div>
     </div>
-    <div class="navbar-link">
-      <a th:href="@{/}">INICIO</a>
-      <a href="#">SOBRE NOSOTROS</a>
-      <a href="#">CONTACTO</a>
-      <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/accounts">PANEL ADMINISTRADOR</a>
+    <div class="navbar-right">
+        <div class="navbar-icon">
+            <i class="fa-solid fa-circle-user"></i>
+        </div>
+        <div class="navbar-link">
+            <a sec:authorize="!isAuthenticated()" th:ref="@{/login}" href="/login">INGRESAR</a>
+            <div class="navbar-user-details" sec:authorize="isAuthenticated()">
+                <a sec:authorize="hasRole('ROLE_USER')" href="/user/profile" th:text="${session.usersession.name}"></a>
+                <a sec:authorize="hasRole('ROLE_PROVIDER')" href="/provider/profile"
+                   th:text="${session.usersession.name}"></a>
+                <h3 class="rol-style" th:text="${session.usersession.role}"></h3>
+            </div>
+            <a class="logout" sec:authorize="isAuthenticated()" href="/logout">CERRAR SESIÓN</a>
+        </div>
     </div>
-  </div>
-  <div class="navbar-right">
-    <div class="navbar-icon">
-      <i class="fa-solid fa-circle-user"></i>
-    </div>
-    <div class="navbar-link">
-      <a sec:authorize="!isAuthenticated()" th:ref="@{/login}" href="/login">INGRESAR</a>
-      <div class="navbar-user-details" sec:authorize="isAuthenticated()">
-        <h3 th:text="${session.usersession.name}"></h3>
-        <h3 class="rol-style" th:text="${session.usersession.role}"></h3>
-      </div>
-      <a class="logout" sec:authorize="isAuthenticated()" href="/logout">CERRAR SESIÓN</a>
-    </div>
-  </div>
 </nav>

@@ -136,18 +136,20 @@ public class ProviderController {
                 return "redirect:/provider/profile";
             case 2:
                 try {
-                    contractServiceImpl.statusChange(contractId, 3);
+                    contractServiceImpl.statusChange(contractId, 4);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 return "redirect:/provider/profile";
-            case 3:
+            /*case 3:
                 try {
                     contractServiceImpl.statusChange(contractId, 4);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 return "redirect:/provider/profile";
+
+             */
         }
         return "redirect:/provider/profile";
     }
