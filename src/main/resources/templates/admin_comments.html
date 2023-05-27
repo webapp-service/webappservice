@@ -45,7 +45,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="contract : ${contracts}" th:if="${!contract.getComment().isEmpty()}">
+                <tr th:each="contract : ${contracts}">
                     <th scope="row" th:text="${contract.contractId}"></th>
                     <td th:text="${contract.provider.name}"></td>
                     <td th:text="${contract.user.name}"></td>
