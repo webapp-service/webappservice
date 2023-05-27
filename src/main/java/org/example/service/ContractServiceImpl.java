@@ -23,15 +23,18 @@ public class ContractServiceImpl implements ContractService {
     @Transactional
     @Override
     public void createContract(int attendanceId, Long providerId, Long userId) {
-        Contract contract = new Contract();
-        contract.setContractDate(new Date());
-        contract.setStatus(statusRep.getById(1));
-        contract.setAttendance(attendanceRep.findById(attendanceId).get());
-        contract.setProvider(providerRep.findById(providerId).get());
-        contract.setScore(0);
-        System.out.println(userRep.findById(userId).get().getName());
-        contract.setUser(userRep.findById(userId).get());
-        contractRep.save(contract);
+        Contract actualContract = contractRep.findByUserAndProviderAndAttendance(userId, providerId, attendanceId);
+
+        if (actualContract == null || actualContract.getStatus().getId() == 4) {
+            Contract contract = new Contract();
+            contract.setContractDate(new Date());
+            contract.setStatus(statusRep.getById(1));
+            contract.setAttendance(attendanceRep.findById(attendanceId).get());
+            contract.setProvider(providerRep.findById(providerId).get());
+            contract.setScore(0);
+            contract.setUser(userRep.findById(userId).get());
+            contractRep.save(contract);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -69,6 +72,12 @@ public class ContractServiceImpl implements ContractService {
         return contracts;
     }
 
+    @Override
+    public List<Contract> findByUserAndAttendance(Long userId, Integer attendanceId) {
+        List<Contract> contracts = contractRep.findByUserAndAttendance(userId, attendanceId);
+        return contracts;
+    }
+
     @Transactional
     @Override
     public void qualify(int contractId, int score, String comment) throws Exception {
@@ -89,6 +98,13 @@ public class ContractServiceImpl implements ContractService {
         } else throw new Exception("el status debe ser completado");
     }
 
+    @Transactional
+    @Override
+    public void censureComment(int contractId) {
+        Contract contract = getContractById(contractId);
+        contract.setComment("comentario censurado por un moderador");
+        contractRep.save(contract);
+    }
 
     public void statusChange(int idContract, int idStatus) throws Exception {
         Optional<Contract> contractResp = contractRep.findById(idContract);

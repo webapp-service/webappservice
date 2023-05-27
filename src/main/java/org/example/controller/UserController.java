@@ -70,7 +70,7 @@ public class UserController {
             return "user_form";
         }
 
-        return "redirect:/";
+        return "redirect:/login";
     }
     @PostMapping("/rate/{contractId}")
     public String rateAndComment(@PathVariable int contractId, @RequestParam int rate, @RequestParam String comment,

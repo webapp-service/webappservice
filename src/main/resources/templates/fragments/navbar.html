@@ -8,6 +8,7 @@
       <a th:href="@{/}">INICIO</a>
       <a href="#">SOBRE NOSOTROS</a>
       <a href="#">CONTACTO</a>
+      <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/accounts">PANEL ADMINISTRADOR</a>
     </div>
   </div>
   <div class="navbar-right">
@@ -16,11 +17,11 @@
     </div>
     <div class="navbar-link">
       <a sec:authorize="!isAuthenticated()" th:ref="@{/login}" href="/login">INGRESAR</a>
-      <div class="navbar-user-details">
-        <h3 sec:authorize="isAuthenticated()" th:text="${logged}"></h3>
-        <h3 class="rol-style" sec:authorize="isAuthenticated()" th:text="${rol}"></h3>
+      <div class="navbar-user-details" sec:authorize="isAuthenticated()">
+        <h3 th:text="${session.usersession.name}"></h3>
+        <h3 class="rol-style" th:text="${session.usersession.role}"></h3>
       </div>
-      <a  class="logout" sec:authorize="isAuthenticated()"  href="/logout">CERRAR SESIÓN</a>
+      <a class="logout" sec:authorize="isAuthenticated()" href="/logout">CERRAR SESIÓN</a>
     </div>
   </div>
 </nav>

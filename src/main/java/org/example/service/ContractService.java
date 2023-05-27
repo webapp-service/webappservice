@@ -19,4 +19,6 @@ public interface ContractService {
 
     void qualify(int contractId, int score, String comment) throws Exception;
     List<Contract> findByUserAndAttendance(Long userId, Integer attendanceId);
+
+    void censureComment(int contractId);
 }
