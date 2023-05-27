@@ -38,7 +38,7 @@ document.getElementById('contracts-size').innerHTML = '';
 for (let i = 1; i <= cantContracts; i++) {
   let status = parseInt(document.getElementById("contract-status-"+i).textContent);
   let buttonStyle = document.getElementById("contract-button-style-"+i)
-  if (status== 1 || status== 2){
+  if (status == 1 || status == 2){
     let contractId= parseInt(document.getElementById("contract-" + i ).textContent);
     let button= document.getElementById("contract-button-"+i)
     button.setAttribute("href",`/user/${contractId}/2`)

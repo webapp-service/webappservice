@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.entity.Attendance;
 import org.example.entity.Contract;
+import org.example.entity.Person;
 import org.example.entity.Provider;
 import org.example.service.AttendanceServiceImpl;
 import org.example.service.ContractServiceImpl;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,7 +34,6 @@ public class ProviderController {
     public String register(ModelMap modelo) {
         List<Attendance> attendances = attendanceServiceImpl.listAttendances();
         modelo.addAttribute("attendances", attendances);
-
 
             return "provider_form";
 
@@ -117,6 +118,53 @@ public class ProviderController {
             modelo.put("error", e.getMessage());
         }
         return "provider_list";
+    }
+
+    @GetMapping("/{contractId}/{buttonId}")
+    public String buttonAction(@PathVariable Integer contractId, @PathVariable Integer buttonId, ModelMap model, HttpSession httpSession) {
+
+        Contract contract = contractServiceImpl.getContractById(contractId);
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        Long userId = logged.getDni();
+        switch (buttonId) {
+            case 1:
+                try {
+                    contractServiceImpl.statusChange(contractId, 2);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                return "redirect:/provider/profile";
+            case 2:
+                try {
+                    contractServiceImpl.statusChange(contractId, 3);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                return "redirect:/provider/profile";
+            case 3:
+                try {
+                    contractServiceImpl.statusChange(contractId, 4);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                return "redirect:/provider/profile";
+        }
+        return "redirect:/provider/profile";
+    }
+
+    @GetMapping("/profile")
+    public String userMenu(HttpSession httpSession, ModelMap model) {
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        if (logged != null){
+            long loggedDni = logged.getDni();
+            model.addAttribute("logged",logged.getName());
+            model.addAttribute("rol",logged.getRole());
+            model.addAttribute("provider",logged);
+            model.addAttribute("providerContracts", contractServiceImpl.createContractDTO(loggedDni));
+        }else{
+            return "login";
+        }
+        return "provider_menu";
     }
 
 }

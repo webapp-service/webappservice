@@ -44,11 +44,11 @@
             <td th:text="${contract.provider.name} + ' ' + ${contract.provider.lastName}"></td>
             <td th:text="${contract.attendance.name}"></td>
             <td th:text="${contract.status.name}"></td>
-            <td th:text="${contract.status.id}"  th:id="'contract-status-' + ${contract.contractId}"></td>
+            <td th:text="${contract.status.id}"  th:id="'contract-status-' + ${contract.contractDtoId}"></td>
 
             <td>
-                <a th:id="'contract-button-' + ${contract.contractId}">
-                    <button th:id="'contract-button-style-' + ${contract.contractId}">
+                <a th:id="'contract-button-' + ${contract.contractDtoId}">
+                    <button th:id="'contract-button-style-' + ${contract.contractDtoId}">
 
 
 

@@ -29,18 +29,16 @@
 
 
     <nav th:replace="/fragments/navbar :: nav"></nav>
+    <h1 id="contracts-size" th:text="${#lists.size(providerContracts)}"></h1>
 
     <section class="portada-section">
       <h1>MIS SERVICIOS</h1>
     </section>
 
-    <section class="encabezado">
-      <h2>JORGE GARCIA</h2>
-      <h3>SOLICITUDES</h3>
-    </section>
 
     <table>
       <tr class="table-title">
+          <th>ID</th>
           <th>CLIENTE</th>
           <th>TIPO</th>
           <th>ESTADO</th>
@@ -48,78 +46,23 @@
           <th></th>
           <th></th>
       </tr>
-      <tr>
-          <td>ARTURO FREITES</td>
-          <td>ELECTRICIDAD</td>
-          <td>EN PROCESO</td>
-         
-          <td>
-              <button class="btn-acept">ACEPTAR</button>
-          </td>
-          <td>
-         <button class="btn-cancel">CANCELAR</button>
+        <tr th:each="contract : ${providerContracts}">
+            <td th:text="${contract.contractId}"  th:id="'contract-' + ${contract.contractDtoId}"></td>
+            <td th:text="${contract.user.name} + ' ' + ${contract.user.lastName}"></td>
+            <td th:text="${contract.attendance.name}"></td>
+            <td th:text="${contract.status.name}"></td>
+            <td th:text="${contract.status.id}"  th:id="'contract-status-' + ${contract.contractDtoId}"></td>
 
-          </td>
-          <td> 
-            <button class="btn-complete">COMPLETAR</button>             
-          </td>
-      </tr>
-      <tr>
-          <td>NATALIN ACUÑA</td>
-          <td>PINTURA</td>
-          <td>PENDIENTE</td>
-         
-          <td>
-              <button class="btn-acept">ACEPTAR</button>
-          </td>
-          <td>
-            <button class="btn-cancel">CANCELAR</button>
-          </td>
-          <td> 
-            <button class="btn-complete">COMPLETAR</button>             
-          </td>
-      </tr>
-      <tr>
-          <td>SOFIA SOUZA</td>
-          <td>ELECTRICIDAD</td>
-          <td>COMPLETADO</td>
-          
-          <td>
-              <button class="btn-acept">ACEPTAR</button>
-          </td>
-          <td><button class="btn-cancel">CANCELAR</button></td>
-          <td> 
-            <button class="btn-complete">COMPLETAR</button>             
-          </td>
-      </tr>
-      <tr>
-          <td>ARTURO FREITES</td>
-          <td>ELECTRICIDAD</td>
-          <td>CANCELADO </td>
-        
-          <td>
-              <button class="btn-acept">ACEPTAR</button>
-          </td>
-          <td>
-            <button class="btn-cancel">CANCELAR</button>
-          </td>
-          <td> 
-            <button class="btn-complete">COMPLETAR</button>             
-          </td>
-      </tr>
-      <tr>
-          <td>SABRINA TECHERA</td>
-          <td>ELECTRICIDAD</td>
-          <td>EN PROCESO</td>
-        
-          <td>
-              <button class="btn-acept">ACEPTAR</button>
-          </td>
-          <td><button class="btn-cancel">CANCELAR</button></td>
-          <td> 
-            <button class="btn-complete">COMPLETAR</button>             
-          </td>
-      </tr>
+            <td>
+                <a th:id="'contract-button-' + ${contract.contractDtoId}">
+                    <button th:id="'contract-button-style-' + ${contract.contractDtoId}">
+
+
+                    </button>
+
+                </a>
+            </td>
+        </tr>
   </table>
 
 
@@ -128,6 +71,6 @@
 
 
     <footer th:replace="fragments/footer"></footer>
-    <script th:src="@{/javascript/example.js}"></script>
+    <script th:src="@{/javascript/provider_menu.js}"></script>
   </body>
 </html>
