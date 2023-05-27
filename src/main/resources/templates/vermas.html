@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" th:href="@{/css/vermas.css}"/>
     <link rel="stylesheet" th:href="@{/css/navbar.css}"/>
     <link rel="stylesheet" th:href="@{/css/footer.css}"/>
@@ -16,62 +16,61 @@
           referrerpolicy="no-referrer"/>
 
     <title>Document</title>
-  </head>
+</head>
 
-  <body>
-  <nav th:replace="/fragments/navbar :: nav"></nav>
+<body>
+<nav th:replace="/fragments/navbar :: nav"></nav>
 
-  <section class="portada-section">
-      <h1>SERVICIOS</h1>
-    </section>
+<section class="portada-section">
+    <h1>SERVICIOS</h1>
+</section>
 
-    <section class="detalles-proveedor">
-      <div class="div-imagen-estrellas">
-        <img
-          src="https://cdn.pixabay.com/photo/2017/09/16/14/33/electrician-2755683_1280.jpg"
-          alt=""
-        />
-        <div>
-          <i class="fa fa-star star"></i>
-          <i class="fa fa-star star"></i>
-          <i class="fa fa-star star"></i>
+<section >
+
+    <div class="container">
+        <div class="left-section">
+            <img th:src="@{'/images/' + ${provider.image}}" alt="Image Provider"/>
+            <div class="star-container">
+                <div th:each="star : ${#numbers.sequence(1, 5)}"
+                     th:class="${star le score} ? 'star-filled' : 'star'"></div>
+
+            </div>
         </div>
-      </div>
+        <div class="right-section  contenido-texto" >
+            
+                <h1 th:text="${provider.name} + ' ' + ${provider.lastName}">JORGE GARCIA</h1>
+                <h2 th:text="${attendance.name}">ELECTRICIDAD</h2>
+                <p th:text="${provider.description}"></p>
 
-      <div class="contenido-texto">
-        <h1>JORGE GARCIA</h1>
-        <h2>ELECTRICIDAD</h2>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias
-          explicabo, amet est impedit quos officiis nobis, dolore inventore
-          voluptates, repudiandae animi eaque consectetur unde doloremque
-          sapiente quisquam temporibus minima labore./p>
-        </p>
-        <div class="botones">
-          <button class="precio">$1000 por hora</button>
-          <button class="contratar">CONTRATAR</button>
+                <div class="service-button">
+                    <form th:action="@{/vermas/createContract}" method="POST">
+                        <input type="number" id="providerId" name="providerId" hidden
+                               th:value="${provider.dni}"/>
+                        <input type="number" id="attendanceId" name="attendanceId" hidden
+                               th:value="${attendanceId}"/>
+                        <button class="precio-provider" th:text=" '$' + ${provider.pricePerHour} + ' por hora.'">$1000 por hora</button>
+                        <button class="contratar">CONTRATAR</button>
+                    </form>
+                </div>
+
+
         </div>
-      </div>
-    </section>
+    </div>
 
-    <section>
-      <div class="comentario">
-        <h4>SOFIA</h4>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, vero
-          officia? Delectus accusantium sit, soluta excepturi necessitatibus in
-          sint aliquam dolor, temporibus, officiis quaerat reiciendis labore
-          magnam quas deleniti nobis.
+</section>
+
+<section>
+    <div class="comentario" th:each="card : ${contracts}">
+        <h4 th:text="${card.user.name}">SOFIA:</h4>
+
+        <p th:text="${card.comment}">
+
         </p>
-      </div>
-      <div th:if="${fail != null}" class="alert alert-danger card-body" role="alert">
-        <h5 class="card-title">Error!</h5>
-        <p class="card-text" th:text="${fail}"></p>
-      </div>
+    </div>
 
-    </section>
+</section>
 
-    <footer th:replace="fragments/footer"></footer>
-    <script th:src="@{/javascript/example.js}"></script>
-  </body>
+<footer th:replace="fragments/footer"></footer>
+<script th:src="@{/javascript/vermas.js}"></script>
+</body>
 </html>

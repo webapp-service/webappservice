@@ -9,16 +9,16 @@ import java.util.Optional;
 public interface UserService {
     void create(String name, String email, String password, Long Dni, String lastName, String address, String phone, MultipartFile image) throws Exception;
 
-    List<User> GetUsers();
+    List<User> getUsers();
 
     void modify(Long dni, String name, String lastName, String phone, String email, String address,
                 MultipartFile image, String password) throws Exception;
 
     void delete(Long DNI);
 
-    User GetOneByEmail(String email);
+    User getOneByEmail(String email);
 
-    Optional<User> GetOneById(long id);
+    Optional<User> getOneById(long id);
 
     void modify(User user);
 }

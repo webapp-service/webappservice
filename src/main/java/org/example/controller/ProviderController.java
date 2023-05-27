@@ -76,7 +76,7 @@ public class ProviderController {
 
             return "provider_form";
         }
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping("/modify_provider/{dni}")

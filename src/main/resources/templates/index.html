@@ -39,7 +39,8 @@
             <h4 class="valor" th:id="'star-valor-' + ${card.idDto}" th:text="${card.score}"></h4>
             <div class="div-stars" th:id="'div-stars-' + ${card.idDto}"></div>
             <p th:text="${card.attendanceUnique.name}"></p>
-            <a href="" target="_blank" rel="noopener noreferrer">
+
+            <a th:href="@{|/vermas/${card.dni}/${card.attendanceUnique.id}|}">
                 <h5>VER MAS</h5>
             </a>
             <div class="service-button">

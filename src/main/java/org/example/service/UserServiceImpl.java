@@ -1,14 +1,11 @@
 package org.example.service;
 
 
-import org.example.entity.Provider;
 import org.example.entity.User;
 import org.example.repository.ProviderRepository;
 import org.example.repository.UserRepository;
 import org.example.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> GetUsers() {
+    public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
         users = userRepository.findAll();
         return users;
@@ -49,7 +46,7 @@ public class UserServiceImpl implements UserService {
     public void modify(Long dni, String name, String lastName, String phone, String email, String address,
                        MultipartFile image, String password) throws Exception {
 
-        Optional<User> userOpc = GetOneById(dni);
+        Optional<User> userOpc = getOneById(dni);
 
         if (userOpc.isPresent()) {
             User useResp = userOpc.get();
@@ -74,12 +71,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User GetOneByEmail(String email) {
+    public User getOneByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public Optional<User> GetOneById(long id) {
+    public Optional<User> getOneById(long id) {
         return userRepository.findById(id);
     }
 

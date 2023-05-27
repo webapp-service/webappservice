@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.entity.Contract;
 import org.example.entity.Provider;
 import org.example.util.Role;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,4 +21,6 @@ public interface ProviderService {
     Provider getOne(Long dni);
 
     Provider getByEmail(String email);
+    Integer averageScore(long idProvider, Integer idAttendance);
+    Integer averageScoreVermas(List<Contract> contracts);
 }
