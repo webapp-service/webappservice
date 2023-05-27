@@ -25,17 +25,23 @@ public class ContractServiceImpl implements ContractService {
     @Transactional
     @Override
     public void createContract(int attendanceId, Long providerId, Long userId) {
-        Contract actualContract = contractRep.findByUserAndProviderAndAttendance(userId, providerId, attendanceId);
+        List<Contract> contracts = contractRep.findByUserAndProviderAndAttendance(userId, providerId, attendanceId);
+        Contract actualContract = null;
 
-        if (actualContract == null || actualContract.getStatus().getId() == 4) {
-            Contract contract = new Contract();
-            contract.setContractDate(new Date());
-            contract.setStatus(statusRep.getById(1));
-            contract.setAttendance(attendanceRep.findById(attendanceId).get());
-            contract.setProvider(providerRep.findById(providerId).get());
-            contract.setScore(0);
-            contract.setUser(userRep.findById(userId).get());
-            contractRep.save(contract);
+        if (!contracts.isEmpty()) {
+            actualContract = contracts.get(contracts.size() - 1);
+        } else {
+
+            if (actualContract == null || actualContract.getStatus().getId() == 4) {
+                Contract contract = new Contract();
+                contract.setContractDate(new Date());
+                contract.setStatus(statusRep.getById(1));
+                contract.setAttendance(attendanceRep.findById(attendanceId).get());
+                contract.setProvider(providerRep.findById(providerId).get());
+                contract.setScore(0);
+                contract.setUser(userRep.findById(userId).get());
+                contractRep.save(contract);
+            }
         }
     }
 

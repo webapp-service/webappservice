@@ -40,7 +40,7 @@
 
         </tr>
         <tr th:each="contract : ${userContracts}">
-            <td th:text="${contract.contractId}"  th:id="'contract-' + ${contract.contractId}"></td>
+            <td th:text="${contract.contractId}"  th:id="'contract-' + ${contract.contractDtoId}"></td>
             <td th:text="${contract.provider.name} + ' ' + ${contract.provider.lastName}"></td>
             <td th:text="${contract.attendance.name}"></td>
             <td th:text="${contract.status.name}"></td>
