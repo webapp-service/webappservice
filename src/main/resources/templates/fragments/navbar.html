@@ -18,7 +18,8 @@
     <div class="navbar-link">
       <a sec:authorize="!isAuthenticated()" th:ref="@{/login}" href="/login">INGRESAR</a>
       <div class="navbar-user-details" sec:authorize="isAuthenticated()">
-        <h3 th:text="${session.usersession.name}"></h3>
+        <a sec:authorize="hasRole('ROLE_USER')" href="/user/profile" th:text="${session.usersession.name}"></a>
+        <a sec:authorize="hasRole('ROLE_PROVIDER')" href="/provider/profile" th:text="${session.usersession.name}"></a>
         <h3 class="rol-style" th:text="${session.usersession.role}"></h3>
       </div>
       <a class="logout" sec:authorize="isAuthenticated()" href="/logout">CERRAR SESIÓN</a>
