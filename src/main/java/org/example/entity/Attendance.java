@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 public class Attendance {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
     private String name;

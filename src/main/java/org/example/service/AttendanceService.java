@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AttendanceService {
-    Attendance create(String name) throws Exception;
+    Attendance create(String name, String icon) throws Exception;
 
     List<Attendance> listAttendances();
 
