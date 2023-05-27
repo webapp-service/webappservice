@@ -12,89 +12,59 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}" />
     <link rel="stylesheet" th:href="@{/css/user_menu.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Document</title>
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Servicios contratados</title>
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
+<!-- NAVBAR -->
 
-    <nav th:replace="/fragments/navbar :: nav"></nav>
+<nav th:replace="/fragments/navbar :: nav"></nav>
 
-    <!-- Banner -->
+<!-- Banner -->
 
-    <section class="portada-section">
-        <h1>MIS SERVICIOS CONTRATADOS</h1>
-    </section>
+<section class="portada-section">
+    <h1>MIS SERVICIOS CONTRATADOS</h1>
+</section>
 
+<section class="table">
+    <h1 id="contracts-size" th:text="${#lists.size(userContracts)}"></h1>
+    <table>
+        <tr class="table-title">
+            <th>ID DE CONTRATO</th>
+            <th>PROVEEDORES</th>
+            <th>TIPO</th>
+            <th>ESTADO</th>
 
-    <Section class="title">
+        </tr>
+        <tr th:each="contract : ${userContracts}">
+            <td th:text="${contract.contractId}"  th:id="'contract-' + ${contract.contractId}"></td>
+            <td th:text="${contract.provider.name} + ' ' + ${contract.provider.lastName}"></td>
+            <td th:text="${contract.attendance.name}"></td>
+            <td th:text="${contract.status.name}"></td>
+            <td th:text="${contract.status.id}"  th:id="'contract-status-' + ${contract.contractId}"></td>
 
-        <h2>ARTURO FREITES</h2>
-
-    </Section>
-
-
-    <section class="table">
-
-        <table>
-            <tr class="table-title">
-                <th>PROVEEDORES</th>
-                <th>TIPO</th>
-                <th>ESTADO</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>ARTURO FREITES</td>
-                <td>ELECTRICIDAD</td>
-                <td>EN PROCESO</td>
-                <td>
-                    <button class="btn-cancel">CANCELAR</button>
-                </td>
-            </tr>
-            <tr>
-                <td>ARTURO FREITES</td>
-                <td>PINTURA</td>
-                <td>PENDIENTE</td>
-                <td>
-                    <button class="btn-cancel">CANCELAR</button>
-                </td>
-            </tr>
-            <tr>
-                <td>ARTURO FREITES</td>
-                <td>ELECTRICIDAD</td>
-                <td>COMPLETADO</td>
-                <td>
-                    <button class="btn-comment">OPINAR</button>
-                </td>
-            </tr>
-            <tr>
-                <td>ARTURO FREITES</td>
-                <td>ELECTRICIDAD</td>
-                <td>COMPLETADO</td>
-                <td>
-                    <button class="btn-comment">OPINAR</button>
-                </td>
-            </tr>
-            <tr>
-                <td>ARTURO FREITES</td>
-                <td>ELECTRICIDAD</td>
-                <td>EN PROCESO</td>
-                <td>
-                    <button class="btn-cancel">CANCELAR</button>
-                </td>
-            </tr>
-        </table>
+            <td>
+                <a th:id="'contract-button-' + ${contract.contractId}">
+                    <button th:id="'contract-button-style-' + ${contract.contractId}">
 
 
-    </section>
+
+                    </button>
+
+                </a>
+            </td>
+        </tr>
+
+    </table>
+</section>
 
 
-    <footer th:replace="fragments/footer"></footer>
-    <script th:src="@{/javascript/example.js}"></script>
 
+<footer th:replace="fragments/footer"></footer>
+<script th:src="@{/javascript/user_menu.js}"></script>
 </body>
 
 </html>

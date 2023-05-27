@@ -58,18 +58,13 @@ public class ContractServiceImpl implements ContractService {
     @Transactional(readOnly = true)
     @Override
     public List<Contract> getAllContractsByUser(Long userId) {
-        List<Contract> contracts = contractRep.findAllByProvider(userId);
+        List<Contract> contracts = contractRep.findAllByUser(userId);
         return contracts;
     }
 
 
     @Override
     public List<Contract> findByProviderAndAttendance(Long userId, Integer attendanceId) {
-        List<Contract> contracts = contractRep.findByProviderAndAttendance(userId, attendanceId);
-        return contracts;
-    }
-    @Override
-    public List<Contract> findByUserAndAttendance(Long userId, Integer attendanceId) {
         List<Contract> contracts = contractRep.findByProviderAndAttendance(userId, attendanceId);
         return contracts;
     }
@@ -95,7 +90,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
 
-    private void statusChange(int idContract, int idStatus) throws Exception {
+    public void statusChange(int idContract, int idStatus) throws Exception {
         Optional<Contract> contractResp = contractRep.findById(idContract);
         Optional<Status> statusResp = statusRep.findById(idStatus);
 
