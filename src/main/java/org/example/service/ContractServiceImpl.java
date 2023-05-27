@@ -90,7 +90,10 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void qualify(int contractId, int score, String comment) throws Exception {
         Contract contract = getContractById(contractId);
+            if (contract.getScore() >= 1 && contract.getComment().length()>0) {
+                throw new Exception("el contrato ya fue comentado y opinado");
 
+            }
         if (contract.getStatus().getId().equals(4)) {
             if (score > 0 && score <= 5) {
                 contract.setScore(score);
