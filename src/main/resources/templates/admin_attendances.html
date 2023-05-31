@@ -24,9 +24,9 @@
         <h1>PANEL ADMINISTRADOR</h1>
 
         <div class="header__buttons-container">
-            <a class="btn btn-primary" th:href="@{/admin/accounts}" role="button">Panel Cuentas</a>
-            <a class="btn btn-primary" th:href="@{/admin/comments}" role="button">Panel Comentarios</a>
-            <a class="btn btn-primary" th:href="@{/admin/attendances}" role="button">Panel Attendances</a>
+            <a class="btn-enlace" th:href="@{/admin/accounts}" role="button"><button class="btn-enlace button">Panel Cuentas</button></a>
+            <a class="btn-enlace" th:href="@{/admin/comments}" role="button"><button class="btn-enlace button">Panel Comentarios</button></a>
+            <a class="btn-enlace" th:href="@{/admin/attendances}" role="button"><button class="btn-enlace button">Panel Attendances</button></a>
         </div>
     </section>
 </header>
@@ -55,6 +55,7 @@
     <form class="form" th:action="@{/admin/attendances}" method="POST">
 
         <section class="form-rows">
+            <h4 class="fw-bold">Registrar Attendance</h4>
             <div>
                 <label for="name"></label>
                 <input type="text" id="name" name="name" placeholder="Nombre de servicio"
@@ -67,8 +68,8 @@
             </div>
         </section>
 
-        <section class="form-button">
-            <button type="submit" class="btn-registrar">Registrar</button>
+        <section class="form-button mt-3 mb-4">
+            <button type="submit" class="rol-style">Registrar</button>
         </section>
         <div th:if="${error != null}" class="alert alert-danger card-body" role="alert">
             <h5 class="card-title">Error!</h5>

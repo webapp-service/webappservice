@@ -13,8 +13,8 @@
     </div>
     <div class="navbar-right">
         <div class="navbar-icon">
-            <i class="fa-solid fa-circle-user" sec:authorize="!isAuthenticated()"></i>
-             <img th:src="@{'/images/' + ${session.usersession.image}}" sec:authorize="isAuthenticated()">
+            <i sec:authorize="!isAuthenticated()" class="fa-solid fa-circle-user"></i>
+             <img sec:authorize="isAuthenticated()" th:src="@{'/images/' + ${session.usersession.image}}">
 
         </div>
         <div class="navbar-link">
