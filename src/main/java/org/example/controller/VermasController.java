@@ -8,6 +8,7 @@ import org.example.entity.Provider;
 import org.example.repository.ContractRepository;
 import org.example.service.AttendanceServiceImpl;
 import org.example.service.ContractServiceImpl;
+import org.example.service.ProviderDTOServiceImpl;
 import org.example.service.ProviderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/vermas")
@@ -31,6 +31,8 @@ public class VermasController {
     ContractRepository contractRepository;
     @Autowired
     AttendanceServiceImpl attendanceService;
+    @Autowired
+    ProviderDTOServiceImpl providerDTOService;
 
     @GetMapping("/{dni}/{attendanceId}")
     public String vermas(ModelMap model, @PathVariable Long dni, @PathVariable Integer attendanceId, HttpSession httpSession){
@@ -58,21 +60,33 @@ public class VermasController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/createContract")
     public String create(@RequestParam Long providerId,
-                         @RequestParam int attendanceId,HttpSession httpSession, ModelMap model) {
-        System.out.println("ENTRA??");
+                         @RequestParam Integer attendanceId,HttpSession httpSession, ModelMap model) {
+
         Person logged = (Person) httpSession.getAttribute("usersession");
         Long userId = logged.getDni();
         model.addAttribute(logged);
 
-            List <Contract> contracts = contractService.getAllContractsByUser(userId);
+        try{
+            contractService.createContract(attendanceId, providerId, userId);
+            return "redirect:/user/profile";
 
-        for (Contract contract : contracts) {
-            if (contract.getAttendance().getId() == attendanceId && Objects.equals(contract.getProvider().getDni(), providerId)) {
-                model.put("error", "No puede realizar la misma contratacion");
-                return "redirect:/";
-            }
+        } catch (Exception e) {
+
+            model.put("error", e.getMessage());
+
+            model.addAttribute("attendanceId", attendanceId);
+            model.addAttribute("logged",logged.getName());
+            model.addAttribute("rol",logged.getRole());
+            List<Contract> contracts = contractRepository.findByUserAndAttendance(providerId, attendanceId);
+            model.addAttribute("contracts", contracts);
+            Provider provider = providerService.getOne(providerId);
+            model.addAttribute("provider", provider);
+            Attendance attendance = attendanceService.findAttendance(attendanceId).get();
+            model.addAttribute("attendance", attendance);
+            Integer score = providerService.averageScoreVermas(contracts);
+            model.addAttribute("score", score);
+
+            return "vermas";
         }
-        contractService.createContract(attendanceId, providerId, userId);
-        return "redirect:/user/profile";
     }
 }
