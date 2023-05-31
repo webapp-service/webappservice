@@ -31,33 +31,29 @@ public class VermasController {
     @Autowired
     AttendanceServiceImpl attendanceService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/{dni}/{attendanceId}")
-    public String vermas(ModelMap model, @PathVariable Long dni, @PathVariable Integer attendanceId, HttpSession httpSession){
+    public String vermas(ModelMap model, @PathVariable Long dni, @PathVariable Integer attendanceId, HttpSession httpSession) {
         Person logged = (Person) httpSession.getAttribute("usersession");
 
-        if (logged!= null){
-            model.addAttribute("logged",logged.getName());
-            model.addAttribute("rol",logged.getRole());
-            List<Contract> contracts = contractRepository.findByUserAndAttendance(dni, attendanceId);
-            model.addAttribute("contracts", contracts);
-            Provider provider = providerService.getOne(dni);
-            model.addAttribute("provider", provider);
-            Attendance attendance = attendanceService.findAttendance(attendanceId).get();
-            model.addAttribute("attendance", attendance);
-            Integer score = providerService.averageScoreVermas(contracts);
-            model.addAttribute("score", score);
+        model.addAttribute("logged", logged.getName());
+        model.addAttribute("rol", logged.getRole());
+        List<Contract> contracts = contractRepository.findByUserAndAttendance(dni, attendanceId);
+        model.addAttribute("contracts", contracts);
+        Provider provider = providerService.getOne(dni);
+        model.addAttribute("provider", provider);
+        Attendance attendance = attendanceService.findAttendance(attendanceId).get();
+        model.addAttribute("attendance", attendance);
+        Integer score = providerService.averageScoreVermas(contracts);
+        model.addAttribute("score", score);
 
-
-            return "vermas.html";
-        } else{
-            return "login.html";
-        }
+        return "vermas";
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/createContract")
     public String create(@RequestParam Long providerId,
-                         @RequestParam int attendanceId,HttpSession httpSession, ModelMap model) {
+                         @RequestParam int attendanceId, HttpSession httpSession, ModelMap model) {
         System.out.println("ENTRA??");
         Person logged = (Person) httpSession.getAttribute("usersession");
         Long userId = logged.getDni();

@@ -6,7 +6,11 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-  
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 
 .navbar {
     background-color: #2d2929;
@@ -17,43 +21,43 @@
     font-weight: 700;
     color: white;
   }
-  
+
   .navbar-icon i {
     color: white;
     font-size: 24px;
   }
-  
+
   .navbar-left,
   .navbar-right {
     display: flex;
     align-items: center;
   }
-  
+
   .navbar-logo img {
     height: 50px;
   }
-  
+
   .navbar-link {
     margin-left: 20px;
   }
-  
+
   .navbar-link a {
     color: white;
     margin-right: 10px;
     text-decoration: none;
   }
-  
+
   .navbar-icon img {
     height: 30px;
   }
-  
+
 
   .portada-section {
     background-color: #2C80B0;
-    padding: 20px;
+    padding: 20px 0;
     width: 100%;
   }
-  
+
   .portada-section h1 {
     text-align: center;
     color: #ffffff; /* Color del texto */
@@ -67,10 +71,10 @@
 
 
 .encabezado h2{
-  font-size: 2.5em; 
-  font-weight: 900; 
+  font-size: 2.5em;
+  font-weight: 900;
   padding: 2.5vh;
-    
+
 }
 
 .encabezado h3{
