@@ -57,7 +57,11 @@ public class AdminController {
         model.addAttribute("users", users);
         model.addAttribute("providers", providers);
 
-        adminService.changeToAdmin(accountId);
+        try {
+            adminService.changeToAdmin(accountId);
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
         return "admin_users";
     }
