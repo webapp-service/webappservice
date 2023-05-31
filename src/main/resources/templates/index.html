@@ -50,6 +50,12 @@
                     <input type="number" id="attendanceId" name="attendanceId" hidden
                            th:value="${card.attendanceUnique.id}"/>
                     <button sec:authorize="!hasRole('ROLE_PROVIDER')" >CONTRATAR</button>
+
+                    <div th:if="${error != null}" class="alert alert-danger card-body" role="alert">
+                        <h5 class="card-title">Error!</h5>
+                        <p class="card-text" th:text="${error}"></p>
+                    </div>
+
                 </form>
                 <p th:text="${card.pricePerHour}"></p>
                 <i th:class="${card.attendanceUnique.icon}" style="color: #2d2929"></i>

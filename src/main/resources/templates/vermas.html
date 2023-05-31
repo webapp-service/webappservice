@@ -37,21 +37,27 @@
             </div>
         </div>
         <div class="right-section  contenido-texto" >
-            
-                <h1 th:text="${provider.name} + ' ' + ${provider.lastName}">JORGE GARCIA</h1>
-                <h2 th:text="${attendance.name}">ELECTRICIDAD</h2>
-                <p th:text="${provider.description}"></p>
 
-                <div class="service-button">
-                    <form th:action="@{/vermas/createContract}" method="POST">
-                        <input type="number" id="providerId" name="providerId" hidden
-                               th:value="${provider.dni}"/>
-                        <input type="number" id="attendanceId" name="attendanceId" hidden
-                               th:value="${attendanceId}"/>
-                        <button class="precio-provider" th:text=" '$' + ${provider.pricePerHour} + ' por hora.'">$1000 por hora</button>
-                        <button class="contratar">CONTRATAR</button>
-                    </form>
-                </div>
+            <h1 th:text="${provider.name} + ' ' + ${provider.lastName}">JORGE GARCIA</h1>
+            <h2 th:text="${attendance.name}">ELECTRICIDAD</h2>
+            <p th:text="${provider.description}"></p>
+
+            <div class="service-button">
+                <form th:action="@{/vermas/createContract}" method="POST">
+                    <input type="number" id="providerId" name="providerId" hidden
+                           th:value="${provider.dni}"/>
+                    <input type="number" id="attendanceId" name="attendanceId" hidden
+                           th:value="${attendanceId}"/>
+                    <button class="precio-provider" th:text=" '$' + ${provider.pricePerHour} + ' por hora.'">$1000 por hora</button>
+                    <button class="contratar">CONTRATAR</button>
+
+                    <div th:if="${error != null}" class="alert alert-danger card-body" role="alert">
+                        <h5 class="card-title">Error!</h5>
+                        <p class="card-text" th:text="${error}"></p>
+                    </div>
+
+                </form>
+            </div>
 
 
         </div>

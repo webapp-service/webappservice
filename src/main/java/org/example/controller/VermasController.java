@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/vermas")
@@ -62,14 +63,16 @@ public class VermasController {
         Person logged = (Person) httpSession.getAttribute("usersession");
         Long userId = logged.getDni();
         model.addAttribute(logged);
-        try {
-            contractService.createContract(attendanceId, providerId, userId);
-            return "user_menu";
-        } catch (Exception e) {
-            model.put("error", e.getMessage());
-            return "redirect:/";
+
+            List <Contract> contracts = contractService.getAllContractsByUser(userId);
+
+        for (Contract contract : contracts) {
+            if (contract.getAttendance().getId() == attendanceId && Objects.equals(contract.getProvider().getDni(), providerId)) {
+                model.put("error", "No puede realizar la misma contratacion");
+                return "redirect:/";
+            }
         }
+        contractService.createContract(attendanceId, providerId, userId);
+        return "redirect:/user/profile";
     }
-
-
 }
