@@ -11,7 +11,9 @@
 
 .navbar-icon i {
     color: white;
-    font-size: 40px;
+    font-size: 50px;
+    border-radius: 30px;
+    height: 50px;
 }
 
 .navbar-left,
@@ -34,8 +36,18 @@
     text-decoration: none;
 }
 
+.navbar-icon {
+    width: 50px;
+    border-radius: 30px;
+    background-size: cover;
+    height: 50px;
+    overflow: hidden;
+}
+
+
 .navbar-icon img {
-    height: 30px;
+    border-radius: 30px;
+    height: 50px;
 }
 
 .navbar-user-details{
