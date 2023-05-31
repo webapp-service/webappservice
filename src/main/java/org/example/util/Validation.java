@@ -152,8 +152,14 @@ public class Validation {
         user.setAddress(address);
 
         try {
+            Path directoryImages = null;
 
-            Path directoryImages = Paths.get("src//main//resources/static/images");
+            if (image == null || image.isEmpty()){
+                 directoryImages = Paths.get("src//main//resources/static/images/imagenPredeterminada.jpg");
+            }else {
+                 directoryImages = Paths.get("src//main//resources/static/images");
+            }
+
             String absolutePath = directoryImages.toFile().getAbsolutePath();
             byte[] byteImg = image.getBytes();
             Path fullPath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
