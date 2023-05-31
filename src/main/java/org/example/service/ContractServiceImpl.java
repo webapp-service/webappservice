@@ -26,22 +26,26 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void createContract(int attendanceId, Long providerId, Long userId) {
         List<Contract> contracts = contractRep.findByUserAndProviderAndAttendance(userId, providerId, attendanceId);
-        Contract actualContract = null;
+        boolean flag = true;
 
         if (!contracts.isEmpty()) {
-            actualContract = contracts.get(contracts.size() - 1);
-        } else {
-
-            if (actualContract == null || actualContract.getStatus().getId() == 4) {
-                Contract contract = new Contract();
-                contract.setContractDate(new Date());
-                contract.setStatus(statusRep.getById(1));
-                contract.setAttendance(attendanceRep.findById(attendanceId).get());
-                contract.setProvider(providerRep.findById(providerId).get());
-                contract.setScore(0);
-                contract.setUser(userRep.findById(userId).get());
-                contractRep.save(contract);
+            for (Contract c : contracts) {
+                if (c.getStatus().getId() != 4) {
+                    flag = false;
+                    break;
+                }
             }
+        }
+
+        if (flag) {
+            Contract contract = new Contract();
+            contract.setContractDate(new Date());
+            contract.setStatus(statusRep.getById(1));
+            contract.setAttendance(attendanceRep.findById(attendanceId).get());
+            contract.setProvider(providerRep.findById(providerId).get());
+            contract.setScore(0);
+            contract.setUser(userRep.findById(userId).get());
+            contractRep.save(contract);
         }
     }
 
@@ -90,10 +94,10 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void qualify(int contractId, int score, String comment) throws Exception {
         Contract contract = getContractById(contractId);
-            if (contract.getScore() >= 1 && contract.getComment().length()>0) {
-                throw new Exception("el contrato ya fue comentado y opinado");
-
-            }
+//            if (contract.getScore() >= 1 && contract.getComment().length()>0) {
+//                throw new Exception("el contrato ya fue comentado y opinado");
+//
+//            }
         if (contract.getStatus().getId().equals(4)) {
             if (score > 0 && score <= 5) {
                 contract.setScore(score);

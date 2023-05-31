@@ -26,7 +26,6 @@ public class UserController {
     public String userMenu(HttpSession httpSession, ModelMap model) {
         Person logged = (Person) httpSession.getAttribute("usersession");
         long loggedDni = logged.getDni();
-        System.out.println(logged.getName() + "prueba");
 
         model.addAttribute("logged", logged.getName());
         model.addAttribute("rol", logged.getRole());
