@@ -5,7 +5,7 @@ import org.example.entity.Contract;
 import java.util.List;
 
 public interface ContractService {
-    void createContract(int attendanceId, Long providerId, Long userId);
+    void createContract(int attendanceId, Long providerId, Long userId) throws Exception;
 
     Contract getContractById(int contractId);
 

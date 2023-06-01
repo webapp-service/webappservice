@@ -8,6 +8,7 @@ import org.example.entity.Provider;
 import org.example.repository.ContractRepository;
 import org.example.service.AttendanceServiceImpl;
 import org.example.service.ContractServiceImpl;
+import org.example.service.ProviderDTOServiceImpl;
 import org.example.service.ProviderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,6 +31,8 @@ public class VermasController {
     ContractRepository contractRepository;
     @Autowired
     AttendanceServiceImpl attendanceService;
+    @Autowired
+    ProviderDTOServiceImpl providerDTOService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{dni}/{attendanceId}")
@@ -52,20 +55,34 @@ public class VermasController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/createContract")
-    public String create(@RequestParam Long providerId,
-                         @RequestParam int attendanceId, HttpSession httpSession, ModelMap model) {
-        System.out.println("ENTRA??");
+    public String create(@RequestParam Long providerId, @RequestParam Integer attendanceId,
+                         HttpSession httpSession, ModelMap model) {
+
         Person logged = (Person) httpSession.getAttribute("usersession");
         Long userId = logged.getDni();
         model.addAttribute(logged);
-        try {
+
+        try{
             contractService.createContract(attendanceId, providerId, userId);
-            return "user_menu";
+            return "redirect:/user/profile";
+
         } catch (Exception e) {
+
             model.put("error", e.getMessage());
-            return "redirect:/";
+
+            model.addAttribute("attendanceId", attendanceId);
+            model.addAttribute("logged",logged.getName());
+            model.addAttribute("rol",logged.getRole());
+            List<Contract> contracts = contractRepository.findByUserAndAttendance(providerId, attendanceId);
+            model.addAttribute("contracts", contracts);
+            Provider provider = providerService.getOne(providerId);
+            model.addAttribute("provider", provider);
+            Attendance attendance = attendanceService.findAttendance(attendanceId).get();
+            model.addAttribute("attendance", attendance);
+            Integer score = providerService.averageScoreVermas(contracts);
+            model.addAttribute("score", score);
+
+            return "vermas";
         }
     }
-
-
 }

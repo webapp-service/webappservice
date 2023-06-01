@@ -24,7 +24,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Transactional
     @Override
-    public void createContract(int attendanceId, Long providerId, Long userId) {
+    public void createContract(int attendanceId, Long providerId, Long userId) throws Exception {
         List<Contract> contracts = contractRep.findByUserAndProviderAndAttendance(userId, providerId, attendanceId);
         boolean flag = true;
 
@@ -46,6 +46,8 @@ public class ContractServiceImpl implements ContractService {
             contract.setScore(0);
             contract.setUser(userRep.findById(userId).get());
             contractRep.save(contract);
+        }else {
+            throw new Exception("No puede contratar a este proveedor ya que tiene un contrato vigente");
         }
     }
 
