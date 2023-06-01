@@ -9,6 +9,7 @@
             <a href="#">SOBRE NOSOTROS</a>
             <a href="#">CONTACTO</a>
             <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin/accounts">PANEL ADMINISTRADOR</a>
+            <a sec:authorize="hasRole('ROLE_USER')" href="/user/changeToProvider">SER PROVEEDOR</a>
         </div>
     </div>
     <div class="navbar-right">

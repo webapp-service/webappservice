@@ -1,8 +1,11 @@
 package org.example.controller;
 
+import org.example.entity.Attendance;
 import org.example.entity.Contract;
 import org.example.entity.Person;
+import org.example.service.AttendanceService;
 import org.example.service.ContractServiceImpl;
+import org.example.service.ProviderService;
 import org.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -20,6 +25,10 @@ public class UserController {
     UserServiceImpl userService;
     @Autowired
     ContractServiceImpl contractService;
+    @Autowired
+    ProviderService providerService;
+    @Autowired
+    AttendanceService attendanceService;
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/profile")
@@ -45,7 +54,7 @@ public class UserController {
     public String register(@RequestParam String name, @RequestParam String email,
                            @RequestParam String password1, @RequestParam Long dni,
                            @RequestParam String lastName, @RequestParam String address,
-                           @RequestParam String phone, @RequestParam MultipartFile image, ModelMap model){
+                           @RequestParam String phone, @RequestParam MultipartFile image, ModelMap model) {
 
         try {
             userService.create(name, email, password1, dni, lastName, address, phone, image);
@@ -67,6 +76,7 @@ public class UserController {
 
         return "redirect:/login";
     }
+
     @PostMapping("/rate/{contractId}")
     public String rateAndComment(@PathVariable int contractId, @RequestParam int rate, @RequestParam String comment,
                                  ModelMap model) {
@@ -85,14 +95,14 @@ public class UserController {
 
     @GetMapping("/rate/{contractId}")
     public String CommentCompletedContract(@PathVariable Integer contractId, ModelMap model) {
-            model.put("contractId", contractId);
-            return "rate_provider";
-        }
+        model.put("contractId", contractId);
+        return "rate_provider";
+    }
 
     @PostMapping("/menu_cancel")
-    public String CancelContract(Integer contractId){
+    public String CancelContract(Integer contractId) {
         try {
-            contractService.statusChange(contractId,2);
+            contractService.statusChange(contractId, 2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -100,17 +110,14 @@ public class UserController {
     }
 
 
-
-
-
-@GetMapping("/{contractId}/{buttonId}")
-    public String buttonAction (@PathVariable Integer contractId, @PathVariable Integer buttonId, ModelMap model,HttpSession httpSession){
+    @GetMapping("/{contractId}/{buttonId}")
+    public String buttonAction(@PathVariable Integer contractId, @PathVariable Integer buttonId, ModelMap model, HttpSession httpSession) {
 
         // si el boton es 1, devuelve la vista para comentar + calificar, si es 2, es para cancelar el contrato
         Contract contract = contractService.getContractById(contractId);
         Person logged = (Person) httpSession.getAttribute("usersession");
         Long userId = logged.getDni();
-        switch (buttonId){
+        switch (buttonId) {
             case 1:
                 model.addAttribute("contract", contract);
                 return "rate_provider";
@@ -123,21 +130,60 @@ public class UserController {
                     System.out.println(e.getMessage());
 
                 }
-                if (logged!= null){
+                if (logged != null) {
                     long loggedDni = logged.getDni();
-                    model.addAttribute("logged",logged.getName());
-                    model.addAttribute("rol",logged.getRole());
-                    model.addAttribute("user",logged);
+                    model.addAttribute("logged", logged.getName());
+                    model.addAttribute("rol", logged.getRole());
+                    model.addAttribute("user", logged);
                     model.addAttribute("userContracts", contractService.getAllContractsByUser(loggedDni));
-                }else{
+                } else {
                     return "login";
                 }
                 return "redirect:/user/profile";
         }
         return "redirect:/user/profile";
-}
-
     }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/changeToProvider")
+    public String changeToProvider(ModelMap model) {
+        List<Attendance> attendances = attendanceService.listAttendances();
+        model.addAttribute("attendances", attendances);
+        return "user_to_provider_form";
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/changeToProvider")
+    public String changeToProvider(@RequestParam Integer attendanceId, @RequestParam Double pricePerHour,
+                                   @RequestParam String description, @RequestParam MultipartFile image,
+                                   @RequestParam String password, ModelMap model,
+                                   HttpSession httpSession) {
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        String name = logged.getName();
+        String email = logged.getEmail();
+        Long dni = logged.getDni();
+        String lastName = logged.getLastName();
+        String address = logged.getAddress();
+        String phone = logged.getPhone();
+
+        try {
+            userService.setStatus(dni);
+            providerService.create(name, email, password, dni, lastName, address, phone, description, pricePerHour,
+                    attendanceId, image);
+        } catch (Exception e) {
+            List<Attendance> attendances = attendanceService.listAttendances();
+            model.addAttribute("attendances", attendances);
+
+            model.put("idAttendance", attendanceId);
+            model.put("pricePerHour", pricePerHour);
+            model.put("description", description);
+            model.put("error", e.getMessage());
+
+            return "user_to_provider_form";
+        }
+        return "redirect:/logout";
+    }
+}
 
 
 
