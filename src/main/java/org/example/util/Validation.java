@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @Service
 public class Validation {
@@ -69,18 +70,19 @@ public class Validation {
     }
 
     private void validateEmail(String email) throws Exception {
+        User user = userRepository.findByEmail(email);
+        Provider provider = providerRepository.findByEmail(email);
 
-
-       if (userRepository.findByEmail(email) == null && providerRepository.findByEmail(email)== null) {
+        if ((user == null || !user.isActive()) && (provider == null || !provider.isActive())) {
 
 
             if (email == null || email.length() <= 10) {
 
                 throw new Exception("El email no puede estar vacío o tener menos de 10 caracteres");
             }
-        }else{
-           throw new Exception("El email ya existe en la base de datos.");
-       }
+        } else {
+            throw new Exception("El email ya existe en la base de datos.");
+        }
     }
 
     private void validatePassword(String password) throws Exception {
@@ -90,16 +92,18 @@ public class Validation {
     }
 
     private void validateDni(Long dni) throws Exception {
+        Optional<User> user = userRepository.findById(dni);
+        Optional<Provider> provider = providerRepository.findById(dni);
 
-        if ( !userRepository.existsById(dni) && !providerRepository.existsById(dni)) {
+        if ((!user.isPresent() || !user.get().isActive())
+                && (!provider.isPresent() || !provider.get().isActive())) {
             if (dni <= 5999999) {
                 throw new Exception("El dni no puede ser menor a 6 millones");
             }
 
-        }else{
+        } else {
             throw new Exception("El dni ya existe en la base de datos");
         }
-
     }
 
     private void validateLastName(String lastName) throws Exception {
@@ -121,8 +125,8 @@ public class Validation {
     }
 
     private void validateDescription(String description) throws Exception {
-        if (description.isEmpty() || description.length() <= 50) {
-            throw new Exception("La descripción debe tener más de 50 caracteres");
+        if (description.isEmpty() || description.length() <= 10) {
+            throw new Exception("La descripción debe tener más de 10 caracteres");
         }
     }
 
