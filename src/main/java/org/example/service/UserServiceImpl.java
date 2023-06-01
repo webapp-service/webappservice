@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void create(String name, String email, String password, Long Dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
-        User user = validation.validationUser(name, email, password, Dni, lastName, address, phone, image);
+        User user = validation.createUser(name, email, password, Dni, lastName, address, phone, image);
         userRepository.save(user);
 
 
