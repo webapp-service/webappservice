@@ -26,7 +26,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void changeToAdmin(long accountId) {
+    public void changeToAdmin(Long accountId) {
         Optional<User> userOpc = userService.getOneById(accountId);
         Provider provider = providerService.getOne(accountId);
 

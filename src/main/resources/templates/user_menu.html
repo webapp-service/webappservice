@@ -33,22 +33,23 @@
     <h1 id="contracts-size" th:text="${#lists.size(userContracts)}"></h1>
     <table>
         <tr class="table-title">
-            <th>ID DE CONTRATO</th>
+<!--            <th>ID DE CONTRATO</th>-->
             <th>PROVEEDORES</th>
             <th>TIPO</th>
             <th>ESTADO</th>
+            <th></th>
 
         </tr>
         <tr th:each="contract : ${userContracts}">
-            <td th:text="${contract.contractId}"  th:id="'contract-' + ${contract.contractDtoId}"></td>
+            <td hidden="hidden" th:text="${contract.contractId}"  th:id="'contract-' + ${contract.contractId}"></td>
             <td th:text="${contract.provider.name} + ' ' + ${contract.provider.lastName}"></td>
             <td th:text="${contract.attendance.name}"></td>
             <td th:text="${contract.status.name}"></td>
-            <td th:text="${contract.status.id}"  th:id="'contract-status-' + ${contract.contractDtoId}"></td>
+            <td th:text="${contract.status.id}"  th:id="'contract-status-' + ${contract.contractId}"></td>
 
             <td>
-                <a th:id="'contract-button-' + ${contract.contractDtoId}">
-                    <button th:id="'contract-button-style-' + ${contract.contractDtoId}">
+                <a th:id="'contract-button-' + ${contract.contractId}">
+                    <button th:id="'contract-button-style-' + ${contract.contractId}">
 
 
 

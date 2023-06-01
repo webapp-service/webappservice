@@ -25,6 +25,7 @@ main {
 }
 .portada-section h1 {
   margin-top: 1rem;
+  font-weight: bold;
 }
 
 .header__buttons-container {
@@ -65,4 +66,39 @@ main {
 
 .hide {
   display: none;
+}
+
+/*
+botones
+ */
+.rol-style{
+  padding: 10px 20px;
+  background-color: #2C80B0;
+  color: white;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.rol-style:hover{
+  background-color: #2C80B0;
+  filter: brightness(1.2);
+}
+.btn-enlace {
+  text-decoration: none;
+}
+
+.btn-enlace button {
+  padding: 10px 20px;
+  background-color: #2C80B0;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-enlace button:hover {
+  background-color: #2C80B0;
+  filter: brightness(1.2);
 }

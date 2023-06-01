@@ -13,7 +13,9 @@
     </div>
     <div class="navbar-right">
         <div class="navbar-icon">
-            <i class="fa-solid fa-circle-user"></i>
+            <i sec:authorize="!isAuthenticated()" class="fa-solid fa-circle-user"></i>
+             <img sec:authorize="isAuthenticated()" th:src="@{'/images/' + ${session.usersession.image}}">
+
         </div>
         <div class="navbar-link">
             <a sec:authorize="!isAuthenticated()" th:ref="@{/login}" href="/login">INGRESAR</a>

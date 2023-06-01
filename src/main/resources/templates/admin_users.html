@@ -21,12 +21,12 @@
   <nav th:replace="/fragments/navbar :: nav"></nav>
 
   <section class="portada-section">
-    <h1>PANEL ADMINISTRADOR</h1>
+    <h1 >PANEL ADMINISTRADOR</h1>
 
     <div class="header__buttons-container">
-      <a class="btn btn-primary" th:href="@{/admin/accounts}" role="button">Panel Cuentas</a>
-      <a class="btn btn-primary" th:href="@{/admin/comments}" role="button">Panel Comentarios</a>
-      <a class="btn btn-primary" th:href="@{/admin/attendances}" role="button">Panel Attendances</a>
+      <a class="btn-enlace" th:href="@{/admin/accounts}" role="button"><button class="btn-enlace button">Panel Cuentas</button></a>
+      <a class="btn-enlace" th:href="@{/admin/comments}" role="button"><button class="btn-enlace button">Panel Comentarios</button></a>
+      <a class="btn-enlace" th:href="@{/admin/attendances}" role="button"><button class="btn-enlace button">Panel Attendances</button></a>
     </div>
   </section>
 </header>
@@ -57,7 +57,12 @@
           <td th:text="${person.lastName}"></td>
           <td th:text="${person.email}"></td>
           <td th:text="${person.role}"></td>
-          <td th:text="${person.role}"></td>
+          <td>
+            <form th:action="@{/admin/accounts}" method="POST">
+              <input type="hidden" name="accountId" th:value="${person.dni}" />
+              <button class="rol-style" type="submit">Cambiar Rol</button>
+            </form>
+          </td>
         </tr>
         </tbody>
         <tbody class="table__body hide">
@@ -68,6 +73,12 @@
           <td th:text="${provider.lastName}"></td>
           <td th:text="${provider.email}"></td>
           <td th:text="${provider.role}"></td>
+          <td>
+            <form th:action="@{/admin/accounts}" method="POST">
+              <input type="hidden" name="accountId" th:value="${provider.dni}" />
+              <button class="rol-style" type="submit">Cambiar Rol</button>
+            </form>
+          </td>
         </tr>
         </tbody>
         <tbody class="table__body hide">
@@ -77,6 +88,12 @@
           <td th:text="${user.lastName}"></td>
           <td th:text="${user.email}"></td>
           <td th:text="${user.role}"></td>
+          <td>
+            <form th:action="@{/admin/accounts}" method="POST">
+              <input type="hidden" name="accountId" th:value="${user.dni}" />
+              <button class="rol-style" type="submit">Cambiar Rol</button>
+            </form>
+          </td>
         </tr>
         </tbody>
         <tbody class="table__body hide">

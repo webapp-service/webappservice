@@ -96,23 +96,22 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void qualify(int contractId, int score, String comment) throws Exception {
         Contract contract = getContractById(contractId);
-            if (contract.getScore() >= 1 && contract.getComment().length()>0) {
-                throw new Exception("el contrato ya fue comentado y opinado");
-
-            }
-        if (contract.getStatus().getId().equals(4)) {
+             if (contract.getScore() >= 1 && contract.getComment().length()>0) {
+               throw new Exception("el contrato ya fue comentado y opinado");
+             }
+        if (contract.getStatus().getId() == 4 || contract.getStatus().getId() == 3) {
             if (score > 0 && score <= 5) {
                 contract.setScore(score);
 
-                if (comment.trim().length() > 10) {
+                if (comment.trim().length() > 5) {
                     contract.setComment(comment);
                     contractRep.save(contract);
 
-                } else throw new Exception("el comentario debe contener mas de 10 caracteres");
+                } else throw new Exception("el comentario debe contener mas de 5 caracteres");
 
             } else throw new Exception("el puntaje debe ser entre 1 y 5");
 
-        } else throw new Exception("el status debe ser completado");
+        } else throw new Exception("el status debe ser completado o cancelado para comentar");
     }
 
     @Transactional

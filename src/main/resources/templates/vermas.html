@@ -47,17 +47,16 @@
             <h2 th:text="${attendance.name}">ELECTRICIDAD</h2>
             <p th:text="${provider.description}"></p>
 
-            <div class="service-button">
-                <form th:action="@{/vermas/createContract}" method="POST">
-                    <input type="number" id="providerId" name="providerId" hidden
-                           th:value="${provider.dni}"/>
-                    <input type="number" id="attendanceId" name="attendanceId" hidden
-                           th:value="${attendanceId}"/>
-                    <button class="precio-provider" th:text=" '$' + ${provider.pricePerHour} + ' por hora.'">$1000 por hora</button>
-                    <button class="contratar">CONTRATAR</button>
-                </form>
-            </div>
-
+                <div class="service-button">
+                    <form th:action="@{/vermas/createContract}" method="POST">
+                        <input type="number" id="providerId" name="providerId" hidden
+                               th:value="${provider.dni}"/>
+                        <input type="number" id="attendanceId" name="attendanceId" hidden
+                               th:value="${attendanceId}"/>
+                        <button class="precio-provider" th:text=" '$' + ${provider.pricePerHour} + ' por hora.'">$1000 por hora</button>
+                        <button sec:authorize="hasRole('ROLE_USER')" class="contratar">CONTRATAR</button>
+                    </form>
+                </div>
 
         </div>
     </div>
@@ -65,7 +64,7 @@
 </section>
 
 <section>
-    <div class="comentario" th:each="card : ${contracts}">
+    <div class="comentario" th:each="card : ${contracts}" th:if="${card.comment != null}">
         <h4 th:text="${card.user.name}">SOFIA:</h4>
 
         <p th:text="${card.comment}">

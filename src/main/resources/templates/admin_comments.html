@@ -24,9 +24,9 @@
         <h1>PANEL ADMINISTRADOR</h1>
 
         <div class="header__buttons-container">
-            <a class="btn btn-primary" th:href="@{/admin/accounts}" role="button">Panel Cuentas</a>
-            <a class="btn btn-primary" th:href="@{/admin/comments}" role="button">Panel Comentarios</a>
-            <a class="btn btn-primary" th:href="@{/admin/attendances}" role="button">Panel Attendances</a>
+            <a class="btn-enlace" th:href="@{/admin/accounts}" role="button"><button class="btn-enlace button">Panel Cuentas</button></a>
+            <a class="btn-enlace" th:href="@{/admin/comments}" role="button"><button class="btn-enlace button">Panel Comentarios</button></a>
+            <a class="btn-enlace" th:href="@{/admin/attendances}" role="button"><button class="btn-enlace button">Panel Attendances</button></a>
         </div>
     </section>
 </header>
@@ -45,7 +45,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="contract : ${contracts}">
+                <tr th:each="contract : ${contracts}" th:if="${contract.comment != null}">
                     <th scope="row" th:text="${contract.contractId}"></th>
                     <td th:text="${contract.provider.name}"></td>
                     <td th:text="${contract.user.name}"></td>

@@ -38,28 +38,24 @@
 
     <table>
       <tr class="table-title">
-          <th>ID</th>
+<!--          <th>ID</th>-->
           <th>CLIENTE</th>
           <th>TIPO</th>
           <th>ESTADO</th>
           <th></th>
-          <th></th>
-          <th></th>
+<!--          <th></th>-->
       </tr>
         <tr th:each="contract : ${providerContracts}">
-            <td th:text="${contract.contractId}"  th:id="'contract-' + ${contract.contractDtoId}"></td>
+            <td hidden="hidden" th:text="${contract.contractId}"  th:id="'contract-' + ${contract.contractDtoId}"></td>
             <td th:text="${contract.user.name} + ' ' + ${contract.user.lastName}"></td>
             <td th:text="${contract.attendance.name}"></td>
             <td th:text="${contract.status.name}"></td>
-            <td th:text="${contract.status.id}"  th:id="'contract-status-' + ${contract.contractDtoId}"></td>
+            <td hidden="hidden" th:text="${contract.status.id}"  th:id="'contract-status-' + ${contract.contractDtoId}"></td>
 
             <td>
                 <a th:id="'contract-button-' + ${contract.contractDtoId}">
                     <button th:id="'contract-button-style-' + ${contract.contractDtoId}">
-
-
                     </button>
-
                 </a>
             </td>
         </tr>
