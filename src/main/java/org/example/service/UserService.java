@@ -14,7 +14,7 @@ public interface UserService {
     void modify(Long dni, String name, String lastName, String phone, String email, String address,
                 MultipartFile image, String password) throws Exception;
 
-    void delete(Long DNI);
+    void setStatus(Long dni);
 
     User getOneByEmail(String email);
 

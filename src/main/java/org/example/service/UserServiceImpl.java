@@ -64,10 +64,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long DNI) {
-        Optional<User> optUser = userRepository.findById(DNI);
+    public void setStatus(Long dni) {
+        Optional<User> optUser = userRepository.findById(dni);
         User user = optUser.get();
-        userRepository.deleteById(DNI);
+        user.setActive(false);
+        userRepository.save(user);
     }
 
     @Override
