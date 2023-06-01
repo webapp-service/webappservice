@@ -35,9 +35,9 @@ public class PersonService implements UserDetailsService {
 
         Person person = null;
 
-        if (provider != null) {
+        if (provider != null && provider.isActive()) {
             person = provider;
-        } else if (user != null) {
+        } else if (user != null && user.isActive()) {
             person = user;
         }
 

@@ -31,4 +31,5 @@ public abstract class Person {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private boolean active = true;
 }
