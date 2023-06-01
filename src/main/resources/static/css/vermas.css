@@ -6,47 +6,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-    
 
-.navbar {
-    background-color: #2d2929;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    font-weight: 700;
-    color: white;
-  }
-  
-  .navbar-icon i {
-    color: white;
-    font-size: 24px;
-  }
-  
-  .navbar-left,
-  .navbar-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-logo img {
-    height: 50px;
-  }
-  
-  .navbar-link {
-    margin-left: 20px;
-  }
-  
-  .navbar-link a {
-    color: white;
-    margin-right: 10px;
-    text-decoration: none;
-  }
-  
-  .navbar-icon img {
-    height: 30px;
-  }
-  
 
   .portada-section {
     background-color: #2C80B0;
@@ -73,7 +33,8 @@
 
   .contenido-texto p{
 
-   margin: auto;
+  margin: 0px 0px 30px;
+    padding: 0px 30px;
 
 
   }
@@ -92,14 +53,13 @@
 
 .service-button {
   padding: 10px;
-  margin:0px 30px;
   border-width: 0px;
   border-radius: 10px;
   display: flex;
   height: 20px;
   align-items: center;
   justify-content: center;
-  margin: 5px 0px 20px 0px;
+  width: 50%;
 }
 
   .precio-provider{
@@ -145,7 +105,7 @@
   }
 
 
-.container {
+.container-vermas{
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -169,39 +129,37 @@
   align-items: center;
 }
 
-.star-container {
-  display: flex;
-  margin-top:30px;
-}
 
-.star {
-  width: 50px;
-  height: 50px;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-
-}
-
-.star-filled {
-  width: 50px;
-  height: 50px;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  background-color: yellow;
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-
-}
 .left-section img{
   max-width: 100%;
   height: auto;
 }
 
+.div-stars i{
+  font-size: 35px;
+  margin: 0px 5px;
+}
 
+.fa-star{
+  color: #FFCD00;
+}
 
+.div-stars {
+  display: flex;
+  flex-direction: row;
+  margin: 30px 10px;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+}
 
+.contenedor-stars-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px;
+
+}
 
 

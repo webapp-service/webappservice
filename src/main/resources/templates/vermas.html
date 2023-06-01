@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -32,35 +32,31 @@
 </div>
 <section >
 
-    <div class="container">
+    <div class="container-vermas">
         <div class="left-section">
             <img th:src="@{'/images/' + ${provider.image}}" alt="Image Provider"/>
-            <div class="star-container">
-                <div th:each="star : ${#numbers.sequence(1, 5)}"
-                     th:class="${star le score} ? 'star-filled' : 'star'"></div>
-
-            </div>
         </div>
         <div class="right-section  contenido-texto" >
-
             <h1 th:text="${provider.name} + ' ' + ${provider.lastName}">JORGE GARCIA</h1>
             <h2 th:text="${attendance.name}">ELECTRICIDAD</h2>
             <p th:text="${provider.description}"></p>
-
-                <div class="service-button">
-                    <form th:action="@{/vermas/createContract}" method="POST">
-                        <input type="number" id="providerId" name="providerId" hidden
-                               th:value="${provider.dni}"/>
-                        <input type="number" id="attendanceId" name="attendanceId" hidden
-                               th:value="${attendanceId}"/>
-                        <button class="precio-provider" th:text=" '$' + ${provider.pricePerHour} + ' por hora.'">$1000 por hora</button>
-                        <button sec:authorize="hasRole('ROLE_USER')" class="contratar">CONTRATAR</button>
-                    </form>
-                </div>
-
         </div>
     </div>
-
+    <div class="contenedor-stars-buttons">
+        <div class="div-stars">
+            <i th:each="star : ${#numbers.sequence(1, 5)}" th:class="${star le score} ? 'fa fa-star' : 'fa-regular fa-star'"></i>
+        </div>
+        <div class="service-button">
+            <form th:action="@{/vermas/createContract}" method="POST">
+                <input type="number" id="providerId" name="providerId" hidden
+                       th:value="${provider.dni}"/>
+                <input type="number" id="attendanceId" name="attendanceId" hidden
+                       th:value="${attendanceId}"/>
+                <label class="precio-provider" th:text=" '$' + ${provider.pricePerHour} + ' por hora.'">$1000 por hora</label>
+                <button sec:authorize="hasRole('ROLE_USER')" class="contratar">CONTRATAR</button>
+            </form>
+        </div>
+    </div>
 </section>
 
 <section>

@@ -140,7 +140,7 @@ public class Validation {
 
 
 
-    private User createUser(String name, String email, String password, Long dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
+    public User createUser(String name, String email, String password, Long dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
         User user = new User();
 
@@ -151,24 +151,26 @@ public class Validation {
         user.setEmail(email);
         user.setAddress(address);
 
-        try {
+
             Path directoryImages = null;
+try{
 
-            if (image == null || image.isEmpty()){
-                 directoryImages = Paths.get("src//main//resources/static/images/imagenPredeterminada.jpg");
-            }else {
-                 directoryImages = Paths.get("src//main//resources/static/images");
-            }
+    if (image == null || image.isEmpty()) {
+        directoryImages = Paths.get("src//main//resources/static/images/imagenPredeterminada.jpg");
+        user.setImage("imagenPredeterminada.jpg");
+    } else {
+        directoryImages = Paths.get("src//main//resources/static/images");
+        String absolutePath = directoryImages.toFile().getAbsolutePath();
+        byte[] byteImg = image.getBytes();
+        Path fullPath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
+        Files.write(fullPath, byteImg);
+        user.setImage(image.getOriginalFilename());
+    }
 
-            String absolutePath = directoryImages.toFile().getAbsolutePath();
-            byte[] byteImg = image.getBytes();
-            Path fullPath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
-            Files.write(fullPath, byteImg);
-            user.setImage(image.getOriginalFilename());
+} catch (Exception e){
+    System.out.println(e.getMessage());
+}
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
 
         String encodedPassword = new BCryptPasswordEncoder().encode(password);
         user.setPassword(encodedPassword);
