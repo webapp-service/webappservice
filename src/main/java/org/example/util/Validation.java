@@ -1,7 +1,6 @@
 package org.example.util;
 
 
-
 import org.example.entity.Attendance;
 import org.example.entity.Provider;
 import org.example.entity.User;
@@ -43,6 +42,18 @@ public class Validation {
         User user = createUser(name, email, password, dni, lastName, address, phone, image);
 
         return user;
+    }
+
+    public void validationProviderModify(String name, String lastName, String phone, String address,
+                                         String password, String description, Double pricePerHour, MultipartFile image) throws Exception {
+        validateName(name);
+        validateLastName(lastName);
+        validatePhone(phone);
+        validateAddress(address);
+        validatePassword(password);
+        validateDescription(description);
+        validatePrice(pricePerHour);
+        validateImage(image);
     }
 
     public Provider validationProvider(String name, String email, String password, Long dni, String lastName, String address, String phone, String description, Double pricePerHour, Integer idAttendance, MultipartFile image) throws Exception {
@@ -143,7 +154,6 @@ public class Validation {
     }
 
 
-
     public User createUser(String name, String email, String password, Long dni, String lastName, String address, String phone, MultipartFile image) throws Exception {
 
         User user = new User();
@@ -156,24 +166,24 @@ public class Validation {
         user.setAddress(address);
 
 
-            Path directoryImages = null;
-try{
+        Path directoryImages = null;
+        try {
 
-    if (image == null || image.isEmpty()) {
-        directoryImages = Paths.get("src//main//resources/static/images/imagenPredeterminada.jpg");
-        user.setImage("imagenPredeterminada.jpg");
-    } else {
-        directoryImages = Paths.get("src//main//resources/static/images");
-        String absolutePath = directoryImages.toFile().getAbsolutePath();
-        byte[] byteImg = image.getBytes();
-        Path fullPath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
-        Files.write(fullPath, byteImg);
-        user.setImage(image.getOriginalFilename());
-    }
+            if (image == null || image.isEmpty()) {
+                directoryImages = Paths.get("src//main//resources/static/images/imagenPredeterminada.jpg");
+                user.setImage("imagenPredeterminada.jpg");
+            } else {
+                directoryImages = Paths.get("src//main//resources/static/images");
+                String absolutePath = directoryImages.toFile().getAbsolutePath();
+                byte[] byteImg = image.getBytes();
+                Path fullPath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
+                Files.write(fullPath, byteImg);
+                user.setImage(image.getOriginalFilename());
+            }
 
-} catch (Exception e){
-    System.out.println(e.getMessage());
-}
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
 
         String encodedPassword = new BCryptPasswordEncoder().encode(password);
@@ -202,7 +212,7 @@ try{
             Path fullPath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
             Files.write(fullPath, byteImg);
             provider.setImage(image.getOriginalFilename());
-            
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

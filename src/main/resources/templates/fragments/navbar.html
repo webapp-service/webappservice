@@ -25,8 +25,10 @@
                 <a sec:authorize="hasRole('ROLE_PROVIDER')" href="/provider/profile"
                    th:text="${session.usersession.name}"></a>
                 <h3 class="rol-style" th:text="${session.usersession.role}"></h3>
+
             </div>
             <a class="logout" sec:authorize="isAuthenticated()" href="/logout">CERRAR SESIÓN</a>
+            <a sec:authorize="hasRole('ROLE_PROVIDER')" th:href="@{/provider/modify/__${session.usersession.dni}__}">Editar Perfil</a>
         </div>
     </div>
 </nav>
