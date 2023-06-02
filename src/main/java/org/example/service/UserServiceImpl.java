@@ -6,9 +6,13 @@ import org.example.repository.ProviderRepository;
 import org.example.repository.UserRepository;
 import org.example.util.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,24 +47,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void modify(Long dni, String name, String lastName, String phone, String email, String address,
+    public void modify(Long dni, String name, String lastName, String phone, String address,
                        MultipartFile image, String password) throws Exception {
+        validation.validationUserModify(name, password, lastName, address, phone, image);
+        Optional<User> optUser = getOneById(dni);
 
-        Optional<User> userOpc = getOneById(dni);
+        if (optUser.isPresent()) {
+            User user = optUser.get();
+            user.setName(name);
+            user.setLastName(lastName);
+            user.setPhone(phone);
+            user.setAddress(address);
 
-        if (userOpc.isPresent()) {
-            User useResp = userOpc.get();
+            String encodedPassword = new BCryptPasswordEncoder().encode(password);
+            user.setPassword(encodedPassword);
 
-            User userAux = validation.validationUser(name, email, password, dni, lastName, address, phone, image);
+            Path directoryImages = Paths.get("src//main//resources/static/images");
+            String absolutePath = directoryImages.toFile().getAbsolutePath();
+            byte[] byteImg = image.getBytes();
+            Path fullPath = Paths.get(absolutePath + "//" + image.getOriginalFilename());
+            Files.write(fullPath, byteImg);
+            user.setImage(image.getOriginalFilename());
 
-            if (!(userAux == null)) {
-                useResp = userAux;
-
-                userRepository.save(useResp);
-            }
-        } else {
-            throw new Exception("no se encontro el usuario");
+            userRepository.save(user);
         }
+
     }
 
     @Override
@@ -77,8 +88,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getOneById(long id) {
-        return userRepository.findById(id);
+    public Optional<User> getOneById(long dni) {
+        Optional<User> optUser = userRepository.findById(dni);
+        if (optUser.isPresent()) {
+            User user = optUser.get();
+        } else {
+            return null;
+        }
+        return optUser;
     }
 
     @Override

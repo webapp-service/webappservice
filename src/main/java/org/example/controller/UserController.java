@@ -183,6 +183,31 @@ public class UserController {
         }
         return "redirect:/logout";
     }
+
+
+    @GetMapping("/modify/{dni}")
+    public String modify(HttpSession httpSession, ModelMap model){
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        long dni = logged.getDni();
+        model.addAttribute("user", userService.getOneById(dni));
+        return "user_modify";
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/modify/{dni}")
+    public String modify(HttpSession httpSession, String name, String lastName, String phone, String address,
+                         MultipartFile image, String password, ModelMap model){
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        long dni = logged.getDni();
+        try {
+            userService.modify(dni, name, lastName, phone, address, image, password);
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("user", providerService.getOne(dni));
+            model.put("error", e.getMessage());
+            return "user_modify";
+        }
+    }
 }
 
 
