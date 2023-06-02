@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacto</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/contacto.css}" />
+    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <title>Contacto</title>
+</head>
+
+<body>
+<nav th:replace="/fragments/navbar :: nav"></nav>
+<main>
+    <div class="nosotros-portada-div">
+        <h2>CONTACTO</h2>
+    </div>
+    <div class="contacto-mensaje">
+        <p>
+            Nos encantaría escucharte! Si tienes alguna pregunta, consulta o sugerencia, no dudes en enviarnos un correo electrónico. Nuestro equipo de atención al cliente está aquí para brindarte toda la ayuda que necesites. Estamos comprometidos en responder rápidamente y asegurarnos de que tus inquietudes sean atendidas de manera efectiva.
+        </p>
+        <p>
+            Envíanos un correo electrónico y te responderemos en breve. ¡Esperamos con ansias ayudarte y hacer de tu experiencia en G&L Service algo excepcional!
+        </p>
+    </div>
+    <section class="form-section">
+
+        <form class="form" th:action="@{/provider/register}" method="POST" enctype="multipart/form-data">
+            <div class="form-row">
+                <input type="text" id="name" name="name" placeholder="NOMBRE" required th:value="${name}" />
+                <input type="text" id="lastName" name="lastName" placeholder="APELLIDO" required th:value="${lastName}" />
+            </div>
+            <div class="form-row">
+                <input type="text" id="phone" name="name" placeholder="TELÉFONO" required th:value="${name}" />
+                <input type="text" id="email" name="dni" placeholder="EMAIL" required th:value="${dni}"/>
+            </div>
+            <div class="image-textarea">
+
+                <section class="description-textarea">
+                    <textarea id="description" name="description" placeholder="INGRESA TU MENSAJE..." rows="4" cols="50" th:text="${description}"></textarea>
+                </section>
+
+                <section class="form-button">
+                    <button type="submit" class="">Enviar</button>
+                </section>
+                <div th:if="${error != null}" class="alert alert-danger card-body" role="alert">
+                    <h5 class="card-title">Error!</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>
+
+<footer th:replace="fragments/footer"></footer>
+</body>
+
+</html>
