@@ -1,144 +1,125 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-*{
-    margin: 0px ;
-    padding:0px ;
+* {
+    margin: 0px;
+    padding: 0px;
     font-family: 'Montserrat', sans-serif;
 }
 
 body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
-.navbar {
-    background-color: #2d2929;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    font-weight: 700;
-    color: white;
-  }
-
-  .navbar-icon i {
-    color: white;
-    font-size: 24px;
-  }
-
-  .navbar-left,
-  .navbar-right {
-    display: flex;
-    align-items: center;
-  }
-
-  .navbar-logo img {
-    height: 50px;
-  }
-
-  .navbar-link {
-    margin-left: 20px;
-  }
-
-  .navbar-link a {
-    color: white;
-    margin-right: 10px;
-    text-decoration: none;
-  }
-
-  .navbar-icon img {
-    height: 30px;
-  }
-
-
-  .portada-section {
+.portada-section {
     background-color: #2C80B0;
     padding: 20px 0;
     width: 100%;
-  }
+}
 
-  .portada-section h1 {
+.portada-section h1 {
     text-align: center;
     color: #ffffff; /* Color del texto */
-  }
+}
 
-  .encabezado{
+.encabezado {
     display: flex;
     align-items: center;
     flex-direction: column;
-  }
+}
 
 
-.encabezado h2{
-  font-size: 2.5em;
-  font-weight: 900;
-  padding: 2.5vh;
+.encabezado h2 {
+    font-size: 2.5em;
+    font-weight: 900;
+    padding: 2.5vh;
 
 }
 
-.encabezado h3{
-  margin: 0vh 0vh 2vh;
+.encabezado h3 {
+    margin: 0vh 0vh 2vh;
 }
 
-table{
-  display: flex;
-  justify-content: center;
-  border-collapse: collapse;
+table {
+    display: flex;
+    justify-content: center;
+    border-collapse: collapse;
 }
 
-.table-title{
+.table-title {
 
-  background-color: #f7d547;
+    background-color: #f7d547;
 }
 
 td,
 th {
-  padding: 2vh;
+    padding: 2vh;
 }
 
-    button {
-      padding: 8px;
-      width: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-weight: 600;
-      border-radius: 10px;
-    }
+.btn-container {
+    text-decoration: none;
+}
 
-.btn-acept{
+button {
+    padding: 8px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+}
 
-  background-color: #05ad42;
-  border-color: #05ad42;
+.btn-acept {
+
+    background-color: #05ad42;
+    border-color: #05ad42;
+}
+
+.btn-acept:hover {
+    cursor: pointer;
+}
+
+.btn-cancel {
+
+    background-color: #cb3234;
+    border-color: #cb3234;
+}
+
+.btn-cancel:hover {
+    cursor: pointer;
+}
+
+.btn-complete {
+
+    background-color: #f7d547;
+    border-color: #f7d547;
+    color: #2d2929;
 
 }
 
-.btn-cancel{
+.btn-complete:hover {
+    cursor: pointer;
+}
 
-  background-color: #cb3234;
-  border-color: #cb3234;
+.btn-comment {
+
+    background-color: #05ad42;
+    border-color: #05ad42;
 
 }
 
-.btn-complete{
-
-  background-color: #f7d547;
-  border-color: #f7d547;
-  color:#2d2929;
-
-}
-.btn-comment{
-
-  background-color: #05ad42;
-  border-color: #05ad42;
-
+.btn-comment:hover {
+    cursor: pointer;
 }
 
-.btn-cancel{
+.btn-cancel {
+    background-color: #cb3234;
+    border-color: #cb3234;
+}
 
-  background-color: #cb3234;
-  border-color: #cb3234;
-
+.btn-cancel:hover {
+    cursor: pointer;
 }

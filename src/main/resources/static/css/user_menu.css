@@ -1,118 +1,95 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
-  margin: 0px;
-  padding: 0px;
-  font-family: "Montserrat", sans-serif;
+    margin: 0px;
+    padding: 0px;
+    font-family: "Montserrat", sans-serif;
 }
 
 body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-.navbar {
-  background-color: #2d2929;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  font-weight: 700;
-  color: white;
-}
-
-.navbar-icon i {
-  color: white;
-  font-size: 24px;
-}
-
-.navbar-left,
-.navbar-right {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-logo img {
-  height: 50px;
-}
-
-.navbar-link {
-  margin-left: 20px;
-}
-
-.navbar-link a {
-  color: white;
-  margin-right: 10px;
-  text-decoration: none;
-}
-
-.navbar-icon img {
-  height: 30px;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 .portada-section {
-  background-color: #2c80b0;
-  /*padding: 20px;*/ /*COMENTÉ ESTO SOFI*/
-  width: 100%;
+    background-color: #2c80b0;
+    /*padding: 20px;*/ /*COMENTÉ ESTO SOFI*/
+    width: 100%;
 }
 
 .portada-section h1 {
-  text-align: center;
-  color: #ffffff;
-  font-weight: 900; /*AGREGUE ESTO SOFI*/
-  padding: 3vh; /*AGREGUE ESTO SOFI*/
+    text-align: center;
+    color: #ffffff;
+    font-weight: 900; /*AGREGUE ESTO SOFI*/
+    padding: 3vh; /*AGREGUE ESTO SOFI*/
 }
 
 .title {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
-.title h2{
-  font-size: 2.5em; /*AGREGUE ESTO SOFI*/
-  font-weight: 900; /*AGREGUE ESTO SOFI*/
-  padding: 2.5vh; /*AGREGUE ESTO SOFI*/
+.title h2 {
+    font-size: 2.5em; /*AGREGUE ESTO SOFI*/
+    font-weight: 900; /*AGREGUE ESTO SOFI*/
+    padding: 2.5vh; /*AGREGUE ESTO SOFI*/
 }
 
-table{
-  display: flex;
-  justify-content: center;
-  border-collapse: collapse;
+table {
+    display: flex;
+    justify-content: center;
+    border-collapse: collapse;
 }
 
-.table-title{
+.table-title {
 
-  background-color: #f7d547;
+    background-color: #f7d547;
 }
 
 td,
 th {
-  padding: 2vh;
+    padding: 2vh;
 }
 
-    button {
-      padding: 8px;
-      width: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-weight: 600;
-      border-radius: 10px;
-    }
-
-.btn-comment{
-
-  background-color: #05ad42;
-  border-color: #05ad42;
+#contract-button {
 
 }
 
-.btn-cancel{
+.btn-container {
+    text-decoration: none;
+}
 
-  background-color: #cb3234;
-  border-color: #cb3234;
+button {
+    padding: 8px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.btn-comment {
+
+    background-color: #05ad42;
+    border-color: #05ad42;
+}
+
+.btn-comment:hover {
+    cursor: pointer;
 
 }
 
+.btn-cancel {
+
+    background-color: #cb3234;
+    border-color: #cb3234;
+
+}
+
+.btn-cancel:hover {
+    cursor: pointer;
+
+}
