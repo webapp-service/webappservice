@@ -73,30 +73,34 @@ public class ProviderController {
 
             model.put("error", e.getMessage());
 
-
             return "provider_form";
         }
         return "redirect:/login";
     }
 
-    @GetMapping("/modify_provider/{dni}")
-    public String modify(@PathVariable Long dni, ModelMap model) {
-        List<Contract> contracts = contractServiceImpl.getAllContracts();
+    @GetMapping("/modify/{dni}")
+    public String modify(HttpSession httpSession, ModelMap model) {
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        long dni = logged.getDni();
         List<Attendance> attendances = attendanceServiceImpl.listAttendances();
-        model.addAttribute("contracts", contracts);
-        model.addAttribute("attendance", attendances);
-        model.put("provider", providerServiceImpl.getOne(dni));
+        model.addAttribute("attendances", attendances);
+        model.addAttribute("provider", providerServiceImpl.getOne(dni));
         return "provider_modify";
     }
 
     @PostMapping("/modify/{dni}")
-    public String modify(Long dni, String name, String lastName, String phone, String email, String address,
-                         String password, Role role, String description, Double pricePerHour,
+    public String modify(HttpSession httpSession, String name, String lastName, String phone, String address,
+                         String password, String description, Double pricePerHour,
                          Integer idAttendance, ModelMap model , @RequestParam MultipartFile image) {
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        long dni = logged.getDni();
         try {
-            providerServiceImpl.modifyProvider(dni, name, lastName, phone, email, address, password, role, description, pricePerHour, idAttendance,image);
-            return "redirect:../list_providers";
+            providerServiceImpl.modifyProvider(dni, name, lastName, phone, address, password, description, pricePerHour, idAttendance,image);
+            return "redirect:/";
         } catch (Exception e) {
+            List<Attendance> attendances = attendanceServiceImpl.listAttendances();
+            model.addAttribute("attendances", attendances);
+            model.addAttribute("provider", providerServiceImpl.getOne(dni));
             model.put("error", e.getMessage());
             return "provider_modify";
         }

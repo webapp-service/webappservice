@@ -13,8 +13,8 @@ public interface ProviderService {
 
     List<Provider> providers();
 
-    void modifyProvider(Long dni, String name, String lastName, String phone, String email, String address,
-                        String password, Role role, String description, Double pricePerHour, Integer idAttendance, MultipartFile image) throws Exception;
+    void modifyProvider(Long dni, String name, String lastName, String phone, String address,
+                        String password, String description, Double pricePerHour, Integer idAttendance, MultipartFile image) throws Exception;
 
     void delete(Long dni);
 
