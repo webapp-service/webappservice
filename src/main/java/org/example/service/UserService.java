@@ -11,7 +11,7 @@ public interface UserService {
 
     List<User> getUsers();
 
-    void modify(Long dni, String name, String lastName, String phone, String email, String address,
+    void modify(Long dni, String name, String lastName, String phone, String address,
                 MultipartFile image, String password) throws Exception;
 
     void setStatus(Long dni);

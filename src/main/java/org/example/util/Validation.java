@@ -44,6 +44,14 @@ public class Validation {
         return user;
     }
 
+    public void validationUserModify(String name, String password, String lastName, String address, String phone, MultipartFile image) throws Exception {
+        validateName(name);
+        validatePassword(password);
+        validateLastName(lastName);
+        validateAddress(address);
+        validatePhone(phone);
+        validateImage(image);
+    }
     public void validationProviderModify(String name, String lastName, String phone, String address,
                                          String password, String description, Double pricePerHour, MultipartFile image) throws Exception {
         validateName(name);
