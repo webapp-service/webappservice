@@ -46,4 +46,24 @@ public class HomeController {
         return "index.html";
     }
 
+    @GetMapping ("/sobre-nosotros")
+    public String aboutUs(ModelMap model, HttpSession httpSession){
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        if (logged!= null){
+            model.addAttribute("logged",logged.getName());
+            model.addAttribute("rol",logged.getRole());
+        }
+        return "sobrenosotros.html";
+    }
+
+    @GetMapping ("/contacto")
+    public String contact(ModelMap model, HttpSession httpSession){
+        Person logged = (Person) httpSession.getAttribute("usersession");
+        if (logged!= null){
+            model.addAttribute("logged",logged.getName());
+            model.addAttribute("rol",logged.getRole());
+        }
+        return "contacto.html";
+    }
+
 }
